@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-6">
+        <div ba-panel ba-panel-class="with-scroll light-text" ba-panel-title="展会基本信息">
+            <form name="Form" ng-submit="kt.save()">
+                <div class="form-group">
+                    <button ui-sref="exhibition.management" type="button" class="btn btn-default btn-with-icon">
+                        <i class="ion-reply"></i>返回
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
+                        <i class="ion-heart"></i>保存</button>
+                </div>
+                <div class="form-group">
+                    <label for="title">名称</label>
+                    <input ng-disabled="kt.isView" type="text" class="form-control" id="title" placeholder="名称"
+                           ng-model="kt.exhibition.title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="remark">备注</label>
+                    <input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
+                           ng-model="kt.role.remark">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
