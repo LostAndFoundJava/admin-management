@@ -9,6 +9,7 @@
         'KingAdmin.pages.sys',
         'KingAdmin.pages.dict',
         'KingAdmin.pages.exhibition',
+        'KingAdmin.pages.newsInfo'
 
     ])
         .config(routeConfig);
