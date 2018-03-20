@@ -19,4 +19,7 @@ public class MgrExhibitionController extends MgrBaseController<MgrExhibitionServ
 
     private static Logger logger = LoggerFactory.getLogger(MgrExhibitionController.class);
 
+
+    //测试git更新
+
 }
