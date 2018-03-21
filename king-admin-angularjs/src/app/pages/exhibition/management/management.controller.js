@@ -19,8 +19,8 @@
         if($stateParams.id){
             ExhibitionService.getInfo({id:$stateParams.id},
                 function (data) {
-                kt.exhibition = data;
-            })
+                    kt.exhibition = data;
+                })
         }else{
             kt.isAdd = true;
         }
@@ -54,6 +54,21 @@
             'version': 1
         };
 
+        $scope.isDisabledDate = function(currentDate, mode) {
+            return mode === 'day' && (currentDate.getDay() === 0 || currentDate.getDay() === 6);
+        };
+
+        $scope.options = {
+            minDate: new Date(),
+            showWeeks: true
+        };
+
+
+        $scope.today = function() {
+            kt.exhibition.startTime = new Date();
+            kt.exhibition.endTime = kt.exhibition.startTime;
+        };
+        $scope.today();
     }
 
 })();
