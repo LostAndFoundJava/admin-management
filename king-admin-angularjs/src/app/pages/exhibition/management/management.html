@@ -1,26 +1,117 @@
 <div class="row">
-    <div class="col-md-6">
-        <div ba-panel ba-panel-class="with-scroll light-text" ba-panel-title="展会基本信息">
-            <form name="Form" ng-submit="kt.save()">
-                <div class="form-group">
-                    <button ui-sref="exhibition.management" type="button" class="btn btn-default btn-with-icon">
-                        <i class="ion-reply"></i>返回
-                    </button>
-                    <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
-                        <i class="ion-heart"></i>保存</button>
-                </div>
-                <div class="form-group">
-                    <label for="title">名称</label>
-                    <input ng-disabled="kt.isView" type="text" class="form-control" id="title" placeholder="名称"
-                           ng-model="kt.exhibition.title" required>
-                </div>
+    <!--<div class="col-md-6">-->
+    <div ba-panel ba-panel-class="large-panel with-scroll light-text" ba-panel-title="新增展会信息">
+        <form name="Form" ng-submit="kt.save()">
 
-                <div class="form-group">
-                    <label for="remark">备注</label>
-                    <input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
-                           ng-model="kt.role.remark">
+
+            <div class="form-group ">
+                <button ui-sref="exhibition.management" type="button" class="btn btn-default btn-with-icon">
+                    <i class="ion-reply"></i>返回
+                </button>
+                <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
+                    <i class="ion-heart"></i>保存
+                </button>
+            </div>
+            <div class="form-group ">
+                <div class="row">
+                    <h5 class="form-section" >展会基本信息</h5>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="title">名称</label>
+                        <input ng-disabled="kt.isView" type="text" class="form-control" id="title" placeholder="名称"
+                               ng-model="kt.exhibition.title" required>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="category">所属行业</label>
+                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.category" id="category"
+                                title="所属行业" data-container="body" selectpicker required
+                                ng-options="item.code as item.text for item in kt.types">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label>开始日期：</label>
+                        <datetimepicker ng-model="kt.exhibition.startTime"
+                                        date-format="yyyy-MM-dd"
+                                        date-options="dateOptions"
+                                        date-disabled="isDisabledDate(date, mode)">
+                        </datetimepicker>
+
+
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label>结束日期：</label>
+                        <datetimepicker ng-model="kt.exhibition.endTime"
+                                        date-format="yyyy-MM-dd"
+                                        date-options="dateOptions"
+                                        date-disabled="isDisabledDate(date, mode)">
+                        </datetimepicker>
+
+
+                    </div>
+
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="tag">标签</label>
+                        <input id="tag" type="text" required
+                               class="form-control tags medium" placeholder="标签" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.tag">
+                        <!--<input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
+                               ng-model="kt.exhibition.remark">-->
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="location">展会地址</label>
+                        <input id="location" type="text" required
+                               class="form-control tags medium" placeholder="展会地址" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.tag">
+                        <!--<input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
+                               ng-model="kt.exhibition.remark">-->
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="city">举办城市</label>
+                        <input id="city" type="text" required
+                               class="form-control tags medium" placeholder="展会举办城市" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.tag">
+                        <!--<input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
+                               ng-model="kt.exhibition.remark">-->
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="country">举办国</label>
+                        <input id="country" type="text" required
+                               class="form-control tags medium" placeholder="展会举办国" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.tag">
+                        <!--<input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
+                               ng-model="kt.exhibition.remark">-->
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label class="checkbox-inline custom-checkbox nowrap">
+                            <input type="checkbox" id="hasCarousel" ng-model="kt.exhibition.hasCarousel"
+                                   ng-disabled="kt.isView">
+                            <span>是否设置为轮播</span>
+                        </label>
+
+                        <label class="checkbox-inline custom-checkbox nowrap">
+                            <input type="checkbox" id="hot" ng-model="kt.exhibition.hot" ng-disabled="kt.isView">
+                            <span>是否推荐</span>
+                        </label>
+
+                    </div>
+
                 </div>
-            </form>
-        </div>
+                <hr/>
+
+                <div class="row">
+                    <h5 class="form-section" >展会说明</h5>
+                    <div text-angular ng-model="description" style="margin-left: 15px;margin-right: 15px"></div>
+                </div>
+                <hr/>
+
+                <div class="row">
+                    <h5 class="form-section" >展会图片</h5>
+                </div>
+            </div>
+        </form>
+        <!--</div>-->
     </div>
 </div>
