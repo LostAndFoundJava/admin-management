@@ -82,6 +82,7 @@
         "./dist/ammap/maps/js/worldLow.js"
       ]
     },
+
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.css",
