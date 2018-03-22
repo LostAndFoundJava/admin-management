@@ -79,7 +79,7 @@
             vm.$expand();
       };
 
-      if (_isState($state.current)) {
+      if (_isState($state.Î)) {
         $element.addClass('ba-sidebar-item-expanded');
       }
 
