@@ -9,12 +9,12 @@ import java.util.Date;
 import java.util.List;
 
 
-@TableName("exhibition_dateil")
+@TableName("exhibition_detail")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ExhibitionDetail extends MgrBaseModel<ExhibitionDetail> {
 
-    private Integer exhibitionId;
+    private String exhibitionId;
 
     private Date createTime;
 
