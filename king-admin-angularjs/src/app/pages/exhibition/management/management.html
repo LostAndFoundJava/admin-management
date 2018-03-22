@@ -20,17 +20,23 @@
                         <input ng-disabled="kt.isView" type="text" class="form-control" id="title" placeholder="名称"
                                ng-model="kt.exhibition.title" required>
                     </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="subtitle">名称</label>
+                        <input ng-disabled="kt.isView" type="text" class="form-control" id="subtitle" placeholder="名称"
+                               ng-model="kt.exhibition.subtitle" required>
+                    </div>
 
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label for="category">所属行业</label>
-                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.category" id="category"
-                                title="所属行业" data-container="body" selectpicker required
+                        <label for="categoryId">所属行业</label>
+                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.categoryId" id="categoryId"
+                                title="所属行业" data-container="body"
                                 ng-options="item.code as item.text for item in kt.types">
                         </select>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label>开始日期：</label>
                         <datetimepicker ng-model="kt.exhibition.startTime"
+                                        show-meridian="false"
                                         date-format="yyyy-MM-dd"
                                         date-options="dateOptions"
                                         date-disabled="isDisabledDate(date, mode)">
@@ -41,6 +47,7 @@
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label>结束日期：</label>
                         <datetimepicker ng-model="kt.exhibition.endTime"
+                                        show-meridian="false"
                                         date-format="yyyy-MM-dd"
                                         date-options="dateOptions"
                                         date-disabled="isDisabledDate(date, mode)">
@@ -55,34 +62,26 @@
                         <input id="tag" type="text" required
                                class="form-control tags medium" placeholder="标签" type="text"
                                value="" ng-disabled="kt.isView" ng-model="kt.exhibition.tag">
-                        <!--<input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
-                               ng-model="kt.exhibition.remark">-->
                     </div>
 
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="location">展会地址</label>
                         <input id="location" type="text" required
                                class="form-control tags medium" placeholder="展会地址" type="text"
-                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.tag">
-                        <!--<input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
-                               ng-model="kt.exhibition.remark">-->
+                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.location">
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="city">举办城市</label>
                         <input id="city" type="text" required
                                class="form-control tags medium" placeholder="展会举办城市" type="text"
-                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.tag">
-                        <!--<input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
-                               ng-model="kt.exhibition.remark">-->
+                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.city">
                     </div>
 
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="country">举办国</label>
                         <input id="country" type="text" required
                                class="form-control tags medium" placeholder="展会举办国" type="text"
-                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.tag">
-                        <!--<input ng-disabled="kt.isView" type="text" class="form-control" id="remark" placeholder="备注"
-                               ng-model="kt.exhibition.remark">-->
+                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.country">
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class="checkbox-inline custom-checkbox nowrap">
@@ -103,7 +102,7 @@
 
                 <div class="row">
                     <h5 class="form-section" >展会说明</h5>
-                    <div text-angular ng-model="description" style="margin-left: 15px;margin-right: 15px"></div>
+                    <div text-angular ng-model="kt.exhibition.description" style="margin-left: 15px;margin-right: 15px"></div>
                 </div>
                 <hr/>
 
