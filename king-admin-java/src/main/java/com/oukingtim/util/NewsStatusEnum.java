@@ -1,4 +1,4 @@
-package com.oukingtim.common.enumutil;
+package com.oukingtim.util;
 
 /**
  * <br>创建日期：2018/3/22
