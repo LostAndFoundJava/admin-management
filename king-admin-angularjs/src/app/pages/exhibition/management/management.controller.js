@@ -58,9 +58,8 @@
             return mode === 'day' && (currentDate.getDay() === 0 || currentDate.getDay() === 6);
         };
 
-        $scope.options = {
-            minDate: new Date(),
-            showWeeks: true
+        $scope.dateOptions = {
+            minDate: new Date()
         };
 
 

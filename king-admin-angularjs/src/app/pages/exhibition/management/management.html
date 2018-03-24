@@ -14,46 +14,25 @@
             </div>
             <div class="form-group ">
                 <div class="row">
-                    <h5 class="form-section" >展会基本信息</h5>
+                    <h5 class="form-section">展会基本信息</h5>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label for="title">名称</label>
-                        <input ng-disabled="kt.isView" type="text" class="form-control" id="title" placeholder="名称"
+                        <label for="title">主题</label>
+                        <input ng-disabled="kt.isView" type="text" class="form-control" id="title" placeholder="主题"
                                ng-model="kt.exhibition.title" required>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label for="subtitle">名称</label>
-                        <input ng-disabled="kt.isView" type="text" class="form-control" id="subtitle" placeholder="名称"
-                               ng-model="kt.exhibition.subtitle" required>
+                        <label for="subtitle">副标题</label>
+                        <input ng-disabled="kt.isView" type="text" class="form-control" id="subtitle" placeholder="副标题"
+                               ng-model="kt.exhibition.subtitle">
                     </div>
 
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="categoryId">所属行业</label>
-                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.categoryId" id="categoryId"
-                                title="所属行业" data-container="body"
+                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.categoryId"
+                                id="categoryId"
+                                title="所属行业" data-container="body" required
                                 ng-options="item.code as item.text for item in kt.types">
                         </select>
-                    </div>
-                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label>开始日期：</label>
-                        <datetimepicker ng-model="kt.exhibition.startTime"
-                                        show-meridian="false"
-                                        date-format="yyyy-MM-dd"
-                                        date-options="dateOptions"
-                                        date-disabled="isDisabledDate(date, mode)">
-                        </datetimepicker>
-
-
-                    </div>
-                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label>结束日期：</label>
-                        <datetimepicker ng-model="kt.exhibition.endTime"
-                                        show-meridian="false"
-                                        date-format="yyyy-MM-dd"
-                                        date-options="dateOptions"
-                                        date-disabled="isDisabledDate(date, mode)">
-                        </datetimepicker>
-
-
                     </div>
 
 
@@ -71,18 +50,37 @@
                                value="" ng-disabled="kt.isView" ng-model="kt.exhibition.location">
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="country">举办国</label>
+                        <input id="country" type="text" required
+                               class="form-control tags medium" placeholder="展会举办国" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.country">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="city">举办城市</label>
                         <input id="city" type="text" required
                                class="form-control tags medium" placeholder="展会举办城市" type="text"
                                value="" ng-disabled="kt.isView" ng-model="kt.exhibition.city">
                     </div>
 
+
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label for="country">举办国</label>
-                        <input id="country" type="text" required
-                               class="form-control tags medium" placeholder="展会举办国" type="text"
-                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.country">
+                        <label>开始日期：</label>
+                        <datetimepicker ng-model="kt.exhibition.startTime"
+                                        show-meridian="false"
+                                        date-format="yyyy-MM-dd"
+                                        date-options="dateOptions">
+                        </datetimepicker>
+
                     </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label>结束日期：</label>
+                        <datetimepicker ng-model="kt.exhibition.endTime"
+                                        show-meridian="false"
+                                        date-format="yyyy-MM-dd"
+                                        date-options="dateOptions">
+                        </datetimepicker>
+                    </div>
+
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label class="checkbox-inline custom-checkbox nowrap">
                             <input type="checkbox" id="hasCarousel" ng-model="kt.exhibition.hasCarousel"
@@ -96,18 +94,26 @@
                         </label>
 
                     </div>
-
                 </div>
                 <hr/>
 
                 <div class="row">
-                    <h5 class="form-section" >展会说明</h5>
-                    <div text-angular ng-model="kt.exhibition.description" style="margin-left: 15px;margin-right: 15px"></div>
+                    <h5 class="form-section">展会说明</h5>
+                    <!--<div text-angular ng-model="kt.exhibition.description"
+                         style="margin-left: 15px;margin-right: 15px"></div>-->
+                   <
                 </div>
                 <hr/>
 
                 <div class="row">
-                    <h5 class="form-section" >展会图片</h5>
+                    <h5 class="form-section">展会图片</h5>
+                    <ng-ckeditor
+                            ng-model="htmlEditor"
+                            skin="moono"
+                            remove-plugins="iframe,flash,smiley"
+                            msn-count="Number of typed characters:">
+                    </ng-ckeditor>
+
                 </div>
             </div>
         </form>
