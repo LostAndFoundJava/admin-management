@@ -27,6 +27,7 @@ exports.paths = {
         '/sys',
         '/druid',
         '/management',
+        '/upload',
     ]
 };
 

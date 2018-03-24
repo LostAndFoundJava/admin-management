@@ -19,4 +19,5 @@ angular.module('KingAdmin', [
     'ui.bootstrap.datetimepicker',
     'textAngular',
     'ngQuill',
+    'thatisuday.dropzone',
 ]);

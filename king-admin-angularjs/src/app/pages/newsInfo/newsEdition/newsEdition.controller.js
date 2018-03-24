@@ -6,10 +6,12 @@
 
 
     /** @ngInject */
-    function NewsEditCtrl($scope,$filter, toastr, NewsEditService,$timeout) {
+    function NewsEditCtrl($scope, $filter, toastr, NewsEditService, $timeout) {
         var kt = this;
-        init();
-        function init() {
+
+        initQill();
+        initDropzone();
+        function initQill() {
             $scope.title = 'Quill works'
             $scope.model = ''
             $scope.readOnly = false
@@ -37,6 +39,52 @@
             $scope.selectionChanged = function (editor, range, oldRange, source) {
                 console.log('editor: ', editor, 'range: ', range, 'oldRange:', oldRange, 'source:', source)
             }
+
+
+            //初始化dropzone
+            $scope.partialDownloadLink = 'http://localhost:8080/download?filename=';
+            $scope.filename = '';
+
+            $scope.uploadFile = function () {
+                $scope.processQueue();
+            };
+
+            $scope.reset = function () {
+                $scope.resetDropzone();
+            };
+        }
+
+        function initDropzone() {
+            //Set options for dropzone
+            //Visit http://www.dropzonejs.com/#configuration-options for more options
+            $scope.dzOptions = {
+                url: '/upload',
+                paramName: 'photo',
+                maxFilesize: '10',
+                acceptedFiles: 'image/jpeg, images/jpg, image/png',
+                addRemoveLinks: true,
+            };
+
+
+            //Handle events for dropzone
+            //Visit http://www.dropzonejs.com/#events for more events
+            $scope.dzCallbacks = {
+                'addedfile': function (file) {
+                    console.log(file);
+                    $scope.newFile = file;
+                },
+                'success': function (file, xhr) {
+                    console.log(file, xhr);
+                },
+
+            };
+
+
+            $scope.dzMethods = {};
+            $scope.removeNewFile = function () {
+                $scope.dzMethods.removeFile($scope.newFile);
+            }
+
         }
     }
 })();
