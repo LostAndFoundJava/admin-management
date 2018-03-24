@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class Category extends MgrBaseModel<Category> {
 
-    private Integer parentId;
+    private String parentId;
     private String name;
 
 }

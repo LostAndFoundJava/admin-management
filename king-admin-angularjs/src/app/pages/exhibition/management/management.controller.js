@@ -1,4 +1,3 @@
-
 (function () {
     'use strict';
 
@@ -6,34 +5,34 @@
         .controller('ExhibitionCtrl', ExhibitionCtrl);
 
     /** @ngInject */
-    function ExhibitionCtrl($scope,$stateParams,$state,ExhibitionService) {
+    function ExhibitionCtrl($scope, $stateParams, $state, ExhibitionService) {
 
         var kt = this;
         kt.exhibition = {};
-        if($stateParams.isView){
+        if ($stateParams.isView) {
             kt.isView = true;
-        }else{
+        } else {
             kt.isView = false;
         }
 
-        if($stateParams.id){
-            ExhibitionService.getInfo({id:$stateParams.id},
+        if ($stateParams.id) {
+            ExhibitionService.getInfo({id: $stateParams.id},
                 function (data) {
-                kt.exhibition = data;
-            })
-        }else{
+                    kt.exhibition = data;
+                })
+        } else {
             kt.isAdd = true;
         }
 
         kt.save = function () {
-
-            var checked = kt.basicTree.jstree().get_checked(true);
-            console.log(checked);
-            kt.role.menuTree = [];
-            angular.forEach(checked,function (c) {
-                kt.role.menuTree.push(c.original);
-            })
-            ExhibitionService.save(kt.exhibition,function (data) {
+            kt.exhibition.exhibitionDetail = {};
+            kt.exhibition.startTime = formatDate(kt.exhibition.startTime);
+            kt.exhibition.endTime = formatDate(kt.exhibition.endTime);
+            kt.exhibition.hot = kt.exhibition.hot ? 1 : 0;
+            kt.exhibition.hasCarousel = kt.exhibition.hasCarousel ? 1 : 0;
+            kt.exhibition.exhibitionDetail.description = kt.exhibition.description;
+            kt.exhibition.exhibitionDetail.files = [];
+            ExhibitionService.save(kt.exhibition, function (data) {
                 $state.go('mgr.exhibition.management');
             });
         }
@@ -47,13 +46,38 @@
                     'icon': false
                 }
             },
-            "checkbox" : {
-                "keep_selected_style" : false
+            "checkbox": {
+                "keep_selected_style": false
             },
-            'plugins': ['types',"wholerow",'checkbox'],
+            'plugins': ['types', "wholerow", 'checkbox'],
             'version': 1
         };
 
+        $scope.isDisabledDate = function (currentDate, mode) {
+            // $scope.today();
+            return mode === 'day' && (currentDate.getDay() === 0 || currentDate.getDay() === 6);
+        };
+
+        $scope.options = {
+            minDate: new Date(),
+            showWeeks: true
+        };
+
+
+        $scope.today = function () {
+            kt.exhibition.startTime = new Date();
+            kt.exhibition.endTime = kt.exhibition.startTime;
+        };
+        $scope.today();
+
+
+        kt.exhibition.title = "title";
+        kt.exhibition.city = 1;
+        kt.exhibition.category = "category";
+        kt.exhibition.tag = "tag";
+        kt.exhibition.location = "location";
+        kt.exhibition.country = 2;
+        kt.exhibition.categoryId = "categoryid";
     }
 
 })();

@@ -2,6 +2,8 @@ package com.oukingtim.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.oukingtim.config.CustomJsonDateDeserilizer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,20 +15,29 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 public class Exhibition extends MgrBaseModel<Exhibition> {
 
+    public Exhibition() {
+
+    }
+
     private String title;
 
-    private String thumbnail;
+    private String subtitle;
 
+    private String thumbnail;
+    @JsonDeserialize(using = CustomJsonDateDeserilizer.class)
     private Date startTime;
 
+    @JsonDeserialize(using = CustomJsonDateDeserilizer.class)
     private Date endTime;
 
     private String location;
 
-    private Integer categoryId;
+    private String categoryId;
 
+    //region_data.id
     private Integer city;
 
+    //region_data.id
     private Integer country;
     /**
      * 人气排行

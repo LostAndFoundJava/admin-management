@@ -13,7 +13,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 public abstract class MgrBaseModel<T extends MgrBaseModel> implements Serializable {
     private static final long serialVersionUID = 3151489830021157829L;
-    private Integer id;
+    private String id;
     private Date createTime;
     private Date updateTime;
     private Integer delete;
