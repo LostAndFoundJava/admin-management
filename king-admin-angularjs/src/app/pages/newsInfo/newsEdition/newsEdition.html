@@ -1,8 +1,12 @@
 <div ba-panel ba-panel-title="新闻编辑" ba-panel-class="xmedium-panel with-scroll light-text">
-    <div class="row add-row-editable-table">
-      <p>你好</p>
-    </div>
+    <h3>文本编辑器</h3>
+    <!--<pre><code>{{model}}</code></pre>-->
+    <ng-quill-editor ng-model="model" placeholder="override default placeholder"
+                      on-content-changed="contentChanged(editor, html, text)"
+                     on-selection-changed="selectionChanged(editor, range, oldRange, source)"></ng-quill-editor>
 
+
+    <div class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div>
 </div>
 
 

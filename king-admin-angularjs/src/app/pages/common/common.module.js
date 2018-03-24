@@ -8,8 +8,7 @@
   angular.module('KingAdmin.pages.common', [
       'kt-angular-loading-bar',
       // 'ngAutodisable',
-  ])
-      .config(routeConfig);
+  ]).config(routeConfig);
 
   /** @ngInject */
   function routeConfig(ktCfpLoadingBarProvider) {
