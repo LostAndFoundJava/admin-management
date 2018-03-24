@@ -10,7 +10,7 @@
             .state('newsInfo.newsEdition', {
                 url: '/newsEdition',
                 templateUrl: 'app/pages/newsInfo/newsEdition/newsEdition.html',
-                controller: '',
+                controller: 'NewsEditCtrl',
                 controllerAs: 'kt',
                 title: '新闻上传',
                 sidebarMeta: {

@@ -19,7 +19,7 @@
     "amcharts": "~3.15.2",
     "amcharts-stock": "*",
     "ammap": "~3.14.5",
-    "angular": "~1.4.8",
+    "angular": "~1.5.8",
     "angular-route": "~1.4.6",
     "angular-resource": "~1.4.8",
     "angular-slimscroll": "~1.1.5",
@@ -58,10 +58,12 @@
     "angular-bootstrap-checkbox": "^0.5.1",
     "angular-autodisable": "^0.2.2",
     "ngstorage": "^0.3.11",
-    "angular-ui-bootstrap-datetimepicker": "^2.5.1"
+    "angular-ui-bootstrap-datetimepicker": "^2.5.1",
+    "ng-quill": "3.6.0",
+    "ngdropzone" : "2.0.1"
   },
   "resolutions": {
-    "angular": "~1.4.8"
+    "angular": "~1.5.8"
   },
   "overrides": {
     "amcharts": {
