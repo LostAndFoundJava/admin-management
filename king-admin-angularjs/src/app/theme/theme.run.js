@@ -14,7 +14,7 @@
         , $window, UserService, hasPermsService) {
         var whatToWait = [
             preloader.loadAmCharts(),
-            $timeout(1000)
+            $timeout(10)
         ];
 
         var theme = themeLayoutSettings;

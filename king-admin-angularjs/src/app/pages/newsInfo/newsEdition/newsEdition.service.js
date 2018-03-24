@@ -75,7 +75,7 @@
             // getSmartData:getSmartData,
             del:del,
             save:save,
-            getList:getList,
+            //getList:getList,
         };
 
     }
