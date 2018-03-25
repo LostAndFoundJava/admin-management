@@ -10,7 +10,7 @@
             .state('category.category', {
                 url: '/management',
                 templateUrl: 'app/pages/category/category/categorylist.html',
-                controller: 'CategoryCtrl',
+                controller: 'CategoryListCtrl',
                 controllerAs: 'kt',
                 title: '行业管理',
                 sidebarMeta: {

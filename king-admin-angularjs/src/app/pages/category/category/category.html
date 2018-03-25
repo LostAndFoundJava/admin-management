@@ -16,12 +16,17 @@
                 <div class="row">
                     <h5 class="form-section">展会基本信息</h5>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label for="title">主题</label>
+                        <label for="title">父行业</label>
                         <input ng-disabled="kt.isView" type="text" class="form-control" id="title" placeholder="主题"
                                ng-model="kt.category.name" required>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label for="subtitle">副标题</label>
+                        <label for="title">子行业</label>
+                        <input ng-disabled="kt.isView" type="text" class="form-control" id="title" placeholder="主题"
+                               ng-model="kt.category.name" required>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="subtitle">状态</label>
                         <input ng-disabled="kt.isView" type="text" class="form-control" id="subtitle" placeholder="副标题"
                                ng-model="kt.category.delete">
                     </div>

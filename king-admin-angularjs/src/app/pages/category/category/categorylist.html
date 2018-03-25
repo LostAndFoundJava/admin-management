@@ -23,7 +23,8 @@
                 </label>
             </th>
             <th>序号</th>
-            <th st-sort="name">名称</th>
+            <th st-sort="parentId">父行业</th>
+            <th st-sort="name">行业</th>
             <th st-sort="delete">状态</th>
             <th>操作</th>
         </tr>
@@ -38,8 +39,11 @@
                     </label>
                 </div>
             </td>
-            <td>{{$index+1}}</td>
+            <td>{{$index+1}}
+            </td>
             <td>
+                {{category.parentId}}
+            </td> <td>
                 {{category.name}}
             </td>
             <td>

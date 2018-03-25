@@ -27,17 +27,7 @@ public interface CategoryInfoMapper extends BaseMapper<Category> {
      * @param name
      * @return
      */
-    @Select(
-            "select *from category t where 1=1" +
-                    "<if test=parentId != null and parentId !='' >" +
-                    "and t.parentId = #{parentId}" +
-                    " </if>"+
-                    "<if test=name != null and name !='' >" +
-                    "and t.name = #{name}" +
-                    " </if>"+
-                    "order by parent_id asc"
-    )
-    List<Category> queryCategoryInfo(Pagination page,@Param("parentId") String patrentId, @Param("name") String name);
+    List<Category> queryCategoryInfo (Pagination page,@Param("parentId") String patrentId, @Param("name") String name);
 
     /**
      * 添加行业
@@ -45,9 +35,7 @@ public interface CategoryInfoMapper extends BaseMapper<Category> {
      * @param category
      * @return
      */
-    @Insert(
-            "insert into category values(#{categoryId},#{name},#{createTime},#{updateTime},#{delete})"
-    )
+
     int insertCategory(Category category);
 
     /**
@@ -56,9 +44,7 @@ public interface CategoryInfoMapper extends BaseMapper<Category> {
      * @param category
      * @return
      */
-    @Update(
-            "update category set delete =#{delete} where id = #{id}; "
-    )
+
     int delectSubCategory(Category category);
 
     /**
@@ -67,9 +53,7 @@ public interface CategoryInfoMapper extends BaseMapper<Category> {
      * @param category
      * @return
      */
-    @Update(
-            "update category set par_delete =#{delete} where parent_id = #{parent_id}; "
-    )
+
     int delectParCategory(Category category);
 
 

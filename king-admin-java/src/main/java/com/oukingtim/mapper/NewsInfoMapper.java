@@ -22,16 +22,7 @@ public interface NewsInfoMapper extends BaseMapper<NewsModel> {
      * @param
      * @return
      */
-    @Select(
-            "select *from news  t" +
-                    "where " +
-                    "1=1" +
-                    "<if test=hot != null and hot !='' >" +
-                    "and t.hot = #{hot}" +
-                    "</if>" +
-                    "order by hot_level" +
-                    "asc;"
-    )
+
     int editHotNews(@Param("hot") String hot);
 
     /**
@@ -40,11 +31,7 @@ public interface NewsInfoMapper extends BaseMapper<NewsModel> {
      * @param id
      * @return
      */
-    @Update(
-            "UPDATE news" +
-                    "SET delete=#{delete}" +
-                    "WHERE id=#{id};"
-    )
+
     int updateHotNewStatus(@Param("delete")String delete,@Param("id")String id);
 
     /**
@@ -53,9 +40,7 @@ public interface NewsInfoMapper extends BaseMapper<NewsModel> {
      * @param
      * @return
      */
-    @Insert(
-            "insert into news values(#{categoryId},#{content},#{original},#{hot},#{hotLevel},#{createTime},#{updateTime},#{delete})"
-    )
+
     int editHotNews(NewsModel newsModel);
 
 }

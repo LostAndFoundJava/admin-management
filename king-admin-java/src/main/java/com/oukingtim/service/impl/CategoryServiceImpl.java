@@ -7,6 +7,7 @@ import com.oukingtim.domain.Category;
 import com.oukingtim.mapper.CategoryInfoMapper;
 import com.oukingtim.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,12 +17,11 @@ import java.util.List;
  * @author JackieChan</b>
  * @version 1.****</b>
  */
-
+@Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Category> implements CategoryService {
 
 
-    @Autowired
-    private CategoryInfoMapper categoryInfoMapper;
+
 
 
 

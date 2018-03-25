@@ -22,7 +22,7 @@ public class NewsModel extends MgrBaseModel<NewsModel> {
     //新闻来源
     private String original;
     //新闻是否删除
-    private String delete;
+    private Integer delete;
     //新闻热度
     private Integer hot;
     //新闻热度排名

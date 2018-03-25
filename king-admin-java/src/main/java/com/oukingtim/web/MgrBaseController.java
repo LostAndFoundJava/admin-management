@@ -118,7 +118,7 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
      * @return
      */
     @DeleteMapping("/{id}")
-    public ResultVM delete(@PathVariable Integer id) {
+    public ResultVM delete(@PathVariable String id) {
         if (service.deleteById(id)) {
             return ResultVM.ok();
         } else {
