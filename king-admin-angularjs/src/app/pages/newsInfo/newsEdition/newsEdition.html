@@ -1,7 +1,7 @@
 <div ba-panel ba-panel-title="新闻编辑" ba-panel-class="xmedium-panel with-scroll light-text">
     <h3>文本编辑器</h3>
     <!--<pre><code>{{model}}</code></pre>-->
-    <form name="Form" enctype="multipart/form-data" ng-click="kt.save()">
+    <form name="Form" enctype="multipart/form-data">
     <ng-quill-editor ng-model="kt.newsEdition.subtitle" placeholder="override default placeholder"
                       on-content-changed="contentChanged(editor, html, text)"
                      on-selection-changed="selectionChanged(editor, range, oldRange, source)"></ng-quill-editor>

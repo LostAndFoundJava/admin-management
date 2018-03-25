@@ -6,7 +6,6 @@
 
     /** @ngInject */
     function ExhibitionListCtrl($scope, ExhibitionService) {
-
         var kt = this;
         kt.exhibitionlist = [];
         kt.LoadPage = function (tableState) {
