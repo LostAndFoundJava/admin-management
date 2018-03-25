@@ -74,7 +74,6 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
      */
     @PostMapping
     public ResultVM create(@RequestBody T t) {
-
         t.setCreateTime(new Date());
         t.setUpdateTime(new Date());
         if (service.insert(t)) {

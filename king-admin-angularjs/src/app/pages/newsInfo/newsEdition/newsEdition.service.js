@@ -7,7 +7,9 @@
     /** @ngInject */
     function NewsEditService($resource ,toastr,CommonService) {
 
-        var rest = $resource('api/mgr/exhibition/management/:id', {}, {
+        // var rest = $resource('api/mgr/exhibition/management/:id', {}, {
+        var rest = $resource('sys/upload', {}, {
+
             'create': {method: 'POST'},
             'update': {method: 'PUT'},
         });

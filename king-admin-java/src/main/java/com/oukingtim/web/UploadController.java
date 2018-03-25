@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/sys")
 public class UploadController extends BaseController<SysUserService,SysUser>{
     @PostMapping("/upload")
-    public ResultVM upload(MultipartHttpServletRequest request){
+    public ResultVM upload(MultipartHttpServletRequest request,String subtitle){
         List imgName = new ArrayList<String>();
 
         try {
@@ -50,3 +50,4 @@ public class UploadController extends BaseController<SysUserService,SysUser>{
         return ResultVM.ok(imgName);
     }
 }
+

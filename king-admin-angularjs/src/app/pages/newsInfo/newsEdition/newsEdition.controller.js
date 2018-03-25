@@ -54,8 +54,9 @@
         function initDropzone() {
             //Set options for dropzone
             //Visit http://www.dropzonejs.com/#configuration-options for more options
+            kt.newsEdition.request = [];
             $scope.dzOptions = {
-                url: '/upload',
+                url: '/sys/upload',
                 paramName: 'photo',
                 maxFilesize: '10',
                 acceptedFiles: 'image/jpeg, images/jpg, image/png',
@@ -93,6 +94,7 @@
                 'addedfile' : function(file){
                     $scope.showBtns = true;
                     $scope.lastFile = file;
+                    kt.newsEdition.request.push(file);
                 },
                 'error' : function(file, xhr){
                     console.warn('File failed to upload from dropzone 2.', file, xhr);
