@@ -10,4 +10,7 @@ public interface MgrExhibitionService extends IService<Exhibition>{
 
     Exhibition selectById(Integer id);
 
+
+
+
 }

@@ -14,5 +14,7 @@ public class Category extends MgrBaseModel<Category> {
 
     private String parentId;
     private String name;
+    //父行业id
+    private String par_id;
 
 }
