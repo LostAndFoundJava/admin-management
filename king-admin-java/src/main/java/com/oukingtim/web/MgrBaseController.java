@@ -3,6 +3,7 @@ package com.oukingtim.web;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
+import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.MgrBaseModel;
 import com.oukingtim.util.StringTools;
 import com.oukingtim.web.vm.ResultVM;
