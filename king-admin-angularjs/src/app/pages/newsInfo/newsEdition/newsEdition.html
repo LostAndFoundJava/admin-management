@@ -1,12 +1,25 @@
 <div ba-panel ba-panel-title="新闻编辑" ba-panel-class="xmedium-panel with-scroll light-text">
     <h3>文本编辑器</h3>
     <!--<pre><code>{{model}}</code></pre>-->
-    <ng-quill-editor ng-model="model" placeholder="override default placeholder"
+    <form name="Form" ng-submit="kt.save()">
+    <ng-quill-editor ng-model="kt.newsEdition.subtitle" placeholder="override default placeholder"
                       on-content-changed="contentChanged(editor, html, text)"
                      on-selection-changed="selectionChanged(editor, range, oldRange, source)"></ng-quill-editor>
 
-
-    <div class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div>
+        <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
+            <i class="ion-heart"></i>保存
+        </button>
+    </form>
+    <div>
+        <div id="NewsEditCtrl" class="dropzone sm" options="dzOptions" methods="dzMethods" callbacks="dzCallbacks" ng-dropzone></div>
+        <div style="text-align:center;" id="startUpload" ng-show="showBtns">
+            <button ng-click="dzMethods.processQueue();">Start Uploading</button>
+            <button ng-click="dzMethods.removeAllFiles();">Remove All Files</button>
+            <button ng-click="dzMethods.removeFile(lastFile);">Remove Last File</button>
+            <!--<button ng-click="getDropzone();">Get getDropzone instance</button>-->
+            <!--<button ng-click="getFiles();">Get total files</button>-->
+        </div>
+    </div>
 </div>
 
 

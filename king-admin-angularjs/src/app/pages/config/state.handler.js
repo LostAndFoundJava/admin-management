@@ -24,7 +24,8 @@
 
                 if (toState.name != 'home' && !hasPermsService.hasPermission(toState.name)) {
                     toastr.warning("没有权限访问该页面", "提示", {"progressBar": true,});
-                    $location.path('/home');
+                    // $location.path('/home');
+                    $window.open('/index.html', '_self');
                 }
 
 

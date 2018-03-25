@@ -8,12 +8,22 @@
     /** @ngInject */
     function NewsEditCtrl($scope, $filter, toastr, NewsEditService, $timeout) {
         var kt = this;
-
+        kt.newsEdition = {}
         initQill();
+
         initDropzone();
+
+
+        kt.save = function () {
+            NewsEditService.save(kt.newsEdition, function (data) {
+                    $state.go('newsInfo/newsEdition');
+                }
+            );
+        }
+
         function initQill() {
             $scope.title = 'Quill works'
-            $scope.model = ''
+            kt.newsEdition.subtitle = 'abc'
             $scope.readOnly = false
             $scope.test = ''
             $scope.customOptions = [{
@@ -39,19 +49,6 @@
             $scope.selectionChanged = function (editor, range, oldRange, source) {
                 console.log('editor: ', editor, 'range: ', range, 'oldRange:', oldRange, 'source:', source)
             }
-
-
-            //初始化dropzone
-            $scope.partialDownloadLink = 'http://localhost:8080/download?filename=';
-            $scope.filename = '';
-
-            $scope.uploadFile = function () {
-                $scope.processQueue();
-            };
-
-            $scope.reset = function () {
-                $scope.resetDropzone();
-            };
         }
 
         function initDropzone() {
@@ -63,28 +60,44 @@
                 maxFilesize: '10',
                 acceptedFiles: 'image/jpeg, images/jpg, image/png',
                 addRemoveLinks: true,
+                uploadMultiple: true,
+                parallelUploads: 20,
+                autoProcessQueue: false,
+                // dictDefaultMessage: 'Click to add or drop photos',
+                dictRemoveFile: 'Remove photo',
+                dictResponseError: 'Could not upload this photo'
             };
 
-
-            //Handle events for dropzone
-            //Visit http://www.dropzonejs.com/#events for more events
-            $scope.dzCallbacks = {
-                'addedfile': function (file) {
-                    console.log(file);
-                    $scope.newFile = file;
-                },
-                'success': function (file, xhr) {
-                    console.log(file, xhr);
-                },
-
+            $scope.showBtns = true;
+            $scope.lastFile = null;
+            $scope.getDropzone = function(){
+                console.log($scope.dzMethods.getDropzone());
+                alert('Check console log.');
+            };
+            $scope.getFiles = function(){
+                console.log($scope.dzMethods.getAllFiles());
+                alert('Check console log.');
             };
 
+            // $scope.dzOptions = {
+            //     url : '/upload_2.php',
+            //     dictDefaultMessage : 'Add files to show dropzone methods (few)',
+            //     acceptedFiles : 'image/jpeg',
+            //     parallelUploads : 5,
+            //     autoProcessQueue : false
+            // };
 
             $scope.dzMethods = {};
-            $scope.removeNewFile = function () {
-                $scope.dzMethods.removeFile($scope.newFile);
-            }
 
+            $scope.dzCallbacks = {
+                'addedfile' : function(file){
+                    $scope.showBtns = true;
+                    $scope.lastFile = file;
+                },
+                'error' : function(file, xhr){
+                    console.warn('File failed to upload from dropzone 2.', file, xhr);
+                }
+            };
         }
     }
 })();
