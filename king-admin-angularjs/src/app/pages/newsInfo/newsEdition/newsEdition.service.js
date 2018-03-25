@@ -12,9 +12,10 @@
             'update': {method: 'PUT'},
         });
 
-        function save(param, callback) {
-            CommonService.info('确定保存?', function () {
-                if (angular.isDefined(param.id) && param.id != null) {
+
+        function save(param,callback) {
+            CommonService.info('确定保存?',function () {
+                if(angular.isDefined(param.id)&&param.id!=null){
                     rest.update(param,
                         function (data) {
                             console.log(data);

@@ -21,6 +21,7 @@ import java.util.List;
  * Created by oukingtim
  */
 @RestController
+@RequestMapping("/sys")
 public class UploadController extends BaseController<SysUserService,SysUser>{
     @PostMapping("/upload")
     public ResultVM upload(MultipartHttpServletRequest request){
