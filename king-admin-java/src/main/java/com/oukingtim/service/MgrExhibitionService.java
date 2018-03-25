@@ -8,6 +8,6 @@ import com.oukingtim.domain.Exhibition;
  */
 public interface MgrExhibitionService extends IService<Exhibition>{
 
-    Exhibition selectById(Integer id);
+    Exhibition selectById(String id);
 
 }

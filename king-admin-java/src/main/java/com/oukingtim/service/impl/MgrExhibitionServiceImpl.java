@@ -1,9 +1,11 @@
 package com.oukingtim.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.ExhibitionDetail;
 import com.oukingtim.domain.File;
+import com.oukingtim.domain.SysUser;
 import com.oukingtim.mapper.MgrExhibitionDetailMapper;
 import com.oukingtim.mapper.MgrExhibitionMapper;
 import com.oukingtim.mapper.MgrFileMapper;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by xufan on 2018/03/19.
@@ -35,11 +38,13 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
             flag = super.insert(exhibition);
             ExhibitionDetail exhibitionDetail = exhibition.getExhibitionDetail();
             if (exhibitionDetail != null) {
+                exhibitionDetail.setExhibitionId(exhibition.getId());
                 exhibitionDetail.setCreateTime(new Date());
                 exhibitionDetail.setUpdateTime(new Date());
                 mgrExhibitionDetailMapper.insert(exhibitionDetail);
                 if (!CollectionUtils.isEmpty(exhibitionDetail.getFiles())) {
                     for (File file : exhibitionDetail.getFiles()) {
+                        file.setTypeId(exhibitionDetail.getId());
                         file.setCreateTime(new Date());
                         file.setUpdateTime(new Date());
                         mgrFileMapper.insert(file);
@@ -52,16 +57,23 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
     }
 
     @Override
-    public Exhibition selectById(Integer id) {
+    public Exhibition selectById(String id) {
         Exhibition exhibitionVO = super.selectById(id);
+        String exhibitionId = exhibitionVO.getId();
         if (exhibitionVO != null) {
-            ExhibitionDetail detail = mgrExhibitionDetailMapper.selectById(id);
-            if (detail != null) {
-                if (!CollectionUtils.isEmpty(detail.getFiles())) {
-                    detail.setFiles(detail.getFiles());
+            List<ExhibitionDetail> detailList = mgrExhibitionDetailMapper.selectList(new EntityWrapper<>(new ExhibitionDetail(exhibitionId)));
+            if(!CollectionUtils.isEmpty(detailList)){
+                ExhibitionDetail detail = detailList.get(0);
+                if (detail != null) {
+                    String typeId =  detail.getId();
+                    List<File> fileList = mgrFileMapper.selectList(new EntityWrapper<>(new File(typeId)));
+                    if (!CollectionUtils.isEmpty(fileList)) {
+                        detail.setFiles(fileList);
+                    }
+                    exhibitionVO.setExhibitionDetail(detail);
                 }
-                exhibitionVO.setExhibitionDetail(detail);
             }
+
         }
         return exhibitionVO;
     }
