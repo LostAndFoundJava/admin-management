@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
     }
 
     @Override
-    public Exhibition selectById(String id) {
+    public Exhibition selectById(Serializable id) {
         Exhibition exhibitionVO = super.selectById(id);
         String exhibitionId = exhibitionVO.getId();
         if (exhibitionVO != null) {
@@ -76,5 +77,42 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
 
         }
         return exhibitionVO;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateById(Exhibition exhibition){
+        boolean flag = false;
+        ExhibitionDetail entity = new ExhibitionDetail();
+        String exhibitionId = exhibition.getId();
+        if (exhibition != null) {
+            flag = super.updateById(exhibition);
+            ExhibitionDetail exhibitionDetail = exhibition.getExhibitionDetail();
+            if (exhibitionDetail != null) {
+                entity.setExhibitionId(exhibitionId);
+                mgrExhibitionDetailMapper.delete(new EntityWrapper<>(entity));
+                exhibitionDetail.setExhibitionId(exhibitionId);
+                exhibitionDetail.setCreateTime(new Date());
+                exhibitionDetail.setUpdateTime(new Date());
+                mgrExhibitionDetailMapper.insert(exhibitionDetail);
+                if (!CollectionUtils.isEmpty(exhibitionDetail.getFiles())) {
+                    File file = new File();
+                    file.setTypeId(exhibitionDetail.getId());
+                    mgrFileMapper.delete(new EntityWrapper<>(file));
+                    for (File fileEntity : exhibitionDetail.getFiles()) {
+                        file.setTypeId(exhibitionDetail.getId());
+                        file.setCreateTime(new Date());
+                        file.setUpdateTime(new Date());
+                        mgrFileMapper.insert(fileEntity);
+                    }
+                }
+            }else{
+                entity.setExhibitionId(exhibitionId);
+                mgrExhibitionDetailMapper.delete(new EntityWrapper<>(entity));
+            }
+            return flag;
+        }
+        return flag;
+
     }
 }
