@@ -1,11 +1,13 @@
 (function () {
     'use strict';
 
-    angular.module('KingAdmin.pages.exhibition.management')
-        .controller('ExhibitionListCtrl', ExhibitionListCtrl);
+    angular.module('KingAdmin.pages.exhibition.listing')
+        .controller('ListingListCtrl', ListingListCtrl);
 
     /** @ngInject */
-    function ExhibitionListCtrl($scope, ListingService) {
+    function ListingListCtrl($scope, ListingService) {
+
+
 
         var kt = this;
         kt.exhibitionlist = [];
