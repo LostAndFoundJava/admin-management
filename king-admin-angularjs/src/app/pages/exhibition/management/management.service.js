@@ -78,12 +78,25 @@
                     toastr.error(error,"提示",{"progressBar": true,});
                 })
         }
+
+        function uploadFile(param,callback) {
+            $resource('api/mgr/image/upload', {}, {
+                'upload':{method: 'POST'},
+            }).upload(param,
+                function (data) {
+                    console.log(data);
+                    callback(data)
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                });
+        }
         return {
             getSmartData:getSmartData,
             del:del,
             save:save,
             getInfo:getInfo,
-            getList:getList
+            getList:getList,
+            uploadFile:uploadFile
         };
 
     }
