@@ -196,8 +196,10 @@
 
         }
 
+        //初始化quill
         initQuill();
 
+        //创建quill editor
         $scope.editorCreated = function (editor) {
             console.log(editor);
             quillEditor = editor;
@@ -223,6 +225,7 @@
 
         }
 
+        //选择图片
         function selectImage(toolbar) {
 
             var fileInput = toolbar.container.querySelector('input.ql-image[type=file]');
@@ -241,7 +244,7 @@
             fileInput.click();
         };
 
-        // @param {File} file
+        // 上传到服务器@param {File} file
         function saveToServer(file) {
             //upload on server
             const fd = new FormData();
@@ -257,6 +260,7 @@
 
         }
 
+        //回显到quill 文本框中
         function insertToEditor(url) {
             // push image url to rich editor.
             var range = quillEditor.getSelection();
