@@ -31,7 +31,7 @@
             ExhibitionService.getInfo({id: $stateParams.id},
                 function (data) {
                     kt.exhibition = data;
-                    quillEditor.setText(kt.exhibition.exhibitionDetail.description);
+                    quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
 
                 })
         } else {
@@ -213,12 +213,13 @@
 
         $scope.contentChanged = function (editor, html, text) {
             $scope.changeDetected = true;
-            console.log('editor: ', editor, 'html: ', html, 'text:', text)
+            kt.exhibition.exhibitionDetail.description = html;
+            /*console.log('editor: ', editor, 'html: ', html, 'text:', text)
             var toolbar = quillEditor.getModule('toolbar');
             var fileInput = quillEditor.getModule('toolbar').container.querySelector('input.ql-image[type=file]');
             if (fileInput.files != null && fileInput.files[0] != null) {
                 saveToServer(fileInput.files[0]);
-            }
+            }*/
 
         }
 
@@ -247,8 +248,11 @@
             fd.append('image', file);
 
             ExhibitionService.uploadFile(fd,
-             function (url) {
-             insertToEditor(url);
+             function (data) {
+                if(data && data.code == 0){
+                    insertToEditor(data.result.fileUrl);
+
+                }
              })
 
         }
