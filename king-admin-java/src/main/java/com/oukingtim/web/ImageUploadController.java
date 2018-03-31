@@ -30,7 +30,7 @@ public class ImageUploadController {
 
     @ApiOperation(value = "上传图片", notes = "上传图片")
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    public ResultVM uploadImg(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public ResultVM uploadImg(HttpSession session, HttpServletRequest request, HttpServletResponse response,MultipartFile file) {
         File fileVO = new File();
         String uploadFile = "";
         String fastIp = Constants.FILE_SERVER_ADMIN;

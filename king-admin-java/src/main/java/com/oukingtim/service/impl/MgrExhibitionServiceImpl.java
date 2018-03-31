@@ -48,6 +48,7 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
                         file.setTypeId(exhibitionDetail.getId());
                         file.setCreateTime(new Date());
                         file.setUpdateTime(new Date());
+                        file.setDelete(0);
                         mgrFileMapper.insert(file);
                     }
                 }
