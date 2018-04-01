@@ -28,4 +28,13 @@ public class ExhibitionDetail extends MgrBaseModel<ExhibitionDetail> {
 
     @TableField(exist = false)
     private List<File> files;
+
+    public ExhibitionDetail(String exhibitionId){
+        this.exhibitionId = exhibitionId;
+    }
+
+    public ExhibitionDetail(){
+
+    }
+
 }

@@ -19,7 +19,9 @@ public final class Constants {
 
     public static final String PASSWORD = "huamo123";
 
-    public static final String IMAGE_SIZE = "200-200";
+    public static final String SM_IMAGE_SIZE = "200-200";
+    public static final String MD_IMAGE_SIZE = "400-400";
+    public static final String LG_IMAGE_SIZE = "600-600";
 
 
 }

@@ -18,4 +18,15 @@ public class File extends MgrBaseModel<File> {
 
     private Integer fileType;
 
+    private String typeId;
+
+
+    public File(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public File(){
+
+    }
+
 }
