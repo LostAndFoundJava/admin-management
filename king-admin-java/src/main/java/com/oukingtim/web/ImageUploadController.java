@@ -38,7 +38,7 @@ public class ImageUploadController {
         try {
             uploadFile = CkUploadUtils.upload(request, savePath);
             fileVO.setFileName(uploadFile);
-            uploadFile = fastIp + "/" + uploadFile + "!" + Constants.MD_IMAGE_SIZE;
+            uploadFile = fastIp + "/" + uploadFile;
             fileVO.setFileUrl(uploadFile);
         } catch (IOException e) {
             logger.error("上传出错", e);
