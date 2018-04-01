@@ -85,25 +85,35 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
     public boolean updateById(Exhibition exhibition){
         boolean flag = false;
         ExhibitionDetail entity = new ExhibitionDetail();
+        //展会id
         String exhibitionId = exhibition.getId();
         if (exhibition != null) {
+            //更新展会
             flag = super.updateById(exhibition);
+
+            //获取上传的展会详情
             ExhibitionDetail exhibitionDetail = exhibition.getExhibitionDetail();
             if (exhibitionDetail != null) {
                 entity.setExhibitionId(exhibitionId);
+                //删除展会详情
                 mgrExhibitionDetailMapper.delete(new EntityWrapper<>(entity));
+
                 exhibitionDetail.setExhibitionId(exhibitionId);
                 exhibitionDetail.setCreateTime(new Date());
                 exhibitionDetail.setUpdateTime(new Date());
+                //插入展会详情
                 mgrExhibitionDetailMapper.insert(exhibitionDetail);
                 if (!CollectionUtils.isEmpty(exhibitionDetail.getFiles())) {
                     File file = new File();
                     file.setTypeId(exhibitionDetail.getId());
+                    //删除展会详情相关的文件(图片)
                     mgrFileMapper.delete(new EntityWrapper<>(file));
+
+                    //更新展会详情文件
                     for (File fileEntity : exhibitionDetail.getFiles()) {
-                        file.setTypeId(exhibitionDetail.getId());
-                        file.setCreateTime(new Date());
-                        file.setUpdateTime(new Date());
+                        fileEntity.setTypeId(exhibitionDetail.getId());
+                        fileEntity.setCreateTime(new Date());
+                        fileEntity.setUpdateTime(new Date());
                         mgrFileMapper.insert(fileEntity);
                     }
                 }
