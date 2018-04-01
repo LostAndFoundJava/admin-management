@@ -78,7 +78,10 @@ public class CkUploadUtils {
                 // int pre = (int) System.currentTimeMillis();
                 // 取得上传文件
                 MultipartFile file = multiRequest.getFile(iter.next());
-
+                fileName = file.getOriginalFilename();
+                if(fileName != null){
+                    fileName.replaceAll(" ", "");
+                }
                 // fastdfs上传文件
                 // fileName =
                 // FastDFSClient.getFastDFSClient().uploadFile(file.getBytes(),
@@ -112,7 +115,7 @@ public class CkUploadUtils {
                     /*
 					List<String> image1 = FastDFSClient.getFastDFSClient().uploadFileImage(file2);
 					*/
-                    fileName = prefix + suffix;
+//                    fileName = prefix + suffix;
                     FtpUtil.uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.BASE_PATH, "", fileName, in);
 //					fileName = image1.get(3);
                     file2.deleteOnExit();
@@ -174,7 +177,7 @@ public class CkUploadUtils {
         PrintWriter out = null;
         try {
             fileName = upload(request, savePath);
-            fileName = Constants.FILE_SERVER_ADMIN +"/"+ fileName + "!" + Constants.IMAGE_SIZE;
+            fileName = Constants.FILE_SERVER_ADMIN +"/"+ fileName + "!" + Constants.MD_IMAGE_SIZE;
             response.setContentType("text/html;charset=UTF-8");
             String callback = request.getParameter("CKEditorFuncNum");
             out = response.getWriter();

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -74,7 +75,7 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
      * @return
      */
     @PostMapping
-    public ResultVM create(@RequestBody T t) {
+    public ResultVM create(@RequestBody T t, MultipartFile file) {
         t.setCreateTime(new Date());
         t.setUpdateTime(new Date());
         if (service.insert(t)) {
@@ -91,7 +92,7 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
      * @return
      */
     @PutMapping
-    public ResultVM update(@RequestBody T t) {
+    public ResultVM update(@RequestBody T t, MultipartFile file) {
 
         t.setUpdateTime(new Date());
         if (service.updateById(t)) {

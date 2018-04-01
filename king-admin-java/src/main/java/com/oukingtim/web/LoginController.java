@@ -17,6 +17,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class LoginController {
             map.put("perms", sysMenuService.getPermissions(ShiroUtils.getUserId()));
             return ResultVM.ok(map);
         }
-        return ResultVM.error();
+        return ResultVM.error(403,"登录失效,请重新登录");
     }
 
     @PutMapping("/password")
