@@ -13,6 +13,12 @@ public interface MgrExhibitionService extends IService<Exhibition>{
     @Override
     Exhibition selectById(Serializable id);
 
+
     @Override
     boolean updateById(Exhibition entity);
+
+
+
+
+
 }

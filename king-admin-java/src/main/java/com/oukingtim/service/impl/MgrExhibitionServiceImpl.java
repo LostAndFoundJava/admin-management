@@ -80,6 +80,7 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
         return exhibitionVO;
     }
 
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateById(Exhibition exhibition){
@@ -126,4 +127,5 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
         return flag;
 
     }
+
 }
