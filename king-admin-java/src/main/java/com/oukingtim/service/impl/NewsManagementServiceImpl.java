@@ -1,6 +1,7 @@
 package com.oukingtim.service.impl;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.oukingtim.domain.NewsModel;
 
 /**
@@ -10,12 +11,6 @@ import com.oukingtim.domain.NewsModel;
  * @version 1.****</b>
  */
 
-public interface NewsManagementServiceImpl extends IService<NewsModel> {
-
-
-    int editHotNews(NewsModel newsModel);
-
-
-
+public class NewsManagementServiceImpl extends ServiceImpl {
 
 }

@@ -1,7 +1,9 @@
 package com.oukingtim.service.impl;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.oukingtim.domain.NewsModel;
+import com.oukingtim.mapper.NewsInfoMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,28 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @version 1.****</b>
  */
 @Mapper
-public interface NewsEditionServiceImpl extends IService<NewsModel>{
-
-    /**
-     * 编辑热门新闻
-     * @param
-     * @return
-     */
-
-    boolean editHotNews(String hot);
-
-    /**
-     * 更新新闻状态,状态参考 NewsStatusEnum
-     * @param delete
-     * @param id
-     * @return
-     */
-
-    boolean updateHotNewStatus(String delete, String id);
-
-
-
-
-
+public class NewsEditionServiceImpl extends ServiceImpl {
 
 }

@@ -40,6 +40,7 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
         Page<T> page = new Page<T>(spage.getPagination().getStart()
                 , spage.getPagination().getNumber());
 
+
         if (StringUtils.isBlank(spage.getSort().getPredicate())) {
             spage.getSort().setPredicate("update_time");
         }
@@ -118,7 +119,7 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
      * @return
      */
     @DeleteMapping("/{id}")
-    public ResultVM delete(@PathVariable Integer id) {
+    public ResultVM delete(@PathVariable String id) {
         if (service.deleteById(id)) {
             return ResultVM.ok();
         } else {

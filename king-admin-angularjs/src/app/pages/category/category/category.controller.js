@@ -6,7 +6,7 @@
 
 
     /** @ngInject */
-    function CategoryCtrl($scope, $filter, toastr, CategoryService, $timeout) {
+    function CategoryCtrl($scope, $filter, toastr, CategoryService, $timeout,$stateParams, $state) {
         var kt = this;
         kt.category = {};
         if ($stateParams.isView) {

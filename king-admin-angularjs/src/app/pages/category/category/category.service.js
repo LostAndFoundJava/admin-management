@@ -7,12 +7,12 @@
     /** @ngInject */
     function CategoryService($resource ,toastr,CommonService) {
 
-        var rest = $resource('mgr/category/management/:id', {}, {
+        var rest = $resource('mgr/category/:id', {}, {
             'create': {method: 'POST'},
             'update': {method: 'PUT'},
         });
         function getSmartData(param,callback) {
-            $resource('mgr/category/management/getSmartData', {}, {
+            $resource('mgr/category/getSmartData', {}, {
                 'query': {method: 'POST'}
             }).query(param,
                 function (data) {

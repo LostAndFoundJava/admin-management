@@ -12,7 +12,7 @@
                 url: '/mgr/category',
                 template: '<ui-view></ui-view>',
                 abstract: true,
-                title: '行业分类管理',
+                title: '行业管理',
                 sidebarMeta: {
                     icon: 'ion-grid',
                     order: 300,

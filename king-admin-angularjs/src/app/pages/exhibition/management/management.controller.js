@@ -33,7 +33,7 @@
             kt.exhibition.exhibitionDetail.description = kt.exhibition.description;
             kt.exhibition.exhibitionDetail.files = [];
             ExhibitionService.save(kt.exhibition, function (data) {
-                $state.go('mgr.exhibition.management');
+                $state.go('exhibition.management');
             });
         }
         kt.basicConfig = {
