@@ -45,7 +45,7 @@ public class ImageUploadController {
 
             if (!CollectionUtils.isEmpty(uploadFileUrls)) {
                 for (String uploadFileUrl : uploadFileUrls) {
-                    uploadFileUrl = fastIp + "/" + uploadFileUrl;
+                    uploadFileUrl = fastIp + filePath + "/" + uploadFileUrl;
                     fileUrlVO.add(uploadFileUrl);
                 }
             }
