@@ -14,29 +14,6 @@ import org.apache.ibatis.annotations.Update;
  * @author JackieChan</b>
  * @version 1.****</b>
  */
-@Mapper
 public interface NewsEditionService extends IService<NewsModel>{
-
-    /**
-     * 编辑热门新闻
-     * @param
-     * @return
-     */
-
-    boolean editHotNews(String hot);
-
-    /**
-     * 更新新闻状态,状态参考 NewsStatusEnum
-     * @param delete
-     * @param id
-     * @return
-     */
-
-    boolean updateHotNewStatus(String delete,String id);
-
-
-
-
-
 
 }

@@ -75,7 +75,7 @@
         }
 
         function getList(param, callback) {
-            $resource('api/mgr/exhibition/management/getlist').get(param,
+            $resource('mgr/news/management/getlist').get(param,
                 function (data) {
                     console.log(data);
                     callback(data);

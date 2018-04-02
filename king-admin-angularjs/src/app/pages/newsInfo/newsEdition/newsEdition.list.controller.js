@@ -2,10 +2,10 @@
     'use strict';
 
     angular.module('KingAdmin.pages.newsInfo.newsEdition')
-        .controller('newsEditonListCtrl', newsEditonListCtrl);
+        .controller('newsEditionListCtrl', newsEditionListCtrl);
 
     /** @ngInject */
-    function newsEditonListCtrl($scope, newsEditionService) {
+    function newsEditionListCtrl($scope, newsEditionService) {
         var kt = this;
         kt.newsInfolist = [];
         kt.LoadPage = function (tableState) {

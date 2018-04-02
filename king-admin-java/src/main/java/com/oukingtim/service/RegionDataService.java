@@ -11,4 +11,5 @@ import com.oukingtim.domain.RegionData;
  */
 
 public interface RegionDataService  extends IService<RegionData>{
+
 }
