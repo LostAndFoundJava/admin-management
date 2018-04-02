@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by xufan on 2018/03/23.
@@ -31,15 +34,19 @@ public class ImageUploadController {
     @ApiOperation(value = "上传图片", notes = "上传图片")
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     public ResultVM uploadImg(HttpSession session, HttpServletRequest request, HttpServletResponse response,MultipartFile file) {
-        File fileVO = new File();
-        String uploadFile = "";
+        List<String> uploadFileUrls;
+        List<String> fileUrlVO = new ArrayList<>();
         String fastIp = Constants.FILE_SERVER_ADMIN;
         String savePath = session.getServletContext().getRealPath("/");
         try {
-            uploadFile = CkUploadUtils.upload(request, savePath);
-            fileVO.setFileName(uploadFile);
-            uploadFile = fastIp + "/" + uploadFile;
-            fileVO.setFileUrl(uploadFile);
+            uploadFileUrls = CkUploadUtils.upload(request, savePath);
+
+            if(!CollectionUtils.isEmpty(uploadFileUrls)){
+                for(String uploadFileUrl : uploadFileUrls){
+                    uploadFileUrl = fastIp + "/" + uploadFileUrl;
+                    fileUrlVO.add(uploadFileUrl);
+                }
+            }
         } catch (IOException e) {
             logger.error("上传出错", e);
             return ResultVM.error("上传出错");
@@ -49,7 +56,7 @@ public class ImageUploadController {
         } catch (IOException e) {
             logger.error("上传出错", e);
         }*/
-        return ResultVM.ok(fileVO);
+        return ResultVM.ok(fileUrlVO);
     }
 
 }

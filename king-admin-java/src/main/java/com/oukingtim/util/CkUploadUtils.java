@@ -60,82 +60,83 @@ public class CkUploadUtils {
      * @throws IOException
      * @Title upload
      */
-    public static String upload(HttpServletRequest request, String savePath)
+    public static List<String> upload(HttpServletRequest request, String savePath)
             throws IllegalStateException, IOException {
+
+        List<String> upLoadFileUrl = new ArrayList<>();
+
         // 创建一个通用的多部分解析器
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
                 request.getSession().getServletContext());
-        // 图片名称
-        String fileName = null;
+
         // 判断 request 是否有文件上传,即多部分请求
         if (multipartResolver.isMultipart(request)) {
             // 转换成多部分request
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
             // 取得request中的所有文件名
             Iterator<String> iter = multiRequest.getFileNames();
-            while (iter.hasNext()) {
-                // 记录上传过程起始时的时间，用来计算上传时间
-                // int pre = (int) System.currentTimeMillis();
-                // 取得上传文件
-                MultipartFile file = multiRequest.getFile(iter.next());
-                fileName = file.getOriginalFilename();
-                if(fileName != null){
-                    fileName.replaceAll(" ", "");
-                }
-                // fastdfs上传文件
-                // fileName =
-                // FastDFSClient.getFastDFSClient().uploadFile(file.getBytes(),
-                // file.getOriginalFilename());
-                File f = null;
-                BufferedImage image = null;
-                ImageOutputStream output = null;
-                FileInputStream in = null;
-                try {
+            File f = null;
+            BufferedImage image = null;
+            ImageOutputStream output = null;
+            FileInputStream in = null;
+            File file2 = null;
+            String tempPath = savePath;
+            try {
+
+                while (iter.hasNext()) {
+                    // 记录上传过程起始时的时间，用来计算上传时间
+                    // int pre = (int) System.currentTimeMillis();
+                    // 图片名称
+                    String fileName;
+
+                    // 取得上传文件
+                    MultipartFile file = multiRequest.getFile(iter.next());
+                    fileName = file.getOriginalFilename();
+                    if (fileName != null) {
+                        fileName.replaceAll(" ", "");
+                    }
                     f = File.createTempFile("tmp", null);
                     file.transferTo(f);
 
                     String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."), file.getOriginalFilename().length());
                     String prefix = System.currentTimeMillis() + "";
-                    savePath += "/" + prefix + suffix;
+                    savePath = tempPath + "/" + prefix + suffix;
 
-
-                    File file2 = new File(savePath);
-                    boolean b = f.renameTo(file2);
-                    image = ImageIO.read(file2);
+                    file2 = new File(savePath);
+                    f.renameTo(file2);
+                   /* image = ImageIO.read(file2);
                     output = ImageIO.createImageOutputStream(file2);
                     if (!ImageIO.write(image, "jpg", output)) {
                         logger.error("cmyk转化异常:{}", image);
                         throw new RuntimeException("图片上传失败,请换一张图试试！");
-                    }
+                    }*/
                     // List 返回图片size 原图 200*200 400*400 600*600 图采用600*600
                     in = new FileInputStream(file2);
 
                     //TODO 上传文件到服务器
-//					List<String> image1 = new ArrayList<>();
-                    /*
-					List<String> image1 = FastDFSClient.getFastDFSClient().uploadFileImage(file2);
-					*/
-//                    fileName = prefix + suffix;
                     FtpUtil.uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.BASE_PATH, "", fileName, in);
-//					fileName = image1.get(3);
+                    upLoadFileUrl.add(fileName);
+                }
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+            } finally {
+                if (file2 != null) {
                     file2.deleteOnExit();
-                } catch (IOException e) {
-                    logger.error(e.getMessage());
-                } finally {
-                    if (image != null) {
-                        image.flush();
-                    }
-                    if (in != null) {
-                        in.close();
-                    }
-                    if (output != null) {
-                        output.flush();
-                        output.close();
-                    }
+                }
+                if (image != null) {
+                    image.flush();
+                }
+                if (in != null) {
+                    in.close();
+                }
+                if (output != null) {
+                    output.flush();
+                    output.close();
                 }
             }
+
         }
-        return fileName;
+        return upLoadFileUrl;
     }
 
 //
@@ -173,11 +174,11 @@ public class CkUploadUtils {
      */
     public static void ckeditor(HttpServletRequest request, HttpServletResponse response, String fastIp,
                                 String savePath) throws IOException, IllegalStateException {
-        String fileName;
+        String fileName = null;
         PrintWriter out = null;
         try {
-            fileName = upload(request, savePath);
-            fileName = Constants.FILE_SERVER_ADMIN +"/"+ fileName + "!" + Constants.MD_IMAGE_SIZE;
+//            fileName = upload(request, savePath);
+            fileName = Constants.FILE_SERVER_ADMIN + "/" + fileName + "!" + Constants.MD_IMAGE_SIZE;
             response.setContentType("text/html;charset=UTF-8");
             String callback = request.getParameter("CKEditorFuncNum");
             out = response.getWriter();
