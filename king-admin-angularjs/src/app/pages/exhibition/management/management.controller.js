@@ -34,6 +34,10 @@
             kt.isView = false;
         }
 
+        //quill只读
+        $scope.ifshow = !kt.isView
+        $scope.readonly = kt.isView
+
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
             ExhibitionService.getInfo({id: $stateParams.id},
@@ -51,7 +55,8 @@
                     $timeout(function () {
 
                         if (kt.exhibition.exhibitionDetail.description) {
-                            quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
+                            // quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
+                            $scope.model=kt.exhibition.exhibitionDetail.description;
                         }
 
                         // get dropzone instance to emit some events
@@ -64,7 +69,6 @@
                             $scope.myDz.options.maxFiles = $scope.dzOptions.maxFiles - $scope.mockFiles.length;
                             $scope.myDz.files.push(mockFile);
                         });
-
                     });
                 })
         } else {
@@ -224,12 +228,9 @@
         /*========初始化quill==============*/
 
         $scope.editorCreated = function (editor) {
-            console.log("wwwwwwww")
             console.log(editor);
-            console.log("wwwwwwww")
-            editor.readOnly = kt.isView
+            $scope.readonly = kt.isView
             quillEditor = editor;
-
             if (editor) {
                 var toolbar = quillEditor.getModule('toolbar');
                 editor.getModule("toolbar").addHandler("image", function () {

@@ -2,22 +2,47 @@
     'use strict';
 
     angular.module('KingAdmin.pages.newsInfo.newsEdition')
-        .factory('NewsEditService', NewsEditService);
+        .factory('newsEditionService', newsEditionService);
 
     /** @ngInject */
-    function NewsEditService($resource ,toastr,CommonService) {
+    function newsEditionService($resource, toastr, CommonService) {
 
-        // var rest = $resource('api/mgr/exhibition/management/:id', {}, {
-        var rest = $resource('sys/upload', {}, {
-
+        var rest = $resource('mgr/news/management/:id', {}, {
             'create': {method: 'POST'},
             'update': {method: 'PUT'},
         });
 
+        function getSmartData(param, callback) {
+            $resource('mgr/news/management/getSmartData', {}, {
+                'query': {method: 'POST'}
+            }).query(param,
+                function (data) {
+                    console.log(data);
+                    callback(data)
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                });
+        }
 
-        function save(param,callback) {
-            CommonService.info('确定保存?',function () {
-                if(angular.isDefined(param.id)&&param.id!=null){
+        function del(param, callback) {
+            CommonService.danger('确定删除?', function () {
+                rest.delete(param,
+                    function (data) {
+                        if (data.code == 0) {
+                            toastr.success("删除成功！", "提示", {"progressBar": true,});
+                        } else {
+                            toastr.warning("删除失败！", "提示", {"progressBar": true,});
+                        }
+                        callback(data);
+                    }, function (error) {
+                        toastr.error(error, "提示", {"progressBar": true,});
+                    })
+            })
+        }
+
+        function save(param, callback) {
+            CommonService.info('确定保存?', function () {
+                if (angular.isDefined(param.id) && param.id != null) {
                     rest.update(param,
                         function (data) {
                             console.log(data);
@@ -39,9 +64,48 @@
             });
         }
 
-        return{
-            save : save,
+        function getInfo(param, callback) {
+            rest.get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
         }
-    }
-})();
 
+        function getList(param, callback) {
+            $resource('api/mgr/exhibition/management/getlist').get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
+        function uploadFile(param, callback) {
+            $resource('api/mgr/image/upload', {}, {
+                'upload': {method: 'POST',headers:{'Content-Type': undefined}},
+
+            }).upload(param,
+                function (data) {
+                    console.log(data);
+                    callback(data)
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                });
+        }
+
+        return {
+            getSmartData: getSmartData,
+            del: del,
+            save: save,
+            getInfo: getInfo,
+            getList: getList,
+            uploadFile: uploadFile
+        };
+
+    }
+
+})();

@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * <br>创建日期：2018/3/22
- * <br>Copyright 2018　上海华信证券　All Rights Reserved</b>
- *
  * @author JackieChan</b>
  * @version 1.****</b>
  */
