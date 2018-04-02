@@ -60,7 +60,7 @@ public class CkUploadUtils {
      * @throws IOException
      * @Title upload
      */
-    public static List<String> upload(HttpServletRequest request, String savePath)
+    public static List<String> upload(HttpServletRequest request, String savePath, String filePath)
             throws IllegalStateException, IOException {
 
         List<String> upLoadFileUrl = new ArrayList<>();
@@ -114,7 +114,7 @@ public class CkUploadUtils {
                     in = new FileInputStream(file2);
 
                     //TODO 上传文件到服务器
-                    FtpUtil.uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.BASE_PATH, "", fileName, in);
+                    FtpUtil.uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.BASE_PATH, filePath, fileName, in);
                     upLoadFileUrl.add(fileName);
                 }
             } catch (IOException e) {

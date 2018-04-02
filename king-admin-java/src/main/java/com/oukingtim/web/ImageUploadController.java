@@ -1,8 +1,8 @@
 package com.oukingtim.web;
 
-import com.oukingtim.domain.File;
 import com.oukingtim.util.CkUploadUtils;
 import com.oukingtim.util.Constants;
+import com.oukingtim.util.DateUtil;
 import com.oukingtim.web.vm.ResultVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,17 +33,18 @@ public class ImageUploadController {
 
 
     @ApiOperation(value = "上传图片", notes = "上传图片")
-    @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    public ResultVM uploadImg(HttpSession session, HttpServletRequest request, HttpServletResponse response,MultipartFile file) {
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public ResultVM uploadImg(HttpSession session, HttpServletRequest request, HttpServletResponse response, MultipartFile file) {
         List<String> uploadFileUrls;
         List<String> fileUrlVO = new ArrayList<>();
         String fastIp = Constants.FILE_SERVER_ADMIN;
         String savePath = session.getServletContext().getRealPath("/");
+        String filePath = "/" + DateUtil.date2Str("yyyy/MM/dd", new Date());//当前日期作为文件目录
         try {
-            uploadFileUrls = CkUploadUtils.upload(request, savePath);
+            uploadFileUrls = CkUploadUtils.upload(request, savePath, filePath);
 
-            if(!CollectionUtils.isEmpty(uploadFileUrls)){
-                for(String uploadFileUrl : uploadFileUrls){
+            if (!CollectionUtils.isEmpty(uploadFileUrls)) {
+                for (String uploadFileUrl : uploadFileUrls) {
                     uploadFileUrl = fastIp + "/" + uploadFileUrl;
                     fileUrlVO.add(uploadFileUrl);
                 }
