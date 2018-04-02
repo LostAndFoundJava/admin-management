@@ -100,31 +100,46 @@
                 <div class="row">
                     <h5 class="form-section">展会说明</h5>
 
-                    <ng-quill-editor ng-model="model" placeholder="描述展会"
+
+
+                    <div ng-if="ifshow">
+                    <ng-quill-editor
+                                     ng-model="model"
+                                     placeholder="描述展会"
                                      id="description"
                                      on-editor-created="editorCreated(editor)"
-                                     on-content-changed="contentChanged(editor, html, text)"></ng-quill-editor>
-
+                                     on-content-changed="contentChanged(editor, html, text)"
+                                     read-only="readonly">
+                    </ng-quill-editor>
+                    </div>
+                    <div ng-if="!ifshow">
+                    <ng-quill-editor
+                            ng-model="model"
+                            read-only="readonly"
+                            modules="{toolbar: false}">
+                    </ng-quill-editor>
+                    </div>
                 </div>
                 <hr/>
 
-                <div class="row">
-                    <h5 class="form-section">展会图片</h5>
-                    <!-- Dropzone 2 -->
 
-                    <div id="dropzone2" class="dropzone sm" options="dzOptions" methods="dzMethods"
-                         callbacks="dzCallbacks" ng-dropzone></div>
-                    <div style="text-align:center;" id="startUpload" ng-show="showBtns">
-                        <button ng-click="dzMethods.processQueue();">上传图片</button>
-                        <!--<button ng-click="dzMethods.removeAllFiles();">Remove All Files</button>-->
-                        <!--<button ng-click="dzMethods.removeFile(lastFile);">Remove Last File</button>-->
-                        <!--<button ng-click="getDropzone();">Get getDropzone instance</button>-->
-                        <!--<button ng-click="getFiles();">Get total files</button>-->
-                    </div>
-                    <!--<div class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone ng-model="kt.exhibitionDetail.files"></div>-->
-                </div>
             </div>
         </form>
+        <div class="row">
+            <h5 class="form-section">展会图片</h5>
+            <!-- Dropzone 2 -->
+
+            <div id="dropzone2" class="dropzone sm" options="dzOptions" methods="dzMethods"
+                 callbacks="dzCallbacks" ng-dropzone></div>
+            <div style="text-align:center;" id="startUpload" ng-show="showBtns">
+                <button ng-show="!readonly" ng-click="dzMethods.processQueue();">上传图片</button>
+                <!--<button ng-click="dzMethods.removeAllFiles();">Remove All Files</button>-->
+                <!--<button ng-click="dzMethods.removeFile(lastFile);">Remove Last File</button>-->
+                <!--<button ng-click="getDropzone();">Get getDropzone instance</button>-->
+                <!--<button ng-click="getFiles();">Get total files</button>-->
+            </div>
+            <!--<div class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone ng-model="kt.exhibitionDetail.files"></div>-->
+        </div>
         <!--</div>-->
     </div>
 </div>

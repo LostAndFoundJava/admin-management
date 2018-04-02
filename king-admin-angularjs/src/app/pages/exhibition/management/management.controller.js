@@ -15,10 +15,15 @@
         kt.exhibition = {};
         kt.exhibition.exhibitionDetail = {};
         kt.exhibition.exhibitionDetail.files = [];
-        var imageFile = {};
+        // var imageFile = {};
         var quillEditor;
         var delta;
         $scope.mockFiles = [];
+
+
+        //初始化dropzone
+        initDropzone();
+
 
         //用户存图片上传后的url
         var map = {};
@@ -29,6 +34,11 @@
             kt.isView = false;
         }
 
+        //quill只读
+        $scope.ifshow = !kt.isView
+        $scope.readonly = kt.isView
+
+        //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
             ExhibitionService.getInfo({id: $stateParams.id},
                 function (data) {
@@ -42,20 +52,39 @@
                         });
                     })
 
+                    $timeout(function () {
+
+                        if (kt.exhibition.exhibitionDetail.description) {
+                            // quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
+                            $scope.model=kt.exhibition.exhibitionDetail.description;
+                        }
+
+                        // get dropzone instance to emit some events
+                        // $scope.myDz = $scope.dzMethods.getDropzone();
+                        $scope.myDz = $scope.dzMethods.getDropzone();
+
+                        $scope.mockFiles.forEach(function (mockFile) {
+                            $scope.myDz.emit('addedfile', mockFile);
+                            $scope.myDz.emit('complete', mockFile);
+                            $scope.myDz.options.maxFiles = $scope.dzOptions.maxFiles - $scope.mockFiles.length;
+                            $scope.myDz.files.push(mockFile);
+                        });
+                    });
                 })
         } else {
             kt.isAdd = true;
         }
 
+        //保存新增／修改的数据
         kt.save = function () {
-
-
             kt.exhibition.startTime = formatDate(kt.exhibition.startTime);
             kt.exhibition.endTime = formatDate(kt.exhibition.endTime);
             kt.exhibition.hot = kt.exhibition.hot ? 1 : 0;
             kt.exhibition.hasCarousel = kt.exhibition.hasCarousel ? 1 : 0;
             // kt.exhibition.exhibitionDetail.description = quillEditor.getText();
+            kt.exhibition.exhibitionDetail.files = [];
             for (var index in map) {
+                var imageFile = {};
                 imageFile.fileUrl = map[index];
                 kt.exhibition.exhibitionDetail.files.push(imageFile);
             }
@@ -82,7 +111,6 @@
         };
 
         $scope.isDisabledDate = function (currentDate, mode) {
-            // $scope.today();
             return mode === 'day' && (currentDate.getDay() === 0 || currentDate.getDay() === 6);
         };
 
@@ -135,20 +163,6 @@
             // wrap methods in $timeout to call methods after current digest cycle
             $scope.myDz = null;
             var dropzone = null;
-            $timeout(function () {
-
-                // get dropzone instance to emit some events
-                // $scope.myDz = $scope.dzMethods.getDropzone();
-                $scope.myDz = $scope.dzMethods.getDropzone();
-
-                $scope.mockFiles.forEach(function (mockFile) {
-                    $scope.myDz.emit('addedfile', mockFile);
-                    $scope.myDz.emit('complete', mockFile);
-                    $scope.myDz.options.maxFiles = $scope.dzOptions.maxFiles - $scope.mockFiles.length;
-                    $scope.myDz.files.push(mockFile);
-                });
-
-            });
 
             $scope.dzOptions = {
                 url: '/api/mgr/image/upload',
@@ -157,20 +171,22 @@
                 acceptedFiles: 'image/jpeg, images/jpg, image/png',
                 addRemoveLinks: true,
                 parallelUploads: 5,
-                autoProcessQueue: false
+                autoProcessQueue: false,
+                // uploadMultiple: true
             };
 
 
             //Handle events for dropzone
             //Visit http://www.dropzonejs.com/#events for more events
+            var index_i = 1;
             $scope.dzCallbacks = {
                 'addedfile': function (file) {
                     $scope.showBtns = true;
                     $scope.lastFile = file;
                     if (file.isMock) {
-                        var index = Date.parse(new Date());
+                        var index = Date.parse(new Date()) + (++index_i);
                         file.previewElement.querySelector("img")['id'] = index;
-                        map[index] = file.previewElement.querySelector("img")['src'];
+                        map[index] = file.serverImgUrl;
                         $scope.myDz.createThumbnailFromUrl(file, file.serverImgUrl, null, true);
                     }
                 },
@@ -180,20 +196,22 @@
                         toastr.error(xhr.msg);
                         return;
                     }
-                    var fileUrl = xhr.result.fileUrl;
-                    var index = Date.parse(new Date());
-                    file.previewElement.querySelector("img")['id'] = index;
-                    map[index] = fileUrl;
+                    angular.forEach(xhr.result, function (fileUrl) {
+                        var index = Date.parse(new Date()) + (++index_i);
+                        file.previewElement.querySelector("img")['id'] = index;
+                        map[index] = fileUrl;
+                    })
+
                 },
                 'error': function (file, xhr) {
-                    console.warn('File failed to upload from dropzone 2.', file, xhr);
+                    console.warn('File failed to upload from dropzone.', file, xhr);
                 },
 
                 'removedfile': function (file) {
                     if (file.previewElement) {
                         if ((file.previewElement) != null) {
                             var _key = file.previewElement.querySelector("img")['id'];
-                            delete map._key;
+                            delete map[_key];
                         }
                     }
                 },
@@ -207,33 +225,12 @@
             }
         }
 
-        initDropzone();
+        /*========初始化quill==============*/
 
-        /*======================*/
-
-        /**
-         * 富文本框
-         */
-        function initQuill() {
-            $scope.model = ''
-            $scope.readOnly = false
-
-            $scope.changeDetected = false;
-
-
-        }
-
-        //初始化quill
-        initQuill();
-
-        //创建quill editor
         $scope.editorCreated = function (editor) {
             console.log(editor);
+            $scope.readonly = kt.isView
             quillEditor = editor;
-            if(kt.exhibition.exhibitionDetail.description){
-                quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
-
-            }
             if (editor) {
                 var toolbar = quillEditor.getModule('toolbar');
                 editor.getModule("toolbar").addHandler("image", function () {
@@ -242,8 +239,8 @@
             }
 
         }
-        $scope.editorCreated();
 
+        //
         $scope.contentChanged = function (editor, html, text) {
             $scope.changeDetected = true;
             kt.exhibition.exhibitionDetail.description = html;
@@ -251,7 +248,6 @@
 
         //选择图片
         function selectImage(toolbar) {
-
             var fileInput = toolbar.container.querySelector('input.ql-image[type=file]');
             if (fileInput == null) {
                 fileInput = document.createElement('input');
@@ -277,11 +273,9 @@
             ExhibitionService.uploadFile(fd,
                 function (data) {
                     if (data && data.code == 0) {
-                        insertToEditor(data.result.fileUrl);
-
+                        insertToEditor(data.result[0]);
                     }
                 })
-
         }
 
         //回显到quill 文本框中
@@ -295,5 +289,4 @@
             quillEditor.insertEmbed(imagePosition, 'image', url);
         }
     }
-
 })();
