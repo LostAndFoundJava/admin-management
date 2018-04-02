@@ -32,6 +32,7 @@
         if ($stateParams.id) {
             ExhibitionService.getInfo({id: $stateParams.id},
                 function (data) {
+                    $scope.editorCreated();
                     kt.exhibition = data;
                     angular.forEach(kt.exhibition.exhibitionDetail.files, function (file) {
                         $scope.mockFiles.push({
@@ -42,6 +43,11 @@
                         });
                     })
 
+                    $timeout(function () {
+                        if (kt.exhibition.exhibitionDetail.description) {
+                            quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
+                        }
+                    },300);
                 })
         } else {
             kt.isAdd = true;
@@ -236,10 +242,7 @@
         $scope.editorCreated = function (editor) {
             console.log(editor);
             quillEditor = editor;
-            if (kt.exhibition.exhibitionDetail.description) {
-                quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
 
-            }
             if (editor) {
                 var toolbar = quillEditor.getModule('toolbar');
                 editor.getModule("toolbar").addHandler("image", function () {
