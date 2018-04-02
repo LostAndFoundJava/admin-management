@@ -33,7 +33,7 @@
             items: {}
         };
         $scope.$watch('kt.checkboxes.checked', function (value) {
-            angular.forEach(kt.exhibitionlist, function (item) {
+            angular.forEach(kt.categorylist, function (item) {
                 kt.checkboxes.items[item.id] = value;
             });
         });

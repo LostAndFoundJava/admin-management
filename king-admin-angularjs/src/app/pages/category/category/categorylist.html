@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-2 col-md-offset-6 ">
             <div class="form-group">
-                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.title"
+                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.name"
                        input-keyup="kt.LoadPage" placeholder="名称">
             </div>
         </div>
@@ -24,7 +24,7 @@
             </th>
             <th>序号</th>
             <th st-sort="name">名称</th>
-            <th st-sort="delete">状态</th>
+            <!--<th st-sort="delete">状态</th>-->
             <th>操作</th>
         </tr>
         </thead>
@@ -42,9 +42,9 @@
             <td>
                 {{category.name}}
             </td>
-            <td>
-                {{category.delete}}
-            </td>
+            <!--<td>-->
+                <!--{{category.delete}}-->
+            <!--</td>-->
             <td>
                 <div class="buttons">
                     <button has-perms='category.category.view' class="btn btn-info editable-table-button btn-xs btn-with-icon"

@@ -10,19 +10,19 @@ package com.oukingtim.util;
 
 public enum NewsStatusEnum {
 
-    NEWS_ONELINE("0", "上线"),
-    NEWS_OFFLINE("1", "下线"),
-    NEWS_DEL("3", "上线"),
-    NEWS_HOT("4", "热点新闻"),
-    NEWS_USUAL("5", "普通新闻");
+    NEWS_ONELINE(0, "上线"),
+    NEWS_OFFLINE(1, "下线"),
+    NEWS_DEL(3, "上线"),
+    NEWS_HOT(4, "热点新闻"),
+    NEWS_USUAL(5, "普通新闻");
 
 
-    NewsStatusEnum(String code, String desc) {
+    NewsStatusEnum(Integer code, String desc) {
         this.code = code;
         this.desc = desc;
     }
 
-    private String code;
+    private Integer code;
     private String desc;
 
     /**
@@ -33,12 +33,12 @@ public enum NewsStatusEnum {
     }
 
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

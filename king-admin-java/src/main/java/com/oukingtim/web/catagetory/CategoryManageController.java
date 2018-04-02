@@ -18,10 +18,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mgr/category")
 public class CategoryManageController extends MgrBaseController<CategoryService, Category> {
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryManageController.class);
-
-
-
-    
-
-
 }

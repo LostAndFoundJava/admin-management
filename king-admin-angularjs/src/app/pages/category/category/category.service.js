@@ -1,28 +1,27 @@
 (function () {
     'use strict';
 
-    angular.module('KingAdmin.pages.newsInfo.newsEdition')
-        .factory('NewsEditService', NewsEditService);
+    angular.module('KingAdmin.pages.category.category')
+        .factory('CategoryService', CategoryService);
 
     /** @ngInject */
-    function NewsEditService($resource ,toastr,CommonService) {
+    function CategoryService($resource ,toastr,CommonService) {
 
-        var rest = $resource('sys/dict/:id', {}, {
+        var rest = $resource('mgr/category/:id', {}, {
             'create': {method: 'POST'},
             'update': {method: 'PUT'},
         });
-        var myAppModule = angular.module('quillTest', ['ngQuill']);
-        // function getSmartData(param,callback) {
-        //     $resource('sys/dict/getSmartData', {}, {
-        //         'query': {method: 'POST'}
-        //     }).query(param,
-        //         function (data) {
-        //             console.log(data);
-        //             callback(data)
-        //         }, function (error) {
-        //             toastr.error(error, "提示", {"progressBar": true,});
-        //         });
-        // }
+        function getSmartData(param,callback) {
+            $resource('mgr/category/getSmartData', {}, {
+                'query': {method: 'POST'}
+            }).query(param,
+                function (data) {
+                    console.log(data);
+                    callback(data)
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                });
+        }
         function del(param,callback) {
             CommonService.danger('确定删除?', function () {
                 rest.delete(param,
@@ -60,25 +59,33 @@
                         })
                 }
             });
-
-            function getList(code,callback) {
-                $resource('sys/dict/getlist/:code').get({code:code},
-                    function (data) {
-                        console.log(data);
-                        callback(data);
-                    }, function (error) {
-                        toastr.error(error,"提示",{"progressBar": true,});
-                    })
-            }
+        }
+        function getInfo(param,callback) {
+            rest.get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error,"提示",{"progressBar": true,});
+                })
+        }
+        function getList(param,callback) {
+            $resource('mgr/category/management/getlist').get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error,"提示",{"progressBar": true,});
+                })
         }
         return {
-            // getSmartData:getSmartData,
+            getSmartData:getSmartData,
             del:del,
             save:save,
-            getList:getList,
+            getInfo:getInfo,
+            getList:getList
         };
 
     }
 
 })();
-

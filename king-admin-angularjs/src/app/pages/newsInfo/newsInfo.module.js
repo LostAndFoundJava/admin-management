@@ -12,7 +12,7 @@
                 url: '/newsInfo',
                 template: '<ui-view></ui-view>',
                 abstract: true,
-                title: '新闻上传',
+                title: '业务功能',
                 sidebarMeta: {
                     icon: 'ion-grid',
                     order: 300,

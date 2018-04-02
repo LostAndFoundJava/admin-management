@@ -12,12 +12,11 @@
                 url: '/mgr/category',
                 template: '<ui-view></ui-view>',
                 abstract: true,
-                title: '新闻上传',
+                title: '行业管理',
                 sidebarMeta: {
                     icon: 'ion-grid',
                     order: 300,
                 },
             });
     }
-
 })();

@@ -18,5 +18,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class NewsEditionController extends MgrBaseController<NewsEditionService,NewsModel> {
 
 
-
 }

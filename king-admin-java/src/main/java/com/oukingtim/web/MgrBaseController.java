@@ -3,6 +3,7 @@ package com.oukingtim.web;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
+import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.MgrBaseModel;
 import com.oukingtim.util.StringTools;
 import com.oukingtim.web.vm.ResultVM;
@@ -40,6 +41,7 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
         Page<T> page = new Page<T>(spage.getPagination().getStart()
                 , spage.getPagination().getNumber());
 
+
         if (StringUtils.isBlank(spage.getSort().getPredicate())) {
             spage.getSort().setPredicate("update_time");
         }
@@ -74,7 +76,6 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
      */
     @PostMapping
     public ResultVM create(@RequestBody T t, MultipartFile file) {
-
         t.setCreateTime(new Date());
         t.setUpdateTime(new Date());
         if (service.insert(t)) {
@@ -119,7 +120,7 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
      * @return
      */
     @DeleteMapping("/{id}")
-    public ResultVM delete(@PathVariable Integer id) {
+    public ResultVM delete(@PathVariable String id) {
         if (service.deleteById(id)) {
             return ResultVM.ok();
         } else {
