@@ -24,7 +24,7 @@
         function initQill() {
             $scope.title = 'Quill works'
             kt.newsEdition.subtitle = 'abc'
-            $scope.readOnly = false
+            $scope.readOnly = true
             $scope.test = ''
             $scope.customOptions = [{
                 import: 'attributors/style/size',
