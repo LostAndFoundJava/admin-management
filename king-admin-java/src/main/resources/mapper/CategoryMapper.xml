@@ -2,14 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oukingtim.mapper.CategoryInfoMapper">
 
-    <select id="queryCategoryInfo" resultType="com.oukingtim.domain.Category">
-        select *from category t where 1=1
-        <if test="parentId != null and parentId !=''">
-            and t.parentId = #{parentId}"
-        </if>
-        <if test="name!= null and name !='' ">
-            and t.name = #{name}
-        </if>
-        order by parent_id asc
+    <select id="selectAll" resultType="com.oukingtim.domain.Category">
+        select * from category t where 1=1
     </select>
 </mapper>

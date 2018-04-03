@@ -1,5 +1,6 @@
 package com.oukingtim.domain;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,11 +21,13 @@ public class NewsModel extends MgrBaseModel<NewsModel> {
     //新闻内容
     private String content;
     //新闻来源
-    private String original;
+    private String origin;
     //新闻热度
     private Integer hot;
     //新闻热度排名
     private Integer hotLevel;
     //新闻标题
     private  String title;
+    @TableField(exist = false)
+    private String categoryName;
 }

@@ -19,43 +19,11 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Category> implements CategoryService {
-
-
     @Autowired
     private CategoryInfoMapper categoryInfoMapper;
 
-
-
-
-
-
     @Override
-    public List<Category> insertCategory(Category category) {
-        return null;
+    public List<Category> getAllCategoryName() {
+        return categoryInfoMapper.selectAll();
     }
-
-    /**
-     * 删除行业（删除子行业)
-     *
-     * @param category
-     * @return
-     */
-
-    @Override
-    public boolean delectSubCategory(Category category) {
-
-        return false;
-    }
-
-    /**
-     * 删除行业（删除父行业)
-     *
-     * @param category
-     * @return
-     */
-    @Override
-    public boolean delectParCategory(Category category) {
-        return false;
-    }
-
 }
