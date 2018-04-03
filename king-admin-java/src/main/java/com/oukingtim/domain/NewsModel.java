@@ -24,7 +24,7 @@ public class NewsModel extends MgrBaseModel<NewsModel> {
     //新闻热度
     private Integer hot;
     //新闻热度排名
-    private String hotLevel;
-
-
+    private Integer hotLevel;
+    //新闻标题
+    private  String title;
 }

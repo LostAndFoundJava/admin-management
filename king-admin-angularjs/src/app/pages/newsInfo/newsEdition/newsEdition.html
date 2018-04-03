@@ -1,31 +1,63 @@
-<div ba-panel ba-panel-title="新闻编辑" ba-panel-class="xmedium-panel with-scroll light-text">
-    <h3>文本编辑器</h3>
-    <!--<pre><code>{{model}}</code></pre>-->
-    <form name="Form" enctype="multipart/form-data">
-    <ng-quill-editor ng-model="kt.newsEdition.subtitle" placeholder="override default placeholder"
-                      on-content-changed="contentChanged(editor, html, text)"
-                     on-selection-changed="selectionChanged(editor, range, oldRange, source)"></ng-quill-editor>
-
-        <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
-            <i class="ion-heart"></i>保存
-        </button>
+<div class="row">
+    <!--<div class="col-md-6">-->
+    <div ba-panel ba-panel-class="large-panel with-scroll light-text" ba-panel-title="新增展会信息">
+        <form name="Form" ng-submit="kt.save()">
 
 
-    <!--图片上传模块dropzone-->
-    <div>
-        <div ng-model="kt.newsEdition.request" id="NewsEditCtrl" class="dropzone sm"
-             options="dzOptions" methods="dzMethods" callbacks="dzCallbacks" ng-dropzone></div>
-        <div style="text-align:center;" id="startUpload" ng-show="showBtns">
-            <button ng-click="dzMethods.processQueue();">Start Uploading</button>
-            <button ng-click="dzMethods.removeAllFiles();">Remove All Files</button>
-            <!--<button ng-click="dzMethods.removeFile(lastFile);">Remove Last File</button>-->
-            <!--<button ng-click="getDropzone();">Get getDropzone instance</button>-->
-            <!--<button ng-click="getFiles();">Get total files</button>-->
-        </div>
-    </div>
+            <div class="form-group ">
+                <button ui-sref="exhibition.management" type="button" class="btn btn-default btn-with-icon">
+                    <i class="ion-reply"></i>返回
+                </button>
+                <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
+                    <i class="ion-heart"></i>保存
+                </button>
+            </div>
+            <div class="form-group ">
+                <div class="row">
+                    <h5 class="form-section">新闻咨询基本信息</h5>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="categoryId">所属行业</label>
+                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.newsEdition.categoryId"
+                                id="categoryId"
+                                title="所属行业" data-container="body" required
+                                ng-options="item.code as item.text for item in kt.types">
+                        </select>
+                    </div>
 
+
+                    <label class="checkbox-inline custom-checkbox nowrap">
+                        <input type="checkbox" id="hot" ng-model="kt.exhibition.hot" ng-disabled="kt.isView">
+                        <span>是否推荐</span>
+                    </label>
+
+                </div>
+            </div>
+            <hr/>
+
+            <div class="row">
+                <h5 class="form-section">展会说明</h5>
+
+
+                <div ng-if="ifshow">
+                    <ng-quill-editor
+                            ng-model="model"
+                            placeholder="描述展会"
+                            id="description"
+                            on-editor-created="editorCreated(editor)"
+                            on-content-changed="contentChanged(editor, html, text)"
+                            read-only="readonly">
+                    </ng-quill-editor>
+                </div>
+                <div ng-if="!ifshow">
+                    <ng-quill-editor
+                            ng-model="model"
+                            read-only="readonly"
+                            modules="{toolbar: false}">
+                    </ng-quill-editor>
+                </div>
+            </div>
+            <hr/>
     </form>
 
 </div>
-
-
+</div>

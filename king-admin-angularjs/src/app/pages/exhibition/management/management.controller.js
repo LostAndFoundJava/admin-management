@@ -20,6 +20,11 @@
         var delta;
         $scope.mockFiles = [];
 
+
+        //初始化dropzone
+        initDropzone();
+
+
         //用户存图片上传后的url
         var map = {};
 
@@ -29,10 +34,14 @@
             kt.isView = false;
         }
 
+        //quill只读
+        $scope.ifshow = !kt.isView
+        $scope.readonly = kt.isView
+
+        //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
             ExhibitionService.getInfo({id: $stateParams.id},
                 function (data) {
-                    $scope.editorCreated();
                     kt.exhibition = data;
                     angular.forEach(kt.exhibition.exhibitionDetail.files, function (file) {
                         $scope.mockFiles.push({
@@ -44,18 +53,30 @@
                     })
 
                     $timeout(function () {
+
                         if (kt.exhibition.exhibitionDetail.description) {
-                            quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
+                            // quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
+                            $scope.model=kt.exhibition.exhibitionDetail.description;
                         }
-                    },300);
+
+                        // get dropzone instance to emit some events
+                        // $scope.myDz = $scope.dzMethods.getDropzone();
+                        $scope.myDz = $scope.dzMethods.getDropzone();
+
+                        $scope.mockFiles.forEach(function (mockFile) {
+                            $scope.myDz.emit('addedfile', mockFile);
+                            $scope.myDz.emit('complete', mockFile);
+                            $scope.myDz.options.maxFiles = $scope.dzOptions.maxFiles - $scope.mockFiles.length;
+                            $scope.myDz.files.push(mockFile);
+                        });
+                    });
                 })
         } else {
             kt.isAdd = true;
         }
 
+        //保存新增／修改的数据
         kt.save = function () {
-
-
             kt.exhibition.startTime = formatDate(kt.exhibition.startTime);
             kt.exhibition.endTime = formatDate(kt.exhibition.endTime);
             kt.exhibition.hot = kt.exhibition.hot ? 1 : 0;
@@ -90,7 +111,6 @@
         };
 
         $scope.isDisabledDate = function (currentDate, mode) {
-            // $scope.today();
             return mode === 'day' && (currentDate.getDay() === 0 || currentDate.getDay() === 6);
         };
 
@@ -143,20 +163,6 @@
             // wrap methods in $timeout to call methods after current digest cycle
             $scope.myDz = null;
             var dropzone = null;
-            $timeout(function () {
-
-                // get dropzone instance to emit some events
-                // $scope.myDz = $scope.dzMethods.getDropzone();
-                $scope.myDz = $scope.dzMethods.getDropzone();
-
-                $scope.mockFiles.forEach(function (mockFile) {
-                    $scope.myDz.emit('addedfile', mockFile);
-                    $scope.myDz.emit('complete', mockFile);
-                    $scope.myDz.options.maxFiles = $scope.dzOptions.maxFiles - $scope.mockFiles.length;
-                    $scope.myDz.files.push(mockFile);
-                });
-
-            },300);
 
             $scope.dzOptions = {
                 url: '/api/mgr/image/upload',
@@ -219,30 +225,12 @@
             }
         }
 
-        initDropzone();
+        /*========初始化quill==============*/
 
-        /*======================*/
-
-        /**
-         * 富文本框
-         */
-        function initQuill() {
-            $scope.model = ''
-            $scope.readOnly = false
-
-            $scope.changeDetected = false;
-
-
-        }
-
-        //初始化quill
-        initQuill();
-
-        //创建quill editor
         $scope.editorCreated = function (editor) {
             console.log(editor);
+            $scope.readonly = kt.isView
             quillEditor = editor;
-
             if (editor) {
                 var toolbar = quillEditor.getModule('toolbar');
                 editor.getModule("toolbar").addHandler("image", function () {
@@ -251,8 +239,8 @@
             }
 
         }
-        $scope.editorCreated();
 
+        //
         $scope.contentChanged = function (editor, html, text) {
             $scope.changeDetected = true;
             kt.exhibition.exhibitionDetail.description = html;
@@ -260,7 +248,6 @@
 
         //选择图片
         function selectImage(toolbar) {
-
             var fileInput = toolbar.container.querySelector('input.ql-image[type=file]');
             if (fileInput == null) {
                 fileInput = document.createElement('input');
@@ -286,11 +273,9 @@
             ExhibitionService.uploadFile(fd,
                 function (data) {
                     if (data && data.code == 0) {
-                        insertToEditor(data.result.fileUrl);
-
+                        insertToEditor(data.result[0]);
                     }
                 })
-
         }
 
         //回显到quill 文本框中
@@ -304,5 +289,4 @@
             quillEditor.insertEmbed(imagePosition, 'image', url);
         }
     }
-
 })();
