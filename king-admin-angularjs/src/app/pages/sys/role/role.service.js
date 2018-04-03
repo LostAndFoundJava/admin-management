@@ -5,7 +5,7 @@
         .factory('RoleService', RoleService);
 
     /** @ngInject */
-    function RoleService($resource ,toastr,CommonService) {
+    function RoleService($resource ,toastr,CommonService,$window) {
 
         var rest = $resource('sys/role/:id', {}, {
             'create': {method: 'POST'},
@@ -17,7 +17,10 @@
             }).query(param,
                 function (data) {
                     console.log(data);
-                    callback(data)
+                    if(data.code == 401)
+                        $window.open('auth.html', '_self');
+                    else
+                        callback(data)
                 }, function (error) {
                     toastr.error(error, "提示", {"progressBar": true,});
                 });

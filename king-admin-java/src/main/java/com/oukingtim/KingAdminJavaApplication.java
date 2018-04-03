@@ -15,5 +15,7 @@ public class KingAdminJavaApplication {
 						"Local: \t\thttp://localhost:{}\n----------------------------------------------------------",
 				env.getProperty("spring.application.name"),
 				env.getProperty("server.port"));
+
+
 	}
 }

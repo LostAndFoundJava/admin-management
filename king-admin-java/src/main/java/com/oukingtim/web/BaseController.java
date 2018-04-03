@@ -102,7 +102,8 @@ public abstract class BaseController<S extends IService<T>, T extends BaseModel<
      */
     @GetMapping("/{id}")
     public T getInfo(@PathVariable String id) {
-        return service.selectById(id);
+        T t = service.selectById(id);
+        return t;
     }
 
     /**

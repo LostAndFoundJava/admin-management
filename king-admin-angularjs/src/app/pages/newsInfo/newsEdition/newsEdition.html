@@ -19,19 +19,19 @@
                         <label for="categoryId">所属行业</label>
                         <select ng-disabled="kt.isView" class="form-control" ng-model="kt.newsEdition.categoryId"
                                 id="categoryId"
-                                title="所属行业" data-container="body" required
-                                ng-options="item.code as item.text for item in kt.types">
+                                title="所属行业" data-container="body"
+                                ng-options="item for item in kt.newsEdition.categoryName" required>
                         </select>
                     </div>
 
-                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                        <label for="hotLevel">热度级别</label>
-                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.newsEdition.hotLevel"
-                                id="hotLevel"
-                                title="所属行业" data-container="body"
-                                ng-options="item.code as item.text for item in kt.types">
-                        </select>
-                    </div>
+                    <!--<div class="form-group col-md-6 col-sm-6 col-xs-6">-->
+                        <!--<label for="hotLevel">热度级别</label>-->
+                        <!--<select ng-disabled="kt.isView" class="form-control" ng-model="kt.newsEdition.hotLevel"-->
+                                <!--id="hotLevel"-->
+                                <!--title="所属行业" data-container="body"-->
+                                <!--ng-options="item.code as item.text for item in kt.types">-->
+                        <!--</select>-->
+                    <!--</div>-->
 
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="title">新闻标题</label>

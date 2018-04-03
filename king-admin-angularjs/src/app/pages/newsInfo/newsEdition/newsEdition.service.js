@@ -64,6 +64,14 @@
             });
         }
 
+        function getSelectInfo(callback){
+            $resource('mgr/category/all').get(function (data) {
+                callback(data)
+            }),function (error) {
+                toastr.error(error, "提示", {"progressBar": true,});
+            }
+        }
+
         function getInfo(param, callback) {
             rest.get(param,
                 function (data) {
@@ -103,7 +111,8 @@
             save: save,
             getInfo: getInfo,
             getList: getList,
-            uploadFile: uploadFile
+            uploadFile: uploadFile,
+            getSelectInfo: getSelectInfo
         };
 
     }

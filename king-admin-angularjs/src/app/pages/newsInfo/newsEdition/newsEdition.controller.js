@@ -13,6 +13,7 @@
 
         var kt = this;
         kt.newsEdition = {};
+        kt.newsEditionVO = {}
 
         var quillEditor;
         var delta;
@@ -26,6 +27,25 @@
         $scope.ifshow = !kt.isView
         $scope.readonly = kt.isView
 
+        //显示所有的行业
+        $timeout(function () {
+            newsEditionService.getSelectInfo(function (data) {
+                kt.newsEdition.category=[]
+                kt.newsEdition.categoryName=[]
+
+                kt.newsEdition.category=data.result
+                angular.forEach(data.result, function (category) {
+                    kt.newsEdition.categoryName.push(category.name)
+                })
+
+                angular.forEach(data.result,function (category) {
+                    if(category.id == kt.newsEdition.categoryId) {
+                        kt.newsEdition.categoryId = category.name
+                    }
+                })
+            });
+        })
+
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
             newsEditionService.getInfo({id: $stateParams.id},
@@ -33,24 +53,29 @@
                     kt.newsEdition = data;
 
                     $timeout(function () {
-
                         if (kt.newsEdition.content) {
-                            // quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
                             $scope.model = kt.newsEdition.content;
                         }
                     });
                 })
         } else {
             kt.isAdd = true;
+
         }
 
         //保存新增／修改的数据
         kt.save = function () {
-            kt.newsEdition.hot = kt.newsEdition.hot ? 1 : 0;
-            kt.newsEdition.title = kt.newsEdition.title;
+            angular.forEach(kt.newsEdition.category, function (category) {
+                if(kt.newsEdition.categoryId == category.name){
+                    kt.newsEditionVO.categoryId = category.id
+                }
+            })
 
 
-            newsEditionService.save(kt.newsEdition, function (data) {
+            kt.newsEditionVO.hot = kt.newsEdition.hot ? 1 : 0;
+            kt.newsEditionVO.title = kt.newsEdition.title;
+
+            newsEditionService.save(kt.newsEditionVO, function (data) {
                 $state.go('newsInfo.newsEdition');
             });
         }
@@ -80,11 +105,6 @@
         };
 
 
-        kt.newsEdition.title = "title";
-        kt.newsEdition.categoryId = "categoryid";
-        kt.newsEdition.hotLevel = "1";
-
-
         /*========初始化quill==============*/
 
         $scope.editorCreated = function (editor) {
@@ -103,7 +123,7 @@
         //
         $scope.contentChanged = function (editor, html, text) {
             $scope.changeDetected = true;
-            kt.newsEdition.content = html;
+            kt.newsEditionVO.content = html;
         }
 
         //选择图片

@@ -15,34 +15,5 @@ import java.util.List;
  */
 
 public interface CategoryService extends IService<Category> {
-
-
-
-
-    /**
-     * 添加行业
-     *
-     * @param category
-     * @return
-     */
-
-    List<Category> insertCategory(Category category);
-
-    /**
-     * 删除行业（删除子行业)
-     *
-     * @param category
-     * @return
-     */
-
-    boolean delectSubCategory(Category category);
-
-    /**
-     * 删除行业（删除父行业)
-     *
-     * @param category
-     * @return
-     */
-
-    boolean delectParCategory(Category category);
+    List<Category> getAllCategoryName();
 }
