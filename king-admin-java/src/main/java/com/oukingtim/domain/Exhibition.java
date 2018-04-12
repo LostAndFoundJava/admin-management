@@ -34,6 +34,9 @@ public class Exhibition extends MgrBaseModel<Exhibition> {
 
     private String categoryId;
 
+    @TableField(exist = false)
+    private String categoryName;
+
     //region_data.id
     private Integer city;
 
@@ -53,6 +56,9 @@ public class Exhibition extends MgrBaseModel<Exhibition> {
      * 是否设置轮播图
      */
     private Integer hasCarousel;
+
+    @TableField(exist = false)
+    private Integer isChoice;
 
     /**
      * 展会详情
