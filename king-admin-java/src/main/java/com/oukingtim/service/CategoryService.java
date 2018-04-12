@@ -16,6 +16,7 @@ import java.util.List;
  */
 
 public interface CategoryService extends IService<Category> {
+<<<<<<< HEAD
 
 
 
@@ -49,4 +50,7 @@ public interface CategoryService extends IService<Category> {
 
     List<Category> getList(String homepageId);
 
+=======
+    List<Category> getAllCategoryName();
+>>>>>>> bdaadb568b5c124bd820fdcd4b83afc8ce4ccfae
 }

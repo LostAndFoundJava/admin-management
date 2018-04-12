@@ -1,5 +1,6 @@
 package com.oukingtim.config;
 
+import com.oukingtim.config.myIntercept.MySessionIntercept;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.SessionValidationScheduler;
@@ -12,6 +13,7 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,7 +27,7 @@ public class ShiroConfiguration {
     public SessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //设置session过期时间为1小时(单位：毫秒)，默认为30分钟
-        sessionManager.setGlobalSessionTimeout(10 * 60 * 1000);
+        sessionManager.setGlobalSessionTimeout(15 * 10 * 1000);
 //        sessionManager.setGlobalSessionTimeout(5 * 1000);
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionValidationScheduler(sessionManager.getSessionValidationScheduler());
@@ -48,6 +50,11 @@ public class ShiroConfiguration {
         shiroFilter.setLoginUrl("/auth.html");
         shiroFilter.setUnauthorizedUrl("/404.html");
 
+        //自定义拦截器
+        Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
+        filtersMap.put("cj", myIntercept());
+        shiroFilter.setFilters(filtersMap);
+
         Map<String, String> filterMap = new LinkedHashMap<>();
 
         filterMap.put("/api/**", "anon");
@@ -58,9 +65,8 @@ public class ShiroConfiguration {
         filterMap.put("/styles/**", "anon");
         filterMap.put("/auth.html", "anon");
         filterMap.put("/index.html", "anon");
-        filterMap.put("/sys/**", "authc");
-
-        filterMap.put("/**", "authc");
+        filterMap.put("/","anon");
+        filterMap.put("/**", "cj");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilter;
@@ -85,4 +91,16 @@ public class ShiroConfiguration {
         return advisor;
     }
 
+    /**
+     * 自定义拦截器
+     * @return
+     */
+    public MySessionIntercept myIntercept(){
+        MySessionIntercept myIntercept = new MySessionIntercept();
+        //使用cacheManager获取相应的cache来缓存用户登录的会话；用于保存用户—会话之间的关系的；
+        //这里我们还是用之前shiro使用的redisManager()实现的cacheManager()缓存管理
+        //也可以重新另写一个，重新配置缓存时间之类的自定义缓存属性
+        //用于根据会话ID，获取会话进行踢出操作的；
+        return myIntercept;
+    }
 }

@@ -21,11 +21,10 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Category> implements CategoryService {
-
-
     @Autowired
     private CategoryInfoMapper categoryInfoMapper;
 
+<<<<<<< HEAD
     @Autowired
     private HomePageMapper homePageMapper;
 
@@ -62,10 +61,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
      * @param category
      * @return
      */
+=======
+>>>>>>> bdaadb568b5c124bd820fdcd4b83afc8ce4ccfae
     @Override
-    public boolean delectParCategory(Category category) {
-        return false;
+    public List<Category> getAllCategoryName() {
+        return categoryInfoMapper.selectAll();
     }
+<<<<<<< HEAD
 
     @Override
     public List<Category> getList(String homepageId) {
@@ -108,4 +110,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
     }*/
 
 
+=======
+>>>>>>> bdaadb568b5c124bd820fdcd4b83afc8ce4ccfae
 }

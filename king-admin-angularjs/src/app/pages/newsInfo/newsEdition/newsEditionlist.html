@@ -1,7 +1,7 @@
 <div ba-panel ba-panel-title="展会列表" ba-panel-class="xmedium-panel with-scroll light-text">
     <div class="row add-row-editable-table">
         <div class="col-md-4">
-            <button has-perms='newsInfo.newsEditon.add' class="btn btn-success btn-with-icon" ui-sref="newsInfo.newsEditon.add">
+            <button has-perms='newsInfo.newsEdition.add' class="btn btn-success btn-with-icon" ui-sref="newsInfo.newsEdition.add">
                 <i class="ion-plus-round"></i>新增
             </button>
         </div>
@@ -13,7 +13,7 @@
         </div>
     </div>
     <table class="table table-bordered table-hover table-condensed" st-pipe="kt.LoadPage"
-           st-table="kt.exhibitionlist">
+           st-table="kt.newsInfolist">
         <thead>
         <tr class="sortable">
             <th>
@@ -33,7 +33,7 @@
             <td class="check-td">
                 <div class="mail-checkbox">
                     <label class="checkbox-inline custom-checkbox nowrap">
-                        <input type="checkbox" ng-model="kt.checkboxes.items[exhibition.id]">
+                        <input type="checkbox" ng-model="kt.checkboxes.items[newsInfo.id]">
                         <span></span>
                     </label>
                 </div>
@@ -43,17 +43,17 @@
                 {{newsInfo.title}}
             </td>
             <td>
-                {{newsInfo.category}}
+                {{newsInfo.categoryId}}
             </td>
             <td>
                 <div class="buttons">
-                    <button has-perms='newsInfo.newsEditon.view' class="btn btn-info editable-table-button btn-xs btn-with-icon"
-                            ui-sref="newsInfo.newsEditon.view({id:newsInfo.id,isView:true})"><i class="ion-search"></i>查看
+                    <button has-perms='newsInfo.newsEdition.view' class="btn btn-info editable-table-button btn-xs btn-with-icon"
+                            ui-sref="newsInfo.newsEdition.view({id:newsInfo.id,isView:true})"><i class="ion-search"></i>查看
                     </button>
-                    <button has-perms='newsInfo.newsEditon.edit' class="btn btn-warning editable-table-button btn-xs btn-with-icon"
-                            ui-sref="newsInfo.newsEditon.edit({id:newsInfo.id})"><i class="ion-edit"></i>编辑
+                    <button has-perms='newsInfo.newsEdition.edit' class="btn btn-warning editable-table-button btn-xs btn-with-icon"
+                            ui-sref="newsInfo.newsEdition.edit({id:newsInfo.id})"><i class="ion-edit"></i>编辑
                     </button>
-                    <button has-perms='newsInfo.newsEditon.delete' class="btn btn-danger editable-table-button btn-xs btn-with-icon"
+                    <button has-perms='newsInfo.newsEdition.delete' class="btn btn-danger editable-table-button btn-xs btn-with-icon"
                             ng-click="kt.del(newsInfo.id)"><i class="ion-trash-a"></i>删除
                     </button>
                 </div>

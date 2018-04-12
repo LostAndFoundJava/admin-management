@@ -10,7 +10,10 @@
         'KingAdmin.pages.dict',
         'KingAdmin.pages.exhibition',
         'KingAdmin.pages.newsInfo',
+<<<<<<< HEAD
         'KingAdmin.pages.homepage',
+=======
+>>>>>>> bdaadb568b5c124bd820fdcd4b83afc8ce4ccfae
         'KingAdmin.pages.category',
     ])
         .config(routeConfig);
