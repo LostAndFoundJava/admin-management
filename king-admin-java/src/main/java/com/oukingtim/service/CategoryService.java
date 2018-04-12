@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.oukingtim.domain.Category;
+import com.oukingtim.domain.Exhibition;
 
 import java.util.List;
 
@@ -45,4 +46,7 @@ public interface CategoryService extends IService<Category> {
      */
 
     boolean delectParCategory(Category category);
+
+    List<Category> getList(String homepageId);
+
 }

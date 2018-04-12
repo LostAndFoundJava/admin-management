@@ -1,8 +1,11 @@
 package com.oukingtim.domain;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 /**
  * Created by xufan on 2018/03/18.
@@ -16,4 +19,10 @@ public class Category extends MgrBaseModel<Category> {
     private String name;
     //父行业id
     private String parent_del;
+
+    @TableField(exist = false)
+    private Boolean checked;
+
+    @TableField(exist = false)
+    private List<Exhibition> exhibitionList;
 }

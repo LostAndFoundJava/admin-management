@@ -1,13 +1,15 @@
 package com.oukingtim.service.impl;
 
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.oukingtim.domain.Category;
-import com.oukingtim.mapper.CategoryInfoMapper;
+import com.oukingtim.domain.CategoryExhibition;
+import com.oukingtim.domain.Exhibition;
+import com.oukingtim.mapper.*;
 import com.oukingtim.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -24,10 +26,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
     @Autowired
     private CategoryInfoMapper categoryInfoMapper;
 
+    @Autowired
+    private HomePageMapper homePageMapper;
 
+    @Autowired
+    private HomePageCategoryMapper homePageCategoryMapper;
 
+    @Autowired
+    private MgrExhibitionMapper mgrExhibitionMapper;
 
-
+    @Autowired
+    private CategoryExhibitionMapper categoryExhibitionMapper;
 
     @Override
     public List<Category> insertCategory(Category category) {
@@ -57,5 +66,46 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
     public boolean delectParCategory(Category category) {
         return false;
     }
+
+    @Override
+    public List<Category> getList(String homepageId) {
+        List<Category> categoryList = selectList(new EntityWrapper<>());
+        if (homepageId != null) {
+            List<String> categoryIds = homePageCategoryMapper.selectCategoryIdsByHomepageId(homepageId);
+            if (!CollectionUtils.isEmpty(categoryIds)) {
+                for (Category category : categoryList) {
+                    if (categoryIds.contains(category.getId())) {
+                        category.setChecked(true);
+                    }
+                }
+            }
+        }
+        return categoryList;
+    }
+
+    /*@Override
+    public List<Exhibition> getExhibitionsByHomepageId(String homepageId) {
+        List<Exhibition> exhibitions = mgrExhibitionMapper.selectList(new EntityWrapper<>());
+        if (homepageId != null) {
+            List<String> categoryIds = homePageCategoryMapper.selectCategoryIdsByHomepageId(homepageId);
+            if (!CollectionUtils.isEmpty(categoryIds)) {
+                for (String categoryId : categoryIds) {
+                    EntityWrapper wrapper = new EntityWrapper(new CategoryExhibition(categoryId));
+                    List<CategoryExhibition> categoryExhibitions = categoryExhibitionMapper.selectList(wrapper);
+                    for (CategoryExhibition categoryExhibition : categoryExhibitions) {
+                        for (Exhibition exhibition : exhibitions) {
+                            if (exhibition.getId().equals(categoryExhibition.getExhibitionId())) {
+                                exhibition.setHasCarousel(categoryExhibition.getIsCarousel());
+                                exhibition.setHot(categoryExhibition.getIsHot());
+                                exhibition.setIsChoice(categoryExhibition.getIsChoice());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return exhibitions;
+    }*/
+
 
 }
