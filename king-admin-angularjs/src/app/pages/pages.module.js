@@ -10,6 +10,8 @@
         'KingAdmin.pages.dict',
         'KingAdmin.pages.exhibition',
         'KingAdmin.pages.newsInfo',
+        'KingAdmin.pages.homepage',
+        'KingAdmin.pages.category',
     ])
         .config(routeConfig);
 
