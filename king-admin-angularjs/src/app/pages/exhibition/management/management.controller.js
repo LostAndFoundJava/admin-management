@@ -107,7 +107,6 @@
             kt.exhibition.hot = kt.exhibition.hot ? 1 : 0;
             kt.exhibition.hasCarousel = kt.exhibition.hasCarousel ? 1 : 0;
             // kt.exhibition.exhibitionDetail.description = quillEditor.getText();
-            kt.exhibition.exhibitionDetail.files = [];
             for (var index in map) {
                 var imageFile = {};
                 imageFile.fileUrl = map[index];
