@@ -6,6 +6,7 @@ package com.oukingtim.domain;
 * 通过洲id作为pid 查询下属国家id,再通过国家id作为pid查询城市id
 *
 * */
+
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,5 +28,12 @@ public class RegionData extends MgrBaseModel<RegionData> {
     private String namePinyin;
 
     private String code;
+
+    public RegionData() {
+    }
+
+    public RegionData(Integer level) {
+        this.level = level;
+    }
 
 }

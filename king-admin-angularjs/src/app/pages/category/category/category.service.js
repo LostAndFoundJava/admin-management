@@ -70,7 +70,7 @@
                 })
         }
         function getList(param,callback) {
-            $resource('mgr/category/management/getlist').get(param,
+            $resource('mgr/category/management/getList').get(param,
                 function (data) {
                     console.log(data);
                     callback(data);

@@ -1,7 +1,8 @@
 package com.oukingtim.web;
 
 import com.oukingtim.domain.Exhibition;
-import com.oukingtim.service.MgrExhibitionService;
+import com.oukingtim.domain.HomePageHotConfig;
+import com.oukingtim.service.HomePageService;
 import com.oukingtim.web.vm.ResultVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,25 +13,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
- * Created by xufan on 2018/03/18.
+ * Created by xufan on 2018/04/02.
  */
 @RestController
-@Api(description = "展会管理API")
-@RequestMapping("/api/mgr/exhibition/management")
-public class MgrExhibitionController extends MgrBaseController<MgrExhibitionService, Exhibition> {
+@Api(description = "首页管理")
+@RequestMapping("/mgr/homepage/management")
+public class HomeConfController extends MgrBaseController<HomePageService,HomePageHotConfig>{
 
-
-    private static Logger logger = LoggerFactory.getLogger(MgrExhibitionController.class);
-
+    private static Logger logger = LoggerFactory.getLogger(HomeConfController.class);
 
     @ApiOperation(value = "获取展会列表", notes = "根据行业ids获取展会列表")
     @RequestMapping(value = "/exhibitions", method = RequestMethod.GET)
-    public ResultVM getExhibitionsByCategoryId(@Valid @RequestParam("categoryIds") List<String> categoryIds) {
-        List<Exhibition> exhibitions = service.getExhibitionsByCategoryId(categoryIds);
+    public ResultVM getExhibitionsByHomepageId(@RequestParam(required = false) String homepageId) {
+        List<Exhibition> exhibitions = service.getExhibitionsByHomepageId(homepageId);
         return ResultVM.ok(exhibitions);
     }
 }

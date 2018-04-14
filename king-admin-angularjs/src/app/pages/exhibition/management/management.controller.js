@@ -9,7 +9,7 @@
     }]);
 
     /** @ngInject */
-    function ExhibitionCtrl($scope, $timeout, toastr, $stateParams, $state, ExhibitionService) {
+    function ExhibitionCtrl($scope, $timeout, toastr, $stateParams, $state, ExhibitionService,RegionService) {
 
         var kt = this;
         kt.exhibition = {};
@@ -37,6 +37,12 @@
         //quill只读
         $scope.ifshow = !kt.isView
         $scope.readonly = kt.isView
+
+
+        //获取国家级类别
+        RegionService.getCountryList({},function (data) {
+            kt.exhibition.CountryList = data.result;
+        })
 
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {

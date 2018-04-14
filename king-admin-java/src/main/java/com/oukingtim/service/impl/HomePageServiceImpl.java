@@ -5,8 +5,9 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.oukingtim.domain.Category;
 import com.oukingtim.domain.CategoryExhibition;
 import com.oukingtim.domain.Exhibition;
+import com.oukingtim.domain.HomePageHotConfig;
 import com.oukingtim.mapper.*;
-import com.oukingtim.service.CategoryService;
+import com.oukingtim.service.HomePageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -20,12 +21,11 @@ import java.util.List;
  * @version 1.****</b>
  */
 @Service
-public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Category> implements CategoryService {
-    @Autowired
-    private CategoryInfoMapper categoryInfoMapper;
+public class HomePageServiceImpl extends ServiceImpl<HomePageMapper, HomePageHotConfig> implements HomePageService {
+
 
     @Autowired
-    private HomePageMapper homePageMapper;
+    private CategoryInfoMapper categoryInfoMapper;
 
     @Autowired
     private HomePageCategoryMapper homePageCategoryMapper;
@@ -36,54 +36,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
     @Autowired
     private CategoryExhibitionMapper categoryExhibitionMapper;
 
-//    @Override
-//    public List<Category> insertCategory(Category category) {
-//        return null;
-//    }
-
-    /**
-     * 删除行业（删除子行业)
-     *
-     * @param category
-     * @return
-     */
-//
-//    @Override
-//    public boolean delectSubCategory(Category category) {
-//
-//        return false;
-//    }
-
-    /**
-     * 删除行业（删除父行业)
-     *
-     * @param category
-     * @return
-     */
     @Override
-    public List<Category> getAllCategoryName() {
-        return categoryInfoMapper.selectAll();
-    }
-
-    @Override
-    public List<Category> getList(String homepageId) {
-        List<Category> categoryList = selectList(new EntityWrapper<>());
-        if (homepageId != null) {
-            List<String> categoryIds = homePageCategoryMapper.selectCategoryIdsByHomepageId(homepageId);
-            if (!CollectionUtils.isEmpty(categoryIds)) {
-                for (Category category : categoryList) {
-                    if (categoryIds.contains(category.getId())) {
-                        category.setChecked(true);
-                    }
-                }
-            }
-        }
-        return categoryList;
-    }
-
-    /*@Override
     public List<Exhibition> getExhibitionsByHomepageId(String homepageId) {
         List<Exhibition> exhibitions = mgrExhibitionMapper.selectList(new EntityWrapper<>());
+        for(Exhibition exhibition : exhibitions) {
+            Category category = categoryInfoMapper.selectById(exhibition.getCategoryId());
+            if (category != null) {
+                exhibition.setCategoryName(category.getName());
+            }
+        }
         if (homepageId != null) {
             List<String> categoryIds = homePageCategoryMapper.selectCategoryIdsByHomepageId(homepageId);
             if (!CollectionUtils.isEmpty(categoryIds)) {
@@ -103,7 +64,5 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
             }
         }
         return exhibitions;
-    }*/
-
-
+    }
 }
