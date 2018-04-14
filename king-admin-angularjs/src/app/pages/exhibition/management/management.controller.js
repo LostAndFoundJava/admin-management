@@ -9,7 +9,7 @@
     }]);
 
     /** @ngInject */
-    function ExhibitionCtrl($scope, $timeout, toastr, $stateParams, $state, ExhibitionService,RegionService) {
+    function ExhibitionCtrl($scope, $timeout, toastr, $stateParams, $state, ExhibitionService, RegionService,CategoryService) {
 
         var kt = this;
         kt.exhibition = {};
@@ -38,17 +38,36 @@
         $scope.ifshow = !kt.isView
         $scope.readonly = kt.isView
 
+        //获取行业列表
+        CategoryService.getList({},function (data) {
+          kt.CategoryList = data.result;
+        })
 
         //获取国家级类别
-        RegionService.getCountryList({},function (data) {
-            kt.exhibition.CountryList = data.result;
+        RegionService.getCountryList({}, function (data) {
+            kt.CountryList = data.result;
         })
+
+        //获取国家级类别
+        $scope.selectCountry = function () {
+            RegionService.getCityList({countryId:kt.exhibition.country}, function (data) {
+                kt.CityList = data.result;
+            })
+        }
+
 
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
             ExhibitionService.getInfo({id: $stateParams.id},
                 function (data) {
                     kt.exhibition = data;
+
+                    if (kt.exhibition.country) {
+                        RegionService.getCityList({countryId:kt.exhibition.country}, function (data) {
+                            kt.CityList = data.result;
+                        })
+                    }
+
                     angular.forEach(kt.exhibition.exhibitionDetail.files, function (file) {
                         $scope.mockFiles.push({
                             name: file.name,
@@ -62,7 +81,7 @@
 
                         if (kt.exhibition.exhibitionDetail.description) {
                             // quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
-                            $scope.model=kt.exhibition.exhibitionDetail.description;
+                            $scope.model = kt.exhibition.exhibitionDetail.description;
                         }
 
                         // get dropzone instance to emit some events

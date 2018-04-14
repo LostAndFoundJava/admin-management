@@ -31,7 +31,7 @@
                         <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.categoryId"
                                 id="categoryId"
                                 title="所属行业" data-container="body" required
-                                ng-options="item.code as item.text for item in kt.types">
+                                ng-options="item.id as item.name for item in kt.CategoryList">
                         </select>
                     </div>
 
@@ -51,15 +51,19 @@
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="country">举办国</label>
-                        <input id="country" type="text" required
-                               class="form-control tags medium" placeholder="展会举办国" type="text"
-                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.country">
+                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.country"
+                                id="country" ng-change="selectCountry()"
+                                title="展会举办国家" data-container="body" required
+                                ng-options="item.id as item.name for item in kt.CountryList">
+                        </select>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="city">举办城市</label>
-                        <input id="city" type="text" required
-                               class="form-control tags medium" placeholder="展会举办城市" type="text"
-                               value="" ng-disabled="kt.isView" ng-model="kt.exhibition.city">
+                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.city"
+                                id="city"
+                                title="展会举办城市" data-container="body" required
+                                ng-options="item.id as item.name for item in kt.CityList">
+                        </select>
                     </div>
 
 

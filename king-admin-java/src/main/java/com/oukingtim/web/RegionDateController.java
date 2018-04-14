@@ -7,6 +7,7 @@ import com.oukingtim.web.vm.ResultVM;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,10 +22,13 @@ import java.util.List;
  * @version 1.****</b>
  */
 @RestController
-@Api(value = "地域管理")
+@Api(description = "地域管理")
 @RequestMapping("/mgr/regionData/management")
-public class RegionDateController extends MgrBaseController<RegionDataService,RegionData>  {
+public class RegionDateController  {
     private static final Logger logger = LoggerFactory.getLogger(RegionDateController.class);
+
+    @Autowired
+    RegionDataService service;
 
     @GetMapping("/getCountryList")
     public ResultVM getCountryList() {
