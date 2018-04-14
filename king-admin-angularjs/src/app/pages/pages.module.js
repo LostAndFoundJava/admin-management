@@ -13,6 +13,8 @@
         'KingAdmin.pages.homepage',
         'KingAdmin.pages.category',
         'KingAdmin.pages.region',
+        'KingAdmin.pages.excelupload'
+
     ])
         .config(routeConfig);
 
