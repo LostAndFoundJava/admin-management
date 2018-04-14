@@ -24,7 +24,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
     @Autowired
     private CategoryInfoMapper categoryInfoMapper;
 
-<<<<<<< HEAD
     @Autowired
     private HomePageMapper homePageMapper;
 
@@ -37,10 +36,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
     @Autowired
     private CategoryExhibitionMapper categoryExhibitionMapper;
 
-    @Override
-    public List<Category> insertCategory(Category category) {
-        return null;
-    }
+//    @Override
+//    public List<Category> insertCategory(Category category) {
+//        return null;
+//    }
 
     /**
      * 删除行业（删除子行业)
@@ -48,12 +47,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
      * @param category
      * @return
      */
-
-    @Override
-    public boolean delectSubCategory(Category category) {
-
-        return false;
-    }
+//
+//    @Override
+//    public boolean delectSubCategory(Category category) {
+//
+//        return false;
+//    }
 
     /**
      * 删除行业（删除父行业)
@@ -61,13 +60,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
      * @param category
      * @return
      */
-=======
->>>>>>> bdaadb568b5c124bd820fdcd4b83afc8ce4ccfae
     @Override
     public List<Category> getAllCategoryName() {
         return categoryInfoMapper.selectAll();
     }
-<<<<<<< HEAD
 
     @Override
     public List<Category> getList(String homepageId) {
@@ -110,6 +106,4 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
     }*/
 
 
-=======
->>>>>>> bdaadb568b5c124bd820fdcd4b83afc8ce4ccfae
 }

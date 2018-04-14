@@ -1,9 +1,8 @@
 package com.oukingtim.service;
 
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
-import com.oukingtim.domain.Category;
+import com.oukingtim.domain.Exhibition;
+import com.oukingtim.domain.HomePageHotConfig;
 
 import java.util.List;
 
@@ -14,35 +13,8 @@ import java.util.List;
  * @version 1.****</b>
  */
 
-public interface CategoryService extends IService<Category> {
+public interface HomePageService extends IService<HomePageHotConfig> {
 
 
-
-
-    /**
-     * 添加行业
-     *
-     * @param category
-     * @return
-     */
-
-    List<Category> insertCategory(Category category);
-
-    /**
-     * 删除行业（删除子行业)
-     *
-     * @param category
-     * @return
-     */
-
-    boolean delectSubCategory(Category category);
-
-    /**
-     * 删除行业（删除父行业)
-     *
-     * @param category
-     * @return
-     */
-
-    boolean delectParCategory(Category category);
+    List<Exhibition> getExhibitionsByHomepageId(String homepageId);
 }

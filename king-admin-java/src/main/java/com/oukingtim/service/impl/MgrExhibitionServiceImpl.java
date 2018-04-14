@@ -2,13 +2,11 @@ package com.oukingtim.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.oukingtim.domain.Category;
 import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.ExhibitionDetail;
 import com.oukingtim.domain.File;
-import com.oukingtim.domain.SysUser;
-import com.oukingtim.mapper.MgrExhibitionDetailMapper;
-import com.oukingtim.mapper.MgrExhibitionMapper;
-import com.oukingtim.mapper.MgrFileMapper;
+import com.oukingtim.mapper.*;
 import com.oukingtim.service.MgrExhibitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +28,12 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
 
     @Autowired
     private MgrFileMapper mgrFileMapper;
+
+    @Autowired
+    private CategoryInfoMapper categoryInfoMapper;
+
+    @Autowired
+    private CategoryExhibitionMapper categoryExhibitionMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -64,10 +68,10 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
         String exhibitionId = exhibitionVO.getId();
         if (exhibitionVO != null) {
             List<ExhibitionDetail> detailList = mgrExhibitionDetailMapper.selectList(new EntityWrapper<>(new ExhibitionDetail(exhibitionId)));
-            if(!CollectionUtils.isEmpty(detailList)){
+            if (!CollectionUtils.isEmpty(detailList)) {
                 ExhibitionDetail detail = detailList.get(0);
                 if (detail != null) {
-                    String typeId =  detail.getId();
+                    String typeId = detail.getId();
                     List<File> fileList = mgrFileMapper.selectList(new EntityWrapper<>(new File(typeId)));
                     if (!CollectionUtils.isEmpty(fileList)) {
                         detail.setFiles(fileList);
@@ -83,7 +87,7 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateById(Exhibition exhibition){
+    public boolean updateById(Exhibition exhibition) {
         boolean flag = false;
         ExhibitionDetail entity = new ExhibitionDetail();
         //展会id
@@ -118,7 +122,7 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
                         mgrFileMapper.insert(fileEntity);
                     }
                 }
-            }else{
+            } else {
                 entity.setExhibitionId(exhibitionId);
                 mgrExhibitionDetailMapper.delete(new EntityWrapper<>(entity));
             }
@@ -127,5 +131,23 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
         return flag;
 
     }
+
+    @Override
+    public List<Exhibition> getExhibitionsByCategoryId(List<String> categoryIds) {
+        EntityWrapper<Exhibition> wrapper = new EntityWrapper<>();
+
+        for (String categoryId : categoryIds) {
+            wrapper.or().in("category_id", categoryId);
+        }
+        List<Exhibition> exhibitions = super.selectList(wrapper);
+        for (Exhibition exhibition : exhibitions) {
+            Category category = categoryInfoMapper.selectById(exhibition.getCategoryId());
+            if (category != null) {
+                exhibition.setCategoryName(category.getName());
+            }
+        }
+        return exhibitions;
+    }
+
 
 }

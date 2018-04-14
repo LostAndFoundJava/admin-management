@@ -9,10 +9,13 @@
     }]);
 
     /** @ngInject */
-    function HomepageCtrl($scope, $timeout, toastr, $stateParams, $state, HomepageService,CategoryService) {
+    function HomepageCtrl($scope, $timeout, toastr, $stateParams, $state, HomepageService,CategoryService,RegionService) {
 
         var kt = this;
+        //回显
         kt.homepage = {};
+
+        //提交服务器
         kt.homepageConfig = {};
 
         if ($stateParams.isView) {
@@ -45,9 +48,9 @@
 
         //保存新增／修改的数据
         kt.save = function () {
-            kt.homepage.extension = JSON.stringify(kt.homepage.extension);
-            kt.homepage.homePageCategoryList = [];
-            kt.homepage.categoryExhibitionList = [];
+            kt.homepageConfig.extension = JSON.stringify(kt.homepage.extension);
+            kt.homepageConfig.homePageCategoryList = [];
+            kt.homepageConfig.categoryExhibitionList = [];
 
             //首页精选行业
             angular.forEach(kt.homepage.categoryList, function(category) {
@@ -55,7 +58,7 @@
                     var homePageCategory = {}
                     homePageCategory.categoryId = category.id;
                     homePageCategory.isChoice = 1;
-                    kt.homepage.homePageCategoryList.push(homePageCategory);
+                    kt.homepageConfig.homePageCategoryList.push(homePageCategory);
                 }
             })
 
@@ -74,12 +77,12 @@
                     if(exhibition.isChoice){
                         categoryExhibition.isChoice = 1;
                     }
-                    kt.homepage.categoryExhibitionList.push(categoryExhibition);
+                    kt.homepageConfig.categoryExhibitionList.push(categoryExhibition);
                 }
 
             })
 
-            HomepageService.save(kt.homepage, function (data) {
+            HomepageService.save(kt.homepageConfig, function (data) {
                 $state.go('homepage.management');
             });
         }
