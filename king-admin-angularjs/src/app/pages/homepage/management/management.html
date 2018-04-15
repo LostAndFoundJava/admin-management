@@ -113,7 +113,7 @@
                 </div>
                 <br>
                 <!--<div class="col-md-2 col-md-offset-6 ">-->
-                    <button ng-click="search()" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
+                    <button ng-click="getExhibitionByCategoryIds()" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
                         <i class="ion-search"></i>查询
                     </button>
                 <!--</div>-->
@@ -137,7 +137,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="exhibition in kt.homepage.exhibitionList">
+                <tr ng-repeat="exhibition in kt.homepage.exhibitions">
 
                     <td>{{$index+1}}</td>
                     <td>

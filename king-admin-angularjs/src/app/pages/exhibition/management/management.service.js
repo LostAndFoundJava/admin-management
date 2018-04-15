@@ -97,13 +97,24 @@
                 });
         }
 
+        function getExhibitions(param, callback) {
+            $resource('api/mgr/exhibition/management/exhibitions').get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
         return {
             getSmartData: getSmartData,
             del: del,
             save: save,
             getInfo: getInfo,
             getList: getList,
-            uploadFile: uploadFile
+            uploadFile: uploadFile,
+            getExhibitions:getExhibitions
         };
 
     }
