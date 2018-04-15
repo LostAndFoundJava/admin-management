@@ -24,9 +24,7 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
     private ReadExcel readExcel;
     @Override
     public List<FlowSrcModel> importExcel(String fileName, MultipartFile file) {
-
         List<FlowSrcModel> list = readExcel.gotExcelInfo(fileName, file);
-
         return list;
     }
 }

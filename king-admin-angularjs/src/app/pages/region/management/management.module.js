@@ -39,7 +39,7 @@
                     }
                 }
             })
-            .state('homepage.management.view', {
+            .state('homepage1.management.view', {
                 url: '/view/:id?isView',
                 title: '查看首页配置',
                 views: {

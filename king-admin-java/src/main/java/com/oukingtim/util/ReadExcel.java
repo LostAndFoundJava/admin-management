@@ -1,7 +1,6 @@
 package com.oukingtim.util;
 
 import com.oukingtim.domain.FlowSrcModel;
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -89,6 +88,7 @@ public class ReadExcel {
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
+            throw new BizException("导入excel数据发生错误，请重新导入");
         } finally {
             if (is != null) {
                 try {
@@ -125,6 +125,7 @@ public class ReadExcel {
             customerList = readExcelValue(wb);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new BizException("导入excel错误，请重新导入");
         }
         return customerList;
     }
@@ -161,27 +162,48 @@ public class ReadExcel {
                 Cell cell = row.getCell(c);
                 if (null != cell) {
                     if (c == 0) {//第一列不读
-                    } else if (c == 1) {
                         flowSrcModel.setCompany(cell.getStringCellValue());
-                    } else if (c == 2) {
-                        flowSrcModel.setClientName(cell.getStringCellValue());
-                    } else if (c == 3) {
-                        flowSrcModel.setAddress(cell.getStringCellValue());
-                    } else if (c == 4) {
-                        flowSrcModel.setMobileNo(cell.getStringCellValue());
-                    } else if (c == 5) {
-                        flowSrcModel.setQqNo(cell.getStringCellValue());
-                    } else if (c == 6) {
-                        flowSrcModel.setEmail(cell.getStringCellValue());
-                    } else if (c == 7) {
-                        flowSrcModel.setSrc(cell.getStringCellValue());
-                    } else if (c == 8) {
-                        flowSrcModel.setUid(cell.getStringCellValue());
-                    } else if (c == 9) {
-                        if (StringUtils.isNotBlank(cell.getStringCellValue())) {
-
-                            flowSrcModel.setCreateTime(DateUtil.stringToDate(cell.getStringCellValue()));
+                    } else if (c == 1) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
                         }
+                        flowSrcModel.setClientName(cell.getStringCellValue());
+                    } else if (c == 2) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setAddress(cell.getStringCellValue());
+                    } else if (c == 3) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setMobileNo(cell.getStringCellValue());
+                    } else if (c == 4) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setQqNo(cell.getStringCellValue());
+                    } else if (c == 5) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setEmail(cell.getStringCellValue());
+                    } else if (c == 6) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setSrc(cell.getStringCellValue());
+                    } else if (c == 7) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setUid(cell.getStringCellValue());
+                    } else if (c == 8) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setCreateTime(DateUtil.stringToDate(cell.getStringCellValue()));
+                    } else if (c == 9) {
                     }
                 }
             }

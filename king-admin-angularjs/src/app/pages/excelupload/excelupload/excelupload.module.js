@@ -3,6 +3,9 @@
 
     angular.module('KingAdmin.pages.excelupload.excelupload', [])
         .config(routeConfig);
+    // angular.module('KingAdmin.pages.excelupload.excelupload', [
+    //     'angularFileUpload'
+    // ]).config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider) {
@@ -10,6 +13,7 @@
             .state('excelupload.excelupload', {
                 url: '/excelupload',
                 templateUrl: 'app/pages/excelupload/excelupload/excelupload.html',
+                // controller: 'AppController',
                 controller: 'ExcelUploadCtrl',
                 controllerAs: 'kt',
                 title: 'excel导入',

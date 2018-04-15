@@ -1,8 +1,7 @@
 package com.oukingtim.web;
 
-import com.oukingtim.domain.FlowSrcModel;
-import com.oukingtim.util.ReadExcel;
-import io.swagger.annotations.Api;
+import com.oukingtim.service.VisaSignService;
+import com.oukingtim.web.vm.ResultVM;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,34 +11,38 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 /**
- * <br>创建日期：2018/4/14
+ * <br>创建日期：2018/4/15
  *
  * @author JackieChan</b>
  * @version 1.****</b>
  */
 @RestController
-@Api(description = "用户信息execel导入")
-@RequestMapping("/api/mgr/excel111111")
-public class ExcelUploadController {
+@RequestMapping("/api/mgr/visa")
+public class VisaManagementController {
     @Autowired
-    private ReadExcel readExcel;
-    @ApiOperation(value = "导入excel", notes = "导入excel")
-    @RequestMapping(value = "/excelupload111111")
-    public String uploadExcel(HttpServletRequest request, HttpServletResponse response, MultipartFile[] files) {
-        String uploadFile = "";
+    private VisaSignService visaSignService;
+
+    @ApiOperation(value = "上传签证文件", notes = "上传签证文件")
+    @RequestMapping(value = "/visaupload")
+    public ResultVM uploadExcel(HttpServletRequest request, HttpServletResponse response, MultipartFile[] files) {
+        Map<String, String> map = new HashMap<>();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        System.out.println("通过 jquery.form.js 提供的ajax方式上传文件！");
         Iterator<String> iter = multipartRequest.getFileNames();
         while (iter.hasNext()) {
             String fileName;
             MultipartFile file = multipartRequest.getFile(iter.next());
-            fileName = file.getOriginalFilename();
-            List<FlowSrcModel> list = readExcel.gotExcelInfo(fileName, file);
+            String filePath = "/Users/JackieChan/visa";
+            map = visaSignService.uploadFile(filePath, file);
         }
-        return uploadFile;
+        if (map == null ||map.isEmpty()|| (!map.isEmpty() && "1".equals(map.get("error")))){
+            return ResultVM.error("上传文件错误，请重新上传");
+        }
+        return ResultVM.ok();
     }
+
 }

@@ -1,18 +1,18 @@
 (function () {
     'use strict';
 
-    angular.module('KingAdmin.pages.excelupload', [
-        'KingAdmin.pages.excelupload.excelupload',
+    angular.module('KingAdmin.pages.visaupload', [
+        'KingAdmin.pages.visaupload.visaupload',
     ]).config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('excelupload', {
-                url: '/mgr/excel',
+            .state('visaupload', {
+                url: '/api/mgr/visa',
                 template: '<ui-view></ui-view>',
                 abstract: true,
-                title: 'excel导入',
+                title: 'visa文件导入',
                 sidebarMeta: {
                     icon: 'ion-grid',
                     order: 300,
