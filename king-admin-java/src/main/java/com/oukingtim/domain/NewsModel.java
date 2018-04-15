@@ -28,6 +28,8 @@ public class NewsModel extends MgrBaseModel<NewsModel> {
     private Integer hotLevel;
     //新闻标题
     private  String title;
+    //新闻分类
+    private String newsCategory;
     @TableField(exist = false)
     private String categoryName;
 }
