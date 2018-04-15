@@ -4,6 +4,7 @@
     angular.module('KingAdmin.pages.newsInfo.newsEdition')
         .controller('newsEditionCtrl', newsEditionCtrl);
 
+
     angular.module('KingAdmin.pages.newsInfo.newsEdition').config(['ngQuillConfigProvider', function (ngQuillConfigProvider) {
         ngQuillConfigProvider.set();
     }]);
@@ -14,6 +15,12 @@
         var kt = this;
         kt.newsEdition = {};
         kt.newsEditionVO = {}
+
+
+        $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
+
+        $scope.multipleDemo = {};
+        $scope.multipleDemo.colors2 = 'Blue';
 
         var quillEditor;
         var delta;
