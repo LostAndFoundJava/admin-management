@@ -33,7 +33,7 @@
                 title: '编辑首页配置',
                 views: {
                     '@': {
-                        templateUrl: 'app/pages/homepage/management/management.html',
+                        templateUrl: 'app/pages/region/management/management.html',
                         controller: 'HomepageCtrl',
                         controllerAs: 'kt',
                     }

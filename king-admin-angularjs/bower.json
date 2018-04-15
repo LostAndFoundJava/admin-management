@@ -60,7 +60,8 @@
     "ngstorage": "^0.3.11",
     "angular-ui-bootstrap-datetimepicker": "^2.5.1",
     "ng-quill": "3.6.0",
-    "ngdropzone" : "2.0.1"
+    "ngdropzone" : "2.0.1",
+    "angular-ui-select" : "0.19.8"
   },
   "resolutions": {
     "angular": "~1.5.8"
