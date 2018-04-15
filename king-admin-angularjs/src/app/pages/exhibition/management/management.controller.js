@@ -9,17 +9,17 @@
     }]);
 
     /** @ngInject */
-    function ExhibitionCtrl($scope, $timeout, toastr, $stateParams, $state, ExhibitionService, RegionService,CategoryService) {
+    function ExhibitionCtrl($scope, $timeout, toastr, $stateParams, $state, ExhibitionService, RegionService, CategoryService) {
 
         var kt = this;
         kt.exhibition = {};
         kt.exhibition.exhibitionDetail = {};
-        kt.exhibition.exhibitionDetail.files = [];
         // var imageFile = {};
         var quillEditor;
         var delta;
         $scope.mockFiles = [];
 
+        var imageSize = "!400-400";
 
         //初始化dropzone
         initDropzone();
@@ -39,8 +39,8 @@
         $scope.readonly = kt.isView
 
         //获取行业列表
-        CategoryService.getList({},function (data) {
-          kt.CategoryList = data.result;
+        CategoryService.getList({}, function (data) {
+            kt.CategoryList = data.result;
         })
 
         //获取国家级类别
@@ -50,7 +50,7 @@
 
         //获取国家级类别
         $scope.selectCountry = function () {
-            RegionService.getCityList({countryId:kt.exhibition.country}, function (data) {
+            RegionService.getCityList({countryId: kt.exhibition.country}, function (data) {
                 kt.CityList = data.result;
             })
         }
@@ -63,7 +63,7 @@
                     kt.exhibition = data;
 
                     if (kt.exhibition.country) {
-                        RegionService.getCityList({countryId:kt.exhibition.country}, function (data) {
+                        RegionService.getCityList({countryId: kt.exhibition.country}, function (data) {
                             kt.CityList = data.result;
                         })
                     }
@@ -77,11 +77,16 @@
                         });
                     })
 
+                    if (kt.exhibition.exhibitionDetail.briefInfo) {
+                        kt.customBriefInfo = JSON.parse(kt.exhibition.exhibitionDetail.briefInfo);
+                    }
+
                     $timeout(function () {
 
                         if (kt.exhibition.exhibitionDetail.description) {
                             // quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
-                            $scope.model = kt.exhibition.exhibitionDetail.description;
+                            // $scope.model = kt.exhibition.exhibitionDetail.description;
+                            kt.customDetail = JSON.parse(kt.exhibition.exhibitionDetail.description);
                         }
 
                         // get dropzone instance to emit some events
@@ -102,10 +107,13 @@
 
         //保存新增／修改的数据
         kt.save = function () {
+            kt.exhibition.exhibitionDetail.files = [];
             kt.exhibition.startTime = formatDate(kt.exhibition.startTime);
             kt.exhibition.endTime = formatDate(kt.exhibition.endTime);
             kt.exhibition.hot = kt.exhibition.hot ? 1 : 0;
             kt.exhibition.hasCarousel = kt.exhibition.hasCarousel ? 1 : 0;
+            kt.exhibition.exhibitionDetail.description = JSON.stringify(kt.customDetail);
+            kt.exhibition.exhibitionDetail.briefInfo = JSON.stringify(kt.customBriefInfo);
             // kt.exhibition.exhibitionDetail.description = quillEditor.getText();
             for (var index in map) {
                 var imageFile = {};
@@ -211,7 +219,7 @@
                         var index = Date.parse(new Date()) + (++index_i);
                         file.previewElement.querySelector("img")['id'] = index;
                         map[index] = file.serverImgUrl;
-                        $scope.myDz.createThumbnailFromUrl(file, file.serverImgUrl, null, true);
+                        $scope.myDz.createThumbnailFromUrl(file, file.serverImgUrl + imageSize, null, true);
                     }
                 },
                 'success': function (file, xhr) {
@@ -223,6 +231,7 @@
                     angular.forEach(xhr.result, function (fileUrl) {
                         var index = Date.parse(new Date()) + (++index_i);
                         file.previewElement.querySelector("img")['id'] = index;
+                        file.previewElement.querySelector("img")['src'] = fileUrl + imageSize;
                         map[index] = fileUrl;
                     })
 
@@ -310,7 +319,44 @@
             if (range) {
                 imagePosition = range.index;
             }
-            quillEditor.insertEmbed(imagePosition, 'image', url);
+            quillEditor.insertEmbed(imagePosition, 'image', url + imageSize);
         }
+
+
+        //自定义详情部分
+        kt.customDetail = [];
+        var detail = {
+            detailTitle: '',
+            detailContent: ''
+        };
+
+        $scope.addDetail = function () {
+            var copyDetail = angular.copy(detail);
+            kt.customDetail.push(copyDetail);
+        }
+
+        $scope.removeDetail = function (item) {
+            var index = kt.customDetail.indexOf(item);
+            kt.customDetail.splice(index, 1);
+        }
+
+        //自定义展会简介
+        kt.customBriefInfo = [];
+        var briefInfo = {
+            key: '',
+            value: ''
+        };
+
+        $scope.addBriefInfo = function () {
+            var copyDetail = angular.copy(briefInfo);
+            kt.customBriefInfo.push(copyDetail);
+        }
+
+        $scope.removeBriefInfo = function (item) {
+            var index = kt.customBriefInfo.indexOf(item);
+            kt.customBriefInfo.splice(index, 1);
+        }
+
+
     }
 })();

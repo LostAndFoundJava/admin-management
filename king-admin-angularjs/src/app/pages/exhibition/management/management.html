@@ -104,48 +104,82 @@
                 <hr/>
 
                 <div class="row">
-                    <h5 class="form-section">展会说明</h5>
-
-
-                    <div ng-if="ifshow">
-                        <ng-quill-editor
-                                ng-disabled="kt.isView"
-                                ng-model="model"
-                                placeholder="描述展会"
-                                id="description"
-                                on-editor-created="editorCreated(editor)"
-                                on-content-changed="contentChanged(editor, html, text)"
-                                read-only="readonly">
-                        </ng-quill-editor>
-                    </div>
-                    <div ng-if="!ifshow">
-                        <ng-quill-editor
-                                ng-model="model"
-                                read-only="readonly"
-                                modules="{toolbar: false}">
-                        </ng-quill-editor>
+                    <h5 class="form-section">展会简介</h5>
+                    <button type="button" class="btn btn-danger btn-with-icon" ng-click="addBriefInfo()"
+                            ng-if="!kt.isView">
+                        <i class="ion-heart"></i>添加
+                    </button>
+                </div>
+                <div class="form-group ">
+                    <div class="row" ng-repeat="item in kt.customBriefInfo track by $index">
+                        <div class="row">
+                            <div class="form-group col-sm-5">
+                                <input type="text"
+                                       class="form-control tags medium" placeholder="名称" type="text"
+                                       value="" ng-disabled="kt.isView" ng-model="item.key">
+                            </div>
+                            <div class="form-group col-sm-5">
+                                <input type="text"
+                                       class="form-control tags medium" placeholder="内容" type="text"
+                                       value="" ng-disabled="kt.isView" ng-model="item.value">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <button type="button" class="btn btn-danger btn-with-icon" ng-click="removeBriefInfo()"
+                                        ng-if="!kt.isView">
+                                    <i class="ion-heart"></i>删除
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr/>
 
 
             </div>
+
+
+            <div class="row">
+                <h5 class="form-section">展会说明</h5>
+                <button type="button" class="btn btn-danger btn-with-icon" ng-click="addDetail()" ng-if="!kt.isView">
+                    <i class="ion-heart"></i>添加详情模块
+                </button>
+            </div>
+            <div class="row" ng-repeat="item in kt.customDetail track by $index">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text"
+                               class="form-control tags medium" placeholder="二级标题" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="item.detailTitle">
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-danger btn-with-icon" ng-click="removeDetail()"
+                                ng-if="!kt.isView">
+                            <i class="ion-heart"></i>删除
+                        </button>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <ng-quill-editor
+                                ng-disabled="kt.isView"
+                                ng-model="item.detailContent"
+                                placeholder="详情描述"
+                                on-editor-created="editorCreated(editor)"
+                                read-only="readonly">
+                        </ng-quill-editor>
+                    </div>
+                </div>
+
+                <hr>
+            </div>
+
         </form>
         <div class="row">
             <h5 class="form-section">展会图片</h5>
-            <!-- Dropzone 2 -->
-
             <div id="dropzone2" class="dropzone sm" options="dzOptions" methods="dzMethods" ng-disabled="kt.isView"
                  callbacks="dzCallbacks" ng-dropzone></div>
             <div style="text-align:center;" id="startUpload" ng-show="showBtns">
                 <button ng-show="!readonly" ng-click="dzMethods.processQueue();">上传图片</button>
-                <!--<button ng-click="dzMethods.removeAllFiles();">Remove All Files</button>-->
-                <!--<button ng-click="dzMethods.removeFile(lastFile);">Remove Last File</button>-->
-                <!--<button ng-click="getDropzone();">Get getDropzone instance</button>-->
-                <!--<button ng-click="getFiles();">Get total files</button>-->
             </div>
-            <!--<div class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone ng-model="kt.exhibitionDetail.files"></div>-->
         </div>
-        <!--</div>-->
     </div>
 </div>
