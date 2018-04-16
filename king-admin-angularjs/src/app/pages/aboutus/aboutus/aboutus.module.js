@@ -1,22 +1,19 @@
 (function () {
     'use strict';
 
-    angular.module('KingAdmin.pages.excelupload.excelupload', [])
+    angular.module('KingAdmin.pages.aboutus.aboutus', [])
         .config(routeConfig);
-    // angular.module('KingAdmin.pages.excelupload.excelupload', [
-    //     'angularFileUpload'
-    // ]).config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('excelupload.excelupload', {
-                url: '/excelupload',
-                templateUrl: 'app/pages/excelupload/excelupload/excelupload.html',
+            .state('aboutus.aboutus', {
+                url: '/aboutdetail',
+                templateUrl: 'app/pages/aboutus/aboutus/aboutus.html',
                 // controller: 'AppController',
                 controller: 'ExcelUploadCtrl',
                 controllerAs: 'kt',
-                title: 'excel导入',
+                title: '首页aboutus',
                 sidebarMeta: {
                     order: 1,
                 },

@@ -14,7 +14,8 @@
         'KingAdmin.pages.category',
         'KingAdmin.pages.region',
         'KingAdmin.pages.excelupload',
-        'KingAdmin.pages.visaupload'
+        'KingAdmin.pages.visaupload',
+        'KingAdmin.pages.aboutus'
 
     ])
         .config(routeConfig);
