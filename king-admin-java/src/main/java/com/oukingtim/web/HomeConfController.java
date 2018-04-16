@@ -31,4 +31,12 @@ public class HomeConfController extends MgrBaseController<HomePageService,HomePa
         List<Exhibition> exhibitions = service.getExhibitionsByHomepageId(homepageId);
         return ResultVM.ok(exhibitions);
     }
+
+
+    @ApiOperation(value = "获取展会列表", notes = "根据首页id及行业ids获取展会列表")
+    @RequestMapping(value = "/someExhibitions", method = RequestMethod.GET)
+    public ResultVM getExhibitionsByHomepageId(@RequestParam(required = false) String homepageId,@RequestParam(required = false) List<String> categoryIds) {
+        List<Exhibition> exhibitions = service.getExhibitionsByHomepageId(homepageId,categoryIds);
+        return ResultVM.ok(exhibitions);
+    }
 }

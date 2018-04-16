@@ -94,6 +94,16 @@
                 })
         }
 
+        function getSomeExhibitions(param, callback) {
+            $resource('mgr/homepage/management/someExhibitions').get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
         function uploadFile(param, callback) {
             $resource('api/mgr/image/upload', {}, {
                 'upload': {method: 'POST',headers:{'Content-Type': undefined}},
@@ -115,6 +125,7 @@
             getList: getList,
             uploadFile: uploadFile,
             getExhibitions: getExhibitions,
+            getSomeExhibitions:getSomeExhibitions
         };
 
     }

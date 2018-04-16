@@ -31,4 +31,9 @@ public class HomePageHotConfig extends MgrBaseModel<HomePageHotConfig>{
 
     @TableField(exist = false)
     private List<CategoryExhibition> categoryExhibitionList;
+
+    public HomePageHotConfig(){
+
+    }
+
 }
