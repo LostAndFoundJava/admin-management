@@ -99,7 +99,8 @@
                     $resource('api/login', {}, {'login': {method: 'POST'}})
                         .login($scope.user, function (data) {
                             if (data.code == 0) {
-                                $window.open('index.html', '_self');
+//                                $window.open('index.html', '_self');
+                                location.href = 'index.html';
                             }else{
                                 toastr.warning(data.msg, "提示", {"progressBar": true,});
                             }

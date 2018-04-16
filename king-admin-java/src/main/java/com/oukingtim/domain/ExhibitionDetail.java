@@ -26,6 +26,8 @@ public class ExhibitionDetail extends MgrBaseModel<ExhibitionDetail> {
 
     private String picture;
 
+    private String briefInfo;
+
     @TableField(exist = false)
     private List<File> files;
 

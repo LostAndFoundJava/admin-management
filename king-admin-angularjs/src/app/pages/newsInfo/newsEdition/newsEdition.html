@@ -50,6 +50,16 @@
             </div>
             <hr/>
 
+            <div>
+                <ui-select tagging tagging-label="false" ng-model="multipleDemo.colors2" theme="bootstrap"
+                           ng-disabled="disabled" style="width: 300px;" title="Choose a color">
+                    <ui-select-match placeholder="Select colors...">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="color in availableColors | filter:$select.search">
+                        {{color}}
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
             <div class="row">
                 <h5 class="form-section">新闻内容</h5>
 

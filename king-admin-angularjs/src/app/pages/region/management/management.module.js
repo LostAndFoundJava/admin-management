@@ -33,13 +33,13 @@
                 title: '编辑首页配置',
                 views: {
                     '@': {
-                        templateUrl: 'app/pages/homepage/management/management.html',
+                        templateUrl: 'app/pages/region/management/management.html',
                         controller: 'HomepageCtrl',
                         controllerAs: 'kt',
                     }
                 }
             })
-            .state('homepage1.management.view', {
+            .state('region.management.view', {
                 url: '/view/:id?isView',
                 title: '查看首页配置',
                 views: {

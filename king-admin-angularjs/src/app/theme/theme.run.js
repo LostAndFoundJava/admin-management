@@ -37,7 +37,8 @@
                         $rootScope.$pageFinishedLoading = true;
                         stateHandler.initialize();
                     } else {
-                        $window.open('auth.html', '_self');
+                        // $window.open('auth.html', '_self');
+                        window.location.href = 'auth.html';
                     }
                 }
             );

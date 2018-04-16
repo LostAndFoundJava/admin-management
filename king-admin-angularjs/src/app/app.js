@@ -20,5 +20,6 @@ angular.module('KingAdmin', [
     'textAngular',
     'ngQuill',
     'thatisuday.dropzone',
+    'ui.select',
     'ngFileUpload',
 ]);

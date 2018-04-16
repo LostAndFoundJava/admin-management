@@ -65,7 +65,7 @@
         }
 
         function getSelectInfo(callback){
-            $resource('mgr/category/all').get(function (data) {
+            $resource('mgr/category/management/all').get(function (data) {
                 callback(data)
             }),function (error) {
                 toastr.error(error, "提示", {"progressBar": true,});
