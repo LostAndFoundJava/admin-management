@@ -14,7 +14,9 @@ import lombok.EqualsAndHashCode;
 @TableName("region_data")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class RegionData extends MgrBaseModel<RegionData> {
+public class RegionData{
+    private Integer id;
+
     private Integer pid;
 
     private String path;

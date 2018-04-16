@@ -15,6 +15,18 @@ import java.util.List;
 
 public interface HomePageService extends IService<HomePageHotConfig> {
 
-
+    /**
+     * 获取首页所有展会及相关设置信息
+     * @param homepageId
+     * @return
+     */
     List<Exhibition> getExhibitionsByHomepageId(String homepageId);
+
+    /**
+     * 获取首页及选定的行业的所有展会及相关设置信息
+     * @param homepageId
+     * @param categoryIds
+     * @return
+     */
+    List<Exhibition> getExhibitionsByHomepageId(String homepageId, List<String> categoryIds);
 }

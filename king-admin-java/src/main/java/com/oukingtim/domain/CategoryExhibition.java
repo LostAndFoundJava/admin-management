@@ -23,6 +23,10 @@ public class CategoryExhibition extends MgrBaseModel<CategoryExhibition>{
     @TableField(exist = false)
     private Exhibition exhibition;
 
+    public CategoryExhibition(){
+
+    }
+
     public CategoryExhibition(String categoryId){
         this.categoryId = categoryId;
     }

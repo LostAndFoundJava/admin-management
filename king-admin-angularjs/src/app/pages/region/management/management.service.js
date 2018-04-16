@@ -7,13 +7,13 @@
     /** @ngInject */
     function RegionService($resource, toastr, CommonService) {
 
-        var rest = $resource('mgr/region/management/:id', {}, {
+        var rest = $resource('mgr/regionData/management/:id', {}, {
             'create': {method: 'POST'},
             'update': {method: 'PUT'},
         });
 
         function getSmartData(param, callback) {
-            $resource('mgr/region/management/getSmartData', {}, {
+            $resource('mgr/regionData/management/getSmartData', {}, {
                 'query': {method: 'POST'}
             }).query(param,
                 function (data) {
@@ -75,7 +75,7 @@
         }
 
         function  getCountryList(param, callback) {
-            $resource('mgr/region/management/getCountryList').get(param,
+            $resource('mgr/regionData/management/getCountryList').get(param,
                 function (data) {
                     console.log(data);
                     callback(data);
@@ -84,7 +84,7 @@
                 })
         }
         function getCityList(param, callback) {
-            $resource('mgr/region/management/getCityList').get(param,
+            $resource('mgr/regionData/management/getCityList').get(param,
                 function (data) {
                     console.log(data);
                     callback(data);
@@ -93,15 +93,6 @@
                 })
         }
 
-        function getExhibitions(param, callback) {
-            $resource('mgr/region/management/exhibitions').get(param,
-                function (data) {
-                    console.log(data);
-                    callback(data);
-                }, function (error) {
-                    toastr.error(error, "提示", {"progressBar": true,});
-                })
-        }
 
         function uploadFile(param, callback) {
             $resource('api/mgr/image/upload', {}, {
