@@ -16,12 +16,6 @@
         kt.newsEdition = {};
         kt.newsEditionVO = {}
 
-
-        $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
-
-        $scope.multipleDemo = {};
-        $scope.multipleDemo.colors2 = 'Blue';
-
         var quillEditor;
         var delta;
 
@@ -34,9 +28,10 @@
         $scope.ifshow = !kt.isView
         $scope.readonly = kt.isView
 
-        //显示所有的行业
+        //显示所有的行业和新闻类别
         $timeout(function () {
-            newsEditionService.getSelectInfo(function (data) {
+            newsEditionService.getSelectCategoryInfo(function (data) {
+                //行业
                 kt.newsEdition.category=[]
                 kt.newsEdition.categoryName=[]
 
@@ -51,6 +46,14 @@
                     }
                 })
             });
+
+            newsEditionService.getSelectNewscategoryInfo(function (data) {
+                //新闻类别
+                kt.newsEdition.newsCategorys = []
+                angular.forEach(data.result,function (newsCategory) {
+                    kt.newsEdition.newsCategorys.push(newsCategory.newsCategory)
+                })
+            });
         })
 
         //由id判断是新增还是修改/查看（回显数据）
@@ -58,7 +61,10 @@
             newsEditionService.getInfo({id: $stateParams.id},
                 function (data) {
                     kt.newsEdition = data;
-
+                    if(kt.newsEdition.hot==1)
+                        kt.newsEdition.hot=true
+                    else
+                        kt.newsEdition.hot=false
                     $timeout(function () {
                         if (kt.newsEdition.content) {
                             $scope.model = kt.newsEdition.content;
@@ -81,6 +87,7 @@
 
             kt.newsEditionVO.hot = kt.newsEdition.hot ? 1 : 0;
             kt.newsEditionVO.title = kt.newsEdition.title;
+            kt.newsEditionVO.newsCategory = kt.newsEdition.newsCategory;
 
             newsEditionService.save(kt.newsEditionVO, function (data) {
                 $state.go('newsInfo.newsEdition');
