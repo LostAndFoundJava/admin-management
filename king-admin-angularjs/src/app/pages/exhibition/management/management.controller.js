@@ -107,15 +107,17 @@
 
         //保存新增／修改的数据
         kt.save = function () {
+            var flag = false;
             kt.exhibition.exhibitionDetail.files = [];
             kt.exhibition.startTime = formatDate(kt.exhibition.startTime);
             kt.exhibition.endTime = formatDate(kt.exhibition.endTime);
-            kt.exhibition.hot = kt.exhibition.hot ? 1 : 0;
-            kt.exhibition.hasCarousel = kt.exhibition.hasCarousel ? 1 : 0;
             kt.exhibition.exhibitionDetail.description = JSON.stringify(kt.customDetail);
             kt.exhibition.exhibitionDetail.briefInfo = JSON.stringify(kt.customBriefInfo);
-            // kt.exhibition.exhibitionDetail.description = quillEditor.getText();
             for (var index in map) {
+                if(!flag){
+                    kt.exhibition.thumbnail = map[index];
+                    flag = true;
+                }
                 var imageFile = {};
                 imageFile.fileUrl = map[index];
                 kt.exhibition.exhibitionDetail.files.push(imageFile);
