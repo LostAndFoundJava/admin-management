@@ -39,7 +39,7 @@
         //保存新增／修改的数据
         kt.save = function () {
             kt.aboutus.detail = JSON.stringify(kt.customDetail);
-            AboutUsService.save(kt.link, function (data) {
+            AboutUsService.save(kt.aboutus, function (data) {
                 $state.go('aboutus.management');
             });
         }
