@@ -20,7 +20,9 @@ public class VisaModel extends MgrBaseModel<VisaModel>{
     private String country;
     private String continent;
     private String visaInfo;
-    private String visaUrl;
+    private String visaFile;
+    @TableField(exist = false)
+    private String countryName;
 
     @TableField(exist = false)
     private List<File> fileList;
