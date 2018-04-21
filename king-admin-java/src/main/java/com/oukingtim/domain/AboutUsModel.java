@@ -14,13 +14,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class AboutUsModel extends MgrBaseModel<AboutUsModel> {
-    private String company;
-    private String conductUs;
-    private String qqNo;
-    private String weChat;
-    private String weibo;
-    private String address;
-    private String telNO;
-    private String mobileNo;
-    private String faxCode;
+    private String detail;
+
 }
