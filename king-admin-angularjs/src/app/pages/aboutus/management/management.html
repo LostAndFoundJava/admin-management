@@ -1,19 +1,17 @@
 <div class="row">
     <!--<div class="col-md-6">-->
-    <div ba-panel ba-panel-class="large-panel with-scroll light-text" ba-panel-title="展会信息">
+    <div ba-panel ba-panel-class="large-panel with-scroll light-text" ba-panel-title="关于我们信息">
         <form name="Form" ng-submit="kt.save()">
 
 
             <div class="form-group ">
-                <button ui-sref="exhibition.management" type="button" class="btn btn-default btn-with-icon">
+                <button ui-sref="aboutus.management" type="button" class="btn btn-default btn-with-icon">
                     <i class="ion-reply"></i>返回
                 </button>
                 <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
                     <i class="ion-heart"></i>保存
                 </button>
             </div>
-            <h5 class="form-section">关于我们</h5>
-
             <div class="form-group">
                 <button type="button" class="btn btn-success btn-with-icon" ng-click="addDetail()"
                         ng-if="!kt.isView">
@@ -24,7 +22,7 @@
                 <div class="form-group">
                     <div class="form-group col-md-5 col-sm-5 col-xs-5">
                         <input type="text"
-                               class="form-control tags medium" placeholder="二级标题" type="text"
+                               class="form-control tags medium" placeholder="栏目标题" type="text"
                                value="" ng-disabled="kt.isView" ng-model="item.detailTitle">
                     </div>
                     <div class="form-group col-md-5 col-sm-5 col-xs-5">

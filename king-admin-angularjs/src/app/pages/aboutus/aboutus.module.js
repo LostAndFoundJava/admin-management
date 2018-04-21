@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('KingAdmin.pages.aboutus', [
-        'KingAdmin.pages.aboutus.aboutus',
+        'KingAdmin.pages.aboutus.management',
     ]).config(routeConfig);
 
     /** @ngInject */
