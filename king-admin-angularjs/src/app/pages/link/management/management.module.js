@@ -10,7 +10,7 @@
             .state('link.management', {
                 url: '/management',
                 templateUrl: 'app/pages/link/management/managementlist.html',
-                controller: 'LinkCtrl',
+                controller: 'LinkListCtrl',
                 controllerAs: 'kt',
                 title: '首页友情链接',
                 sidebarMeta: {
