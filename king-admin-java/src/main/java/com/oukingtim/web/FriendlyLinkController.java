@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(description = "友情链接")
-@RequestMapping("/mgr/link/mangement")
+@RequestMapping("/mgr/link/management")
 public class FriendlyLinkController extends MgrBaseController<FriendlyLinkService,FriendlyLinkModel>{
 
     Logger LOGGER = LoggerFactory.getLogger(FriendlyLinkController.class);
