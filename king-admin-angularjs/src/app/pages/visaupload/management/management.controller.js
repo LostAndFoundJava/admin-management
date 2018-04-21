@@ -22,17 +22,23 @@
         }
 
 
+        //获取国家级类别
+        $scope.selectContinent = function () {
+            RegionService.getCountryByContinent({continentId: kt.visa.continent}, function (data) {
+                kt.countryList = data.result;
+            })
+        }
+
+        //获取洲
+        RegionService.getContinentList({},function (data) {
+            kt.continentList = data.result;
+        })
 
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
             VisaUploadService.getInfo({id: $stateParams.id},
                 function (data) {
-                    kt.aboutus = data;
-
-                    if (kt.aboutus.detail) {
-                        kt.customDetail = JSON.parse(kt.aboutus.detail);
-                    }
-
+                    kt.visa = data;
                 })
         } else {
             kt.isAdd = true;
@@ -40,9 +46,8 @@
 
         //保存新增／修改的数据
         kt.save = function () {
-            kt.aboutus.detail = JSON.stringify(kt.customDetail);
-            VisaUploadService.save(kt.link, function (data) {
-                $state.go('aboutus.management');
+            VisaUploadService.save(kt.visa, function (data) {
+                $state.go('visa.management');
             });
         }
 
