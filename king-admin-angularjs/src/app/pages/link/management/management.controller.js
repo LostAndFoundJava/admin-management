@@ -15,6 +15,8 @@
         //回显
         kt.link = {};
 
+        $scope.mockFiles = [];
+
         if ($stateParams.isView) {
             kt.isView = true;
         } else {
