@@ -8,11 +8,11 @@
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('excelupload', {
-                url: '/mgr/excel',
+            .state('aboutus', {
+                url: '/mgr/aboutus',
                 template: '<ui-view></ui-view>',
                 abstract: true,
-                title: 'excel导入',
+                title: '关于我们',
                 sidebarMeta: {
                     icon: 'ion-grid',
                     order: 300,
