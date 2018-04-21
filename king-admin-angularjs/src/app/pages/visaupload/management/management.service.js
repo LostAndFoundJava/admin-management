@@ -7,13 +7,13 @@
     /** @ngInject */
     function VisaUploadService($resource, toastr, CommonService) {
 
-        var rest = $resource('mgr/visaupload/management/:id', {}, {
+        var rest = $resource('mgr/visa/management/:id', {}, {
             'create': {method: 'POST'},
             'update': {method: 'PUT'},
         });
 
         function getSmartData(param, callback) {
-            $resource('mgr/visaupload/management/getSmartData', {}, {
+            $resource('mgr/visa/management/getSmartData', {}, {
                 'query': {method: 'POST'}
             }).query(param,
                 function (data) {
@@ -75,7 +75,7 @@
         }
 
         function getList(param, callback) {
-            $resource('mgr/link/management/getlist').get(param,
+            $resource('mgr/visa/management/getlist').get(param,
                 function (data) {
                     console.log(data);
                     callback(data);
