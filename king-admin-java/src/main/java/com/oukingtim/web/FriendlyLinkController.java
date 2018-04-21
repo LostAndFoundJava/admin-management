@@ -1,5 +1,7 @@
 package com.oukingtim.web;
 
+import com.oukingtim.domain.FriendlyLinkModel;
+import com.oukingtim.service.FriendlyLinkService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(description = "友情链接")
-@RequestMapping("/api/mgr/friendlyLink")
-public class FriendlyLinkController {
+@RequestMapping("/mgr/link/mangement")
+public class FriendlyLinkController extends MgrBaseController<FriendlyLinkService,FriendlyLinkModel>{
 
     Logger LOGGER = LoggerFactory.getLogger(FriendlyLinkController.class);
 
