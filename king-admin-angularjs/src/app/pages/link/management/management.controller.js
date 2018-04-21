@@ -21,6 +21,8 @@
             kt.isView = false;
         }
 
+        //回显图片大小
+        var imageSize = "!400-400";
 
         //用户存图片上传后的url
         var map = {};
