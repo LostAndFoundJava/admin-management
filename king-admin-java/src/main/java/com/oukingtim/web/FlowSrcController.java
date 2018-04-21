@@ -29,7 +29,7 @@ import java.util.Map;
 @RestController
 @Api(description = "用户信息execel导入")
 @RequestMapping("/api/mgr/excel")
-public class FlowSrcController {
+public class FlowSrcController extends BaseController<FlowSrcService,FlowSrcModel> {
 
     private static Logger LOGGER = LoggerFactory.getLogger(FlowSrcController.class);
 
