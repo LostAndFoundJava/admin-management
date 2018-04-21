@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.****</b>
  */
 @RestController
-@RequestMapping("/api/mgr/visaInfo")
+@RequestMapping("/mgr/visa/management")
 public class VisaDetailController extends MgrBaseController<VisaDetailService, VisaModel> {
 
 

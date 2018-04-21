@@ -16,6 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(description = "网站主页aboutus")
-@RequestMapping("/mgr/aboutus/management/")
+@RequestMapping("/mgr/aboutus/management")
 public class AboutUsController extends MgrBaseController<AboutUsService, AboutUsModel> {
 }
