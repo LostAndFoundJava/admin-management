@@ -12,5 +12,4 @@ import com.oukingtim.domain.FriendlyLinkModel;
 
 public interface FriendlyLinkService extends IService<FriendlyLinkModel>{
 
-    public boolean insertFriendlyLinkService();
 }
