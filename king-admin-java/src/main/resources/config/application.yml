@@ -10,10 +10,12 @@ spring:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
 
+
 management:
   security:
     enabled: false #关掉安全认证
   context-path: /management #actuator的访问路径　
+
 
 
 druid:
