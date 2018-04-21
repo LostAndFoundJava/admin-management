@@ -22,12 +22,20 @@
         }
 
 
+        //用户存图片上传后的url
+        var map = {};
+
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
             LinkService.getInfo({id: $stateParams.id},
                 function (data) {
                     kt.link = data;
-
+                    $scope.mockFiles.push({
+                        name: kt.link.picName,
+                        size: 5000,
+                        isMock: true,
+                        serverImgUrl: kt.link.picUrl
+                    });
                 })
         } else {
             kt.isAdd = true;
@@ -35,6 +43,10 @@
 
         //保存新增／修改的数据
         kt.save = function () {
+            for (var index in map) {
+                kt.link.picUrl  = map[index];
+            }
+
             LinkService.save(kt.link, function (data) {
                 $state.go('link.management');
             });
