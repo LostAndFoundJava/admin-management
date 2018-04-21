@@ -17,4 +17,8 @@ public interface RegionDataService  extends IService<RegionData>{
     List<RegionData> getCountryList();
 
     List<RegionData> getCityList(Integer countryId);
+
+    List<RegionData> getContinentList();
+
+    List<RegionData> getCountryList(Integer continentId);
 }

@@ -10,7 +10,7 @@
             .state('visa.management', {
                 url: '/management',
                 templateUrl: 'app/pages/visaupload/management/managementlist.html',
-                controller: 'visaUploadListCtrl',
+                controller: 'VisaUploadListCtrl',
                 controllerAs: 'kt',
                 title: '签证列表',
                 sidebarMeta: {
@@ -23,7 +23,7 @@
                 views: {
                     '@': {
                         templateUrl: 'app/pages/visaupload/management/management.html',
-                        controller: 'visaUploadCtrl',
+                        controller: 'VisaUploadCtrl',
                         controllerAs: 'kt',
                     }
                 }
@@ -34,7 +34,7 @@
                 views: {
                     '@': {
                         templateUrl: 'app/pages/visaupload/management/management.html',
-                        controller: 'visaUploadCtrl',
+                        controller: 'VisaUploadCtrl',
                         controllerAs: 'kt',
                     }
                 }
@@ -45,7 +45,7 @@
                 views: {
                     '@': {
                         templateUrl: 'app/pages/visaupload/management/management.html',
-                        controller: 'visaUploadCtrl',
+                        controller: 'VisaUploadCtrl',
                         controllerAs: 'kt',
                     }
                 }

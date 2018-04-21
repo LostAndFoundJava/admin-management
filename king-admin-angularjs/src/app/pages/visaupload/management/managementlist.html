@@ -23,8 +23,7 @@
                 </label>
             </th>
             <th>序号</th>
-            <th>所在洲</th>
-            <th>所在国家</th>
+            <th>国家</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -39,8 +38,7 @@
                 </div>
             </td>
             <td>{{$index+1}}</td>
-            <td>{{visa.}}</td>
-            <td>{{$index+1}}</td>
+            <td>{{visa.country}}</td>
             <td>
                 <div class="buttons">
                     <button has-perms='visa.management.view' class="btn btn-info editable-table-button btn-xs btn-with-icon"
