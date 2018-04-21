@@ -92,7 +92,6 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
      */
     @PutMapping
     public ResultVM update(@RequestBody T t, MultipartFile file) {
-
         t.setUpdateTime(new Date());
         if (service.updateById(t)) {
             return ResultVM.ok();

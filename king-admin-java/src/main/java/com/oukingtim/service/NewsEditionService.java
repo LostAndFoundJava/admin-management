@@ -1,12 +1,15 @@
 package com.oukingtim.service;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.oukingtim.domain.Category;
 import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.NewsModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 /**
  * <br>创建日期：2018/3/24
@@ -16,4 +19,5 @@ import org.apache.ibatis.annotations.Update;
  */
 public interface NewsEditionService extends IService<NewsModel>{
 
+    List<NewsModel> selectAll();
 }

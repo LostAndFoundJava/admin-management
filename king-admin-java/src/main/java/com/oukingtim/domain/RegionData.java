@@ -10,6 +10,8 @@ package com.oukingtim.domain;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
 @TableName("region_data")
 @Data
