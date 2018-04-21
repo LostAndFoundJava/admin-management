@@ -74,7 +74,7 @@
                 })
         }
 
-        function  getCountryList(param, callback) {
+        function getCountryList(param, callback) {
             $resource('mgr/regionData/management/getCountryList').get(param,
                 function (data) {
                     console.log(data);
@@ -83,8 +83,29 @@
                     toastr.error(error, "提示", {"progressBar": true,});
                 })
         }
+
+        function getCountryByContinent(param, callback) {
+            $resource('mgr/regionData/management/country').get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
         function getCityList(param, callback) {
             $resource('mgr/regionData/management/getCityList').get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
+        function getContinentList(param, callback) {
+            $resource('mgr/regionData/management/getContinentList').get(param,
                 function (data) {
                     console.log(data);
                     callback(data);
@@ -96,7 +117,7 @@
 
         function uploadFile(param, callback) {
             $resource('api/mgr/image/upload', {}, {
-                'upload': {method: 'POST',headers:{'Content-Type': undefined}},
+                'upload': {method: 'POST', headers: {'Content-Type': undefined}},
 
             }).upload(param,
                 function (data) {
@@ -115,6 +136,8 @@
             getCountryList: getCountryList,
             getCityList: getCityList,
             uploadFile: uploadFile,
+            getContinentList: getContinentList,
+            getCountryByContinent:getCountryByContinent
         };
 
     }
