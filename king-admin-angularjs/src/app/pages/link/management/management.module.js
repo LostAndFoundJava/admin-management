@@ -44,7 +44,7 @@
                 title: '查看友情链接',
                 views: {
                     '@': {
-                        templateUrl: 'app/pages/homepage/management/management.html',
+                        templateUrl: 'app/pages/link/management/management.html',
                         controller: 'LinkCtrl',
                         controllerAs: 'kt',
                     }
