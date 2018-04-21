@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('KingAdmin.pages.excelupload', [
-        'KingAdmin.pages.excelupload.excelupload',
+    angular.module('KingAdmin.pages.aboutus', [
+        'KingAdmin.pages.aboutus.aboutus',
     ]).config(routeConfig);
 
     /** @ngInject */

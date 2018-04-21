@@ -5,15 +5,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * <br>创建日期：2018/3/31
+ * <br>创建日期：2018/4/17
  *
  * @author JackieChan</b>
  * @version 1.****</b>
  */
-@TableName("about_us")
+@TableName("visa")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class AboutUsModel extends MgrBaseModel<AboutUsModel> {
-    private String detail;
+public class VisaModel extends MgrBaseModel<VisaModel>{
+    private String country;
+    private String continent;
+    private String visaInfo;
+    private String visaUrl;
+
 
 }
