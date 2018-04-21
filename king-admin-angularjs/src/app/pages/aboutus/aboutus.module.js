@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('KingAdmin.pages.aboutus', [
-        'KingAdmin.pages.aboutus.aboutus',
+        'KingAdmin.pages.aboutus.management',
     ]).config(routeConfig);
 
     /** @ngInject */
@@ -12,7 +12,7 @@
                 url: '/mgr/aboutus',
                 template: '<ui-view></ui-view>',
                 abstract: true,
-                title: '首页aboutus',
+                title: '关于我们',
                 sidebarMeta: {
                     icon: 'ion-grid',
                     order: 300,

@@ -1,23 +1,19 @@
 (function () {
     'use strict';
 
-    angular.module('KingAdmin.pages.aboutus.aboutus')
+    angular.module('KingAdmin.pages.aboutus.management')
         .factory('AboutUsService', AboutUsService);
-    // angular.module('KingAdmin.pages.excelupload.excelupload', ['ngFileUpload'])
-    //     .factory('ExcelUploadService', ExcelUploadService);
 
-    //ng-js
     /** @ngInject */
-    function AboutUsService($scope, Upload) {
-        var rest = $resource('sys/dict/:id', {}, {
+    function AboutUsService($resource, toastr, CommonService) {
+
+        var rest = $resource('mgr/aboutus/management/:id', {}, {
             'create': {method: 'POST'},
             'update': {method: 'PUT'},
         });
 
-        var myAppModule = angular.module('quillTest', ['ngQuill']);
-
         function getSmartData(param, callback) {
-            $resource('sys/dict/getSmartData', {}, {
+            $resource('mgr/aboutus/management/getSmartData', {}, {
                 'query': {method: 'POST'}
             }).query(param,
                 function (data) {
@@ -66,26 +62,50 @@
                         })
                 }
             });
+        }
 
-            function getList(code, callback) {
-                $resource('sys/dict/getlist/:code').get({code: code},
-                    function (data) {
-                        console.log(data);
-                        callback(data);
-                    }, function (error) {
-                        toastr.error(error, "提示", {"progressBar": true,});
-                    })
-            }
+        function getInfo(param, callback) {
+            rest.get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
+        function getList(param, callback) {
+            $resource('mgr/link/management/getlist').get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
+        function uploadFile(param, callback) {
+            $resource('api/mgr/image/upload', {}, {
+                'upload': {method: 'POST', headers: {'Content-Type': undefined}},
+
+            }).upload(param,
+                function (data) {
+                    console.log(data);
+                    callback(data)
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                });
         }
 
         return {
-            getSmartData:getSmartData,
+            getSmartData: getSmartData,
             del: del,
             save: save,
-            getList:getList,
+            getInfo: getInfo,
+            getList: getList,
+            uploadFile: uploadFile,
         };
 
     }
 
 })();
-
