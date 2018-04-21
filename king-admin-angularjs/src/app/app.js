@@ -17,9 +17,9 @@ angular.module('KingAdmin', [
     'KingAdmin.theme',
     'KingAdmin.pages',
     'ui.bootstrap.datetimepicker',
-    'ngSanitize',
     'textAngular',
     'ngQuill',
     'thatisuday.dropzone',
     'ui.select',
+    'ngFileUpload'
 ]);

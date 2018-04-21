@@ -1,0 +1,61 @@
+<div ba-panel ba-panel-title="EXCEL导入" ba-panel-class="xmedium-panel with-scroll light-text">
+    <div class="row add-row-editable-table">
+        <p>你好</p>
+    </div>
+
+    <div>
+        <!--<form role="form" action="/api/mgr/excel/exelupload" method="POST" enctype="multipart/form-data">-->
+        <!--<div class="form-group">-->
+        <!--<label for="upfile">导入excel</label>-->
+        <!--<input type="file" id="upfile" name="upfile" multiple="multiple">-->
+        <!--</div>-->
+        <!--<button type="submit" class="btn btn-default">导入</button>-->
+        <!--</form>-->
+        <!--</div>-->
+        <!--<script type="text/javascript">-->
+        <!--function onc() {-->
+        <!--var files = document.getElementById("input").files;-->
+        <!--for (var i = 0; i < files.length; i++) {-->
+        <!--alert(input.files[i].name);-->
+        <!--}-->
+        <!--}-->
+        <!--</script>-->
+        <!--<div>-->
+        <!--<form class="form-horizontal" id="form_table" action="/api/mgr/excel/excelupload" enctype="multipart/form-data"-->
+        <!--method="POST">-->
+        <!--<input class="form-input" type="file" name="filename" multiple="multiple" onchange="onc"></input>-->
+
+        <!--<br/>-->
+        <!--<button type="submit" class="btn">开始导入</button>-->
+        <!--</form>-->
+        <!--</div>-->
+
+
+        <!--<form ng-controller="FileController">-->
+        <!--<img src="{{uploadImg}}"/>-->
+        <!--<div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*" accept="image/*"-->
+        <!--ngf-max-size="20MB" ngf-min-height="100">Select-->
+        <!--</div>-->
+        <!--<button type="submit" ng-click="submit()">submit</button>-->
+        <!--{{fileInfo.name}}<br/> {{fileInfo.size}}-->
+        <!--</form>-->
+
+
+        <button ngf-select="uploadFiles($files)" multiple
+                accept="*">Select Files
+        </button>
+        <br>
+        <br>Files:
+        <ul>
+            <li ng-repeat="f in files" style="font:smaller">
+                {{f.name}}
+            </li>
+        </ul>
+        <span class="progress" ng-show="progress >= 0">
+        <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+    </span>
+        {{errorMsg}}
+
+    </div>
+
+</div>
