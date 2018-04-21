@@ -15,6 +15,7 @@
         'KingAdmin.pages.region',
         'KingAdmin.pages.excelupload',
         'KingAdmin.pages.visaupload',
+        'KingAdmin.pages.link',
         'KingAdmin.pages.aboutus'
 
     ])

@@ -93,7 +93,7 @@ public class CkUploadUtils {
                     MultipartFile file = multiRequest.getFile(iter.next());
                     fileName = file.getOriginalFilename();
                     if (fileName != null) {
-                        fileName.replaceAll(" ", "");
+                        fileName = fileName.replaceAll(" ", "").toLowerCase();
                     }
                     f = File.createTempFile("tmp", null);
                     file.transferTo(f);
@@ -112,7 +112,6 @@ public class CkUploadUtils {
                     }*/
                     // List 返回图片size 原图 200*200 400*400 600*600 图采用600*600
                     in = new FileInputStream(file2);
-
                     //TODO 上传文件到服务器
                     FtpUtil.uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.BASE_PATH, filePath, fileName, in);
                     upLoadFileUrl.add(fileName);
