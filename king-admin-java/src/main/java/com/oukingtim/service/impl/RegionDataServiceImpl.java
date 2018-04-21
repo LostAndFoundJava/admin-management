@@ -34,4 +34,18 @@ public class RegionDataServiceImpl extends ServiceImpl<RegionDataMapper, RegionD
         List<RegionData> regionDataList = super.selectList(new EntityWrapper<>(regionData));
         return regionDataList;
     }
+
+    @Override
+    public List<RegionData> getContinentList() {
+        List<RegionData> regionDataList = super.selectList(new EntityWrapper<>(new RegionData(CONTINENT_LEVEL)));
+        return regionDataList;
+    }
+
+    @Override
+    public List<RegionData> getCountryList(Integer continentId) {
+        RegionData regionData = new RegionData();
+        regionData.setPid(continentId);
+        List<RegionData> regionDataList = super.selectList(new EntityWrapper<>(regionData));
+        return regionDataList;
+    }
 }
