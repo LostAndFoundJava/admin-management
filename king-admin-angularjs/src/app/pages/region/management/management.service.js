@@ -114,6 +114,16 @@
                 })
         }
 
+        function getRegionList(param, callback) {
+            $resource('mgr/regionData/management/regionData').get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
 
         function uploadFile(param, callback) {
             $resource('api/mgr/image/upload', {}, {
@@ -137,7 +147,8 @@
             getCityList: getCityList,
             uploadFile: uploadFile,
             getContinentList: getContinentList,
-            getCountryByContinent:getCountryByContinent
+            getCountryByContinent:getCountryByContinent,
+            getRegionList : getRegionList
         };
 
     }

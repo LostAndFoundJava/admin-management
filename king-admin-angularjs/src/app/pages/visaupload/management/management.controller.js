@@ -42,6 +42,7 @@
             VisaUploadService.getInfo({id: $stateParams.id},
                 function (data) {
                     kt.visa = data;
+
                 })
         } else {
             kt.isAdd = true;
@@ -92,7 +93,7 @@
                     var wjzl = {};
                     wjzl.name = file.name;
                     kt.files.push(wjzl);
-                    kt.visa.fileList.push(wjzl);
+                    // kt.visa.fileList.push(wjzl);
                 })
                 Upload.upload({
                     url: '/api/mgr/image/upload',
