@@ -46,12 +46,15 @@
         //获取国家级类别
         RegionService.getCountryList({}, function (data) {
             kt.CountryList = data.result;
+            kt.ProvinceList = [];
+            kt.CityList = [];
         })
 
         //获取省份类别
         $scope.selectCountry = function () {
             RegionService.getRegionList({pid: kt.exhibition.country}, function (data) {
                 kt.ProvinceList = data.result;
+                kt.CityList = [];
             })
         }
 
@@ -69,9 +72,11 @@
                     kt.exhibition = data;
 
                     if (kt.exhibition.country) {
-                        RegionService.getCityList({countryId: kt.exhibition.country}, function (data) {
-                            kt.CityList = data.result;
-                        })
+                        $scope.selectCountry();
+                    }
+
+                    if (kt.exhibition.province) {
+                        $scope.selectProvince();
                     }
 
                     angular.forEach(kt.exhibition.exhibitionDetail.files, function (file) {
