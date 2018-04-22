@@ -10,7 +10,7 @@
         kt.newsInfolist = [];
 
         //显示所有的行业
-        newsEditionService.getSelectInfo(function (data) {
+        newsEditionService.getSelectCategoryInfo(function (data) {
             kt.newsEdition = []
             kt.newsEdition = data.result
         });
