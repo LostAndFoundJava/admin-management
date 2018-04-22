@@ -12,7 +12,7 @@
                 url: '/mgr/visa',
                 template: '<ui-view></ui-view>',
                 abstract: true,
-                title: 'visa文件导入',
+                title: '签证管理',
                 sidebarMeta: {
                     icon: 'ion-grid',
                     order: 300,

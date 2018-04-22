@@ -1,0 +1,28 @@
+<div class="kt-modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title">添加文件</h4>
+    </div>
+    <div class="modal-body">
+        <div ba-panel ba-panel-class="with-scroll light-text">
+            <div>
+                <button ngf-select="uploadFiles($files)" multiple
+                        accept="*">Select Files
+                </button>
+                <br>
+                <br>Files:
+                <ul>
+                    <li ng-repeat="f in kt.files" style="font:smaller">
+                        {{f.name}}
+                    </li>
+                </ul>
+                <span class="progress" ng-show="progress >= 0">
+                <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+            </span>
+                {{errorMsg}}
+            </div>
+        </div>
+    </div>
+</div>
