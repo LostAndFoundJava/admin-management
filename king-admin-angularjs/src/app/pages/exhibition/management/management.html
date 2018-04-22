@@ -126,7 +126,7 @@
                     </div>
                     <div class="form-group col-sm-2">
                         <button type="button" class="btn btn-danger btn-with-icon"
-                                ng-click="removeBriefInfo()"
+                                ng-click="removeBriefInfo(item)"
                                 ng-if="!kt.isView">
                             <i class="ion-trash-a"></i>删除
                         </button>
@@ -151,7 +151,7 @@
                                value="" ng-disabled="kt.isView" ng-model="item.detailTitle">
                     </div>
                     <div class="form-group col-md-5 col-sm-5 col-xs-5">
-                        <button type="button" class="btn btn-danger btn-with-icon" ng-click="removeDetail()"
+                        <button type="button" class="btn btn-danger btn-with-icon" ng-click="removeDetail(item)"
                                 ng-if="!kt.isView">
                             <i class="ion-trash-a"></i>删除
                         </button>

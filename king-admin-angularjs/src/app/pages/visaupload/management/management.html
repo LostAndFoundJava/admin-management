@@ -11,6 +11,13 @@
                 <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
                     <i class="ion-heart"></i>保存
                 </button>
+                <button type="button"
+                        class="btn btn-success btn-with-icon" ngf-select="uploadFiles($files)" accept="*" multiple>
+                    <i class="icon-plus-round">添加文件</i>
+                </button>
+                <!--                <button ngf-select="uploadFiles($files)" multiple
+                                        accept="*">Select Files
+                                </button>-->
             </div>
 
             <div class="form-group ">
@@ -46,15 +53,55 @@
             </div>
 
             <div class="form-group">
-                <label for="file">签证资料</label>
-                <select ng-disabled="kt.isView" class="form-control" ng-model="kt.file"
-                        id="file"
-                        title="选择签证资料" data-container="body" required
-                        ng-options="item.id as item.name for item in kt.files">
-                </select>
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="file">签证资料</label>
+                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.file"
+                                id="file"
+                                title="选择签证资料" data-container="body" required
+                                ng-options="item.id as item.name for item in kt.files">
+                        </select>
+                    </div>
+                </div>
             </div>
 
         </form>
+
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <tr>
+
+                <th>序号</th>
+                <th>文件名</th>
+                <th>操作</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-if="!kt.noData">
+                <td>
+                    hh
+                </td>
+                <td>
+                </td>
+                <th>操作</th>
+            </tr>
+            <tr ng-repeat="file in kt.files track by $index">
+
+                <td>{{$index+1}}</td>
+                <td>
+                    {{file.name}}
+                </td>
+                <td>
+                    <div class="buttons">
+                        <button class="btn btn-danger editable-table-button btn-xs btn-with-icon"
+                                ng-click="removeFile(file)"><i class="ion-trash-a"></i>删除
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
     </div>
 </div>

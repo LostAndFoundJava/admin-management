@@ -32,7 +32,7 @@ public class MySessionIntercept extends AccessControlFilter {
                 response.setCharacterEncoding("UTF-8");//设置编码
                 response.setContentType("application/json");//设置返回类型
                 out = response.getWriter();
-                out.println(JSONObject.toJSONString(new ResultVM().error(401, "为登录")).toString());//输出
+                out.println(JSONObject.toJSONString(ResultVM.error(401, "为登录")));//输出
             } catch (Exception e) {
                 log.error("自定义拦截器异常");
             } finally {

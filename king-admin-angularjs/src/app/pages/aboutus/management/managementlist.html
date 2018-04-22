@@ -1,16 +1,16 @@
-<div ba-panel ba-panel-title="首页自定义列表" ba-panel-class="xmedium-panel with-scroll light-text">
+<div ba-panel ba-panel-title="关于我们信息" ba-panel-class="xmedium-panel with-scroll light-text">
     <div class="row add-row-editable-table">
         <div class="col-md-4">
             <button has-perms='aboutus.management.add' class="btn btn-success btn-with-icon" ui-sref="aboutus.management.add" ng-if="!kt.onlyOne">
                 <i class="ion-plus-round"></i>新增
             </button>
         </div>
-        <div class="col-md-2 col-md-offset-6 ">
+       <!-- <div class="col-md-2 col-md-offset-6 ">
             <div class="form-group">
                 <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.title"
                        input-keyup="kt.LoadPage" placeholder="名称">
             </div>
-        </div>
+        </div>-->
     </div>
     <table class="table table-bordered table-hover table-condensed" st-pipe="kt.LoadPage"
            st-table="kt.aboutuslist">
