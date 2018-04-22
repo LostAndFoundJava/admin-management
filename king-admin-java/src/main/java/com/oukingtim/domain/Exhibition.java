@@ -42,6 +42,8 @@ public class Exhibition extends MgrBaseModel<Exhibition> {
 
     //region_data.id
     private Integer country;
+
+    private Integer province;
     /**
      * 人气排行
      */
