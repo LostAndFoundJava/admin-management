@@ -1,12 +1,20 @@
 package com.oukingtim.service.impl;
 
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.FlowSrcModel;
+import com.oukingtim.domain.RegionData;
+import com.oukingtim.domain.VisaModel;
 import com.oukingtim.mapper.FlowSrcMapper;
 import com.oukingtim.service.FlowSrcService;
+import com.oukingtim.service.MgrExhibitionService;
+import com.oukingtim.service.RegionDataService;
 import com.oukingtim.util.ReadExcel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -26,5 +34,30 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
     public List<FlowSrcModel> importExcel(String fileName, MultipartFile file) {
         List<FlowSrcModel> list = readExcel.gotExcelInfo(fileName, file);
         return list;
+    }
+
+
+    @Autowired
+    private MgrExhibitionService mgrExhibitionService;
+
+    @Override
+    public Page<FlowSrcModel> selectPage(Page<FlowSrcModel> page, Wrapper<FlowSrcModel> wrapper) {
+        super.selectPage(page,wrapper);
+        if(page != null && !CollectionUtils.isEmpty(page.getRecords())) {
+            for (FlowSrcModel flowSrcModel : page.getRecords()) {
+                if(flowSrcModel.getSrcType().equals("1")) {
+                   List<Exhibition> list =  mgrExhibitionService.selectTitleById();
+                   if(list !=null && !list.isEmpty()){
+                       for(Exhibition e:list){
+                           if(flowSrcModel.getExhibition().equals(e.getId())){
+                               flowSrcModel.setExhibition(e.getTitle());
+                               break;
+                           }
+                       }
+                   }
+                }
+            }
+        }
+        return page;
     }
 }
