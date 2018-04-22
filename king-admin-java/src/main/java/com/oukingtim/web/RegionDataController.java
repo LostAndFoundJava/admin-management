@@ -53,4 +53,9 @@ public class RegionDataController {
         return ResultVM.ok(regionDataList);
     }
 
+    @GetMapping("/regionData")
+    public ResultVM getRegionData(@RequestParam(required = false) Integer pid){
+        List<RegionData> regionDataList = service.getRegionDataList(pid);
+        return ResultVM.ok(regionDataList);
+    }
 }

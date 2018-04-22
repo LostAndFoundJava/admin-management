@@ -48,4 +48,13 @@ public class RegionDataServiceImpl extends ServiceImpl<RegionDataMapper, RegionD
         List<RegionData> regionDataList = super.selectList(new EntityWrapper<>(regionData));
         return regionDataList;
     }
+
+    @Override
+    public List<RegionData> getRegionDataList(Integer pid) {
+        RegionData regionData = new RegionData();
+        regionData.setPid(pid);
+        List<RegionData> regionDataList = super.selectList(new EntityWrapper<>(regionData));
+        return regionDataList;
+    }
+
 }
