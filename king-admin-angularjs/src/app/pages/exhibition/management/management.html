@@ -59,6 +59,14 @@
                         </select>
                     </div>
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="province">举办省份(直辖市，州等)</label>
+                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.province"
+                                id="province" ng-change="selectProvince()"
+                                title="展会举办省份(直辖市，州等)" data-container="body" required
+                                ng-options="item.id as item.name for item in kt.ProvinceList">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="city">举办城市</label>
                         <select ng-disabled="kt.isView" class="form-control" ng-model="kt.exhibition.city"
                                 id="city"

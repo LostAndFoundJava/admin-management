@@ -48,13 +48,19 @@
             kt.CountryList = data.result;
         })
 
-        //获取国家级类别
+        //获取省份类别
         $scope.selectCountry = function () {
-            RegionService.getCityList({countryId: kt.exhibition.country}, function (data) {
-                kt.CityList = data.result;
+            RegionService.getRegionList({pid: kt.exhibition.country}, function (data) {
+                kt.ProvinceList = data.result;
             })
         }
 
+        //获取城市类别
+        $scope.selectProvince = function () {
+            RegionService.getRegionList({pid: kt.exhibition.province}, function (data) {
+                kt.CityList = data.result;
+            })
+        }
 
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
@@ -114,7 +120,7 @@
             kt.exhibition.exhibitionDetail.description = JSON.stringify(kt.customDetail);
             kt.exhibition.exhibitionDetail.briefInfo = JSON.stringify(kt.customBriefInfo);
             for (var index in map) {
-                if(!flag){
+                if (!flag) {
                     kt.exhibition.thumbnail = map[index];
                     flag = true;
                 }
