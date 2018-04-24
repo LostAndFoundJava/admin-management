@@ -11,7 +11,7 @@
                 <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
                     <i class="ion-heart"></i>保存
                 </button>
-                <button type="button"
+                <button type="button" ng-if="!kt.isView"
                         class="btn btn-success btn-with-icon" ngf-select="uploadFiles($files)" accept="*" multiple>
                     <i class="icon-plus-round">添加文件</i>
                 </button>
@@ -24,20 +24,30 @@
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="continent">所属洲</label>
-                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.visa.continent"
+                        <select ng-disabled="kt.isDisable" class="form-control" ng-model="kt.visa.continent"
                                 id="continent" ng-change="selectContinent()"
                                 title="选择所属洲" data-container="body" required
                                 ng-options="item.id as item.name for item in kt.continentList">
                         </select>
                     </div>
+
                     <div class="form-group col-md-6 col-sm-6 col-xs-6">
                         <label for="country">签证国</label>
-                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.visa.country"
+                        <select ng-disabled="kt.isDisable" class="form-control" ng-model="kt.visa.country"
                                 id="country"
                                 title="选择签证国家" data-container="body" required
                                 ng-options="item.id as item.name for item in kt.countryList">
                         </select>
                     </div>
+
+                    <!--<div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="country">签证国</label>
+                        <select ng-disabled="kt.isDisable" class="form-control" ng-model="kt.visa.country"
+                                id="country"
+                                title="选择签证国家" data-container="body" required
+                                ng-options="item.id as item.name for item in kt.countryList">
+                        </select>
+                    </div>-->
                 </div>
             </div>
 
@@ -73,6 +83,8 @@
 
                 <th>序号</th>
                 <th>文件名</th>
+                <!--<td>附件-->
+                <!--</td>-->
                 <th>操作</th>
 
             </tr>
@@ -84,6 +96,8 @@
                 </td>
                 <td>
                 </td>
+                <td>
+                </td>
                 <th>操作</th>
             </tr>
             <tr ng-repeat="file in kt.files track by $index">
@@ -92,6 +106,9 @@
                 <td>
                     {{file.name}}
                 </td>
+                <!--<td >-->
+                    <!--<a href="javascript:void(0)" download="{{file.fileUrl}}"><i class="ion-clipboard">{{file.name}} </i></a>-->
+                <!--</td>-->
                 <td>
                     <div class="buttons">
                         <button class="btn btn-danger editable-table-button btn-xs btn-with-icon"

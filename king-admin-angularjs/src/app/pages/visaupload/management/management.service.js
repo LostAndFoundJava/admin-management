@@ -49,7 +49,7 @@
                             toastr.success("保存成功", "提示", {"progressBar": true,});
                             callback(data);
                         }, function (error) {
-                            toastr.error(error, "提示", {"progressBar": true,});
+                            toastr.error(error.msg, "提示", {"progressBar": true,});
                         })
                 } else {
                     rest.create(param,
@@ -58,7 +58,7 @@
                             toastr.success("保存成功", "提示", {"progressBar": true,});
                             callback(data);
                         }, function (error) {
-                            toastr.error(error, "提示", {"progressBar": true,});
+                            toastr.error(error.msg, "提示", {"progressBar": true,});
                         })
                 }
             });
