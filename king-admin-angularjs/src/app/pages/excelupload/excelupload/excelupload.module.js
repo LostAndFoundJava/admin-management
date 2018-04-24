@@ -11,7 +11,7 @@
     function routeConfig($stateProvider) {
         $stateProvider
             .state('excelupload.excelupload', {
-                url: '/excelupload',
+                url: '/management/excelupload',
                 templateUrl: 'app/pages/excelupload/excelupload/excelupload.html',
                 // controller: 'AppController',
                 controller: 'ExcelUploadCtrl',
