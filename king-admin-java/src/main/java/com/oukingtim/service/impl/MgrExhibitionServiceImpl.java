@@ -25,6 +25,8 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
 
     @Autowired
     private MgrExhibitionDetailMapper mgrExhibitionDetailMapper;
+    @Autowired
+    private MgrExhibitionMapper mgrExhibitionMapper;
 
     @Autowired
     private MgrFileMapper mgrFileMapper;
@@ -148,6 +150,12 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
             }
         }
         return exhibitions;
+    }
+
+    @Override
+    public List<Exhibition> selectTitleById() {
+        List<Exhibition> list = mgrExhibitionMapper.selectTitleById();
+        return list;
     }
 
 

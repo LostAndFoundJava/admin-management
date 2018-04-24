@@ -209,8 +209,14 @@ public class ReadExcel {
                             cell.setCellType(Cell.CELL_TYPE_STRING);
                         }
                         flowSrcModel.setCreateTime(DateUtil.stringToDate(cell.getStringCellValue()));
+                    } else if (c == 10) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setCreateTime(DateUtil.stringToDate(cell.getStringCellValue()));
                     }
                 }
+                flowSrcModel.setSrcType("1");
             }
             flowSrcModels.add(flowSrcModel);
         }
