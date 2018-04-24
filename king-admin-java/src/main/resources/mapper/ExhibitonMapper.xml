@@ -4,12 +4,12 @@
 
 
     <select id="selectTitleById" resultType="com.oukingtim.domain.Exhibition">
-       select t1.* as id,t1.title as title
+       select t1.id as id,t1.title as title
        from exhibition t1
        where t1.id
        in(select DISTINCT(t2.exhibition)
        from flow_src t2
-       where t2.src_type ="1")
+       where t2.src_type ="0")
 	</select>
 
 
