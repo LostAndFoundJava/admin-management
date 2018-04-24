@@ -29,7 +29,7 @@
                 }
             })
             .state('visa.management.edit', {
-                url: '/edit/:id',
+                url: '/edit/:id?isDisable',
                 title: '编辑签证',
                 views: {
                     '@': {
@@ -40,7 +40,7 @@
                 }
             })
             .state('visa.management.view', {
-                url: '/view/:id?isView',
+                url: '/view/:id?isView&isDisable',
                 title: '查看签证',
                 views: {
                     '@': {

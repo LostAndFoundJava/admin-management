@@ -23,6 +23,12 @@
             kt.isView = false;
         }
 
+        if ($stateParams.isDisable) {
+            kt.isDisable = true;
+        } else {
+            kt.isDisable = false;
+        }
+
         kt.noData = true;
 
         //获取国家级类别
@@ -41,7 +47,24 @@
         if ($stateParams.id) {
             VisaUploadService.getInfo({id: $stateParams.id},
                 function (data) {
+
+                    if (data && data.continent) {
+                        $scope.selectContinent();
+                    }
                     kt.visa = data;
+                    angular.forEach(kt.visa.fileList, function (file) {
+                        var wj = {};
+                        var fileUrl = file.fileUrl;
+                        if (fileUrl) {
+                            var index = fileUrl.lastIndexOf("/") + 1;
+                            wj.name = fileUrl.substring(index, file.fileUrl.length);
+                            // wj.fileUrl = fileUrl;
+                            kt.files.push(wj);
+                        }
+                    })
+
+                    // kt.visa.continent = data.continent;
+                    // kt.visa.country = data.country;
                 })
         } else {
             kt.isAdd = true;
@@ -92,7 +115,7 @@
                     var wjzl = {};
                     wjzl.name = file.name;
                     kt.files.push(wjzl);
-                    kt.visa.fileList.push(wjzl);
+                    // kt.visa.fileList.push(wjzl);
                 })
                 Upload.upload({
                     url: '/api/mgr/image/upload',
