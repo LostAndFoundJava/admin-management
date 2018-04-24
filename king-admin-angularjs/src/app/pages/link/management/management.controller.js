@@ -40,6 +40,16 @@
                         isMock: true,
                         serverImgUrl: kt.link.picUrl
                     });
+
+                    $timeout(function () {
+                        $scope.myDz = $scope.dzMethods.getDropzone();
+                        $scope.mockFiles.forEach(function (mockFile) {
+                            $scope.myDz.emit('addedfile', mockFile);
+                            $scope.myDz.emit('complete', mockFile);
+                            $scope.myDz.options.maxFiles = $scope.dzOptions.maxFiles - $scope.mockFiles.length;
+                            $scope.myDz.files.push(mockFile);
+                        });
+                    });
                 })
         } else {
             kt.isAdd = true;
