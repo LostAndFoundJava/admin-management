@@ -9,7 +9,7 @@
     function routeConfig($stateProvider) {
         $stateProvider
             .state('excelupload', {
-                url: '/mgr/excel',
+                url: '/mgr/flowsrc/management',
                 template: '<ui-view></ui-view>',
                 abstract: true,
                 title: 'excel导入',
