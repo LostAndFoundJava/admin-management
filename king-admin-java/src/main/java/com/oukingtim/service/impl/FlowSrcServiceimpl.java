@@ -45,7 +45,7 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
         super.selectPage(page,wrapper);
         if(page != null && !CollectionUtils.isEmpty(page.getRecords())) {
             for (FlowSrcModel flowSrcModel : page.getRecords()) {
-                if(flowSrcModel.getSrcType().equals("0")) {
+                if("0".equals(flowSrcModel.getSrcType())) {
                    List<Exhibition> list =  mgrExhibitionService.selectTitleById();
                    if(list !=null && !list.isEmpty()){
                        for(Exhibition e:list){
