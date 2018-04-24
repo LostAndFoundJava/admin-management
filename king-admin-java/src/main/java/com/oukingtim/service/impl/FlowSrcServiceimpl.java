@@ -30,15 +30,15 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
 
     @Autowired
     private ReadExcel readExcel;
+
+    @Autowired
+    private MgrExhibitionService mgrExhibitionService;
     @Override
     public List<FlowSrcModel> importExcel(String fileName, MultipartFile file) {
         List<FlowSrcModel> list = readExcel.gotExcelInfo(fileName, file);
         return list;
     }
 
-
-    @Autowired
-    private MgrExhibitionService mgrExhibitionService;
 
     @Override
     public Page<FlowSrcModel> selectPage(Page<FlowSrcModel> page, Wrapper<FlowSrcModel> wrapper) {
