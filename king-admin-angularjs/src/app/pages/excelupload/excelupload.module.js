@@ -3,6 +3,7 @@
 
     angular.module('KingAdmin.pages.excelupload', [
         'KingAdmin.pages.excelupload.excelupload',
+        'KingAdmin.pages.excelupload.flowsrc',
     ]).config(routeConfig);
 
     /** @ngInject */
