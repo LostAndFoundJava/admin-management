@@ -49,9 +49,11 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
                    List<Exhibition> list =  mgrExhibitionService.selectTitleById();
                    if(list !=null && !list.isEmpty()){
                        for(Exhibition e:list){
-                           if(flowSrcModel.getExhibition().equals(e.getId())){
-                               flowSrcModel.setExhibition(e.getTitle());
-                               break;
+                           if(flowSrcModel.getExhibition() != null&&!flowSrcModel.getExhibition().isEmpty()) {
+                               if (flowSrcModel.getExhibition().equals(e.getId())) {
+                                   flowSrcModel.setExhibition(e.getTitle());
+                                   break;
+                               }
                            }
                        }
                    }
