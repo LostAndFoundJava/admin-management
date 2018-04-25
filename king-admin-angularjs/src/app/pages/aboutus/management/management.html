@@ -12,12 +12,7 @@
                     <i class="ion-heart"></i>保存
                 </button>
             </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-success btn-with-icon" ng-click="addDetail()"
-                        ng-if="!kt.isView">
-                    <i class="ion-plus-round"></i>添加详情模块
-                </button>
-            </div>
+
             <div class="row" ng-repeat="item in kt.customDetail track by $index">
                 <div class="form-group">
                     <div class="form-group col-md-5 col-sm-5 col-xs-5">
@@ -42,6 +37,15 @@
                         </ng-quill-editor>
                     </div>
                 </div>
+                <div class="form-group col-md-12 col-sm-5 col-xs-5">
+                    <hr style="border-top: 1px solid #5197d9">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-default-focus btn-with-icon" ng-click="addDetail()"
+                        ng-if="!kt.isView" style="width: 100%">
+                    <i class="ion-plus-round"></i>添加详情模块
+                </button>
             </div>
         </form>
 

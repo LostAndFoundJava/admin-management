@@ -21,6 +21,8 @@
             kt.isView = false;
         }
 
+        var imageSize = "!200-200";
+
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
             AboutUsService.getInfo({id: $stateParams.id},
