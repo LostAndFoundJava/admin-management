@@ -14,9 +14,6 @@
         var kt = this;
         kt.exhibition = {};
         kt.exhibition.exhibitionDetail = {};
-        // var imageFile = {};
-        var quillEditor;
-        var delta;
         $scope.mockFiles = [];
 
         var imageSize = "!400-400";
@@ -95,7 +92,6 @@
                     $timeout(function () {
 
                         if (kt.exhibition.exhibitionDetail.description) {
-                            // quillEditor.pasteHTML(kt.exhibition.exhibitionDetail.description);
                             // $scope.model = kt.exhibition.exhibitionDetail.description;
                             kt.customDetail = JSON.parse(kt.exhibition.exhibitionDetail.description);
                         }
@@ -123,7 +119,6 @@
             kt.exhibition.endTime = formatDate(kt.exhibition.endTime);
             kt.exhibition.exhibitionDetail.description = JSON.stringify(kt.customDetail);
             kt.exhibition.exhibitionDetail.briefInfo = JSON.stringify(kt.customBriefInfo);
-            var thumbrul = map[kt.thumbnailImg];
             if(!map[kt.thumbnailImg]){
                 toastr.warning("缩略图设置不正确");
                 return;
@@ -246,7 +241,6 @@
                     }
                 },
                 'success': function (file, xhr) {
-                    console.log(file, xhr);
                     if (!xhr && xhr.code != 0) {
                         toastr.error(xhr.msg);
                         return;
@@ -289,13 +283,11 @@
         /*========初始化quill==============*/
 
         $scope.editorCreated = function (editor) {
-            console.log(editor);
             $scope.readonly = kt.isView
-            quillEditor = editor;
             if (editor) {
-                var toolbar = quillEditor.getModule('toolbar');
+                var toolbar = editor.getModule('toolbar');
                 editor.getModule("toolbar").addHandler("image", function () {
-                    selectImage(toolbar);
+                    selectImage(toolbar,editor);
                 });
             }
 
@@ -308,7 +300,7 @@
         }
 
         //选择图片
-        function selectImage(toolbar) {
+        function selectImage(toolbar,editor) {
             var fileInput = toolbar.container.querySelector('input.ql-image[type=file]');
             if (fileInput == null) {
                 fileInput = document.createElement('input');
@@ -317,7 +309,7 @@
                 fileInput.classList.add('ql-image');
                 fileInput.addEventListener('change', function () {
                     if (fileInput.files != null && fileInput.files[0] != null) {
-                        saveToServer(fileInput.files[0]);
+                        saveToServer(fileInput.files[0],editor);
                     }
                 });
                 toolbar.container.appendChild(fileInput);
@@ -326,7 +318,7 @@
         };
 
         // 上传到服务器@param {File} file
-        function saveToServer(file) {
+        function saveToServer(file,editor) {
             //upload on server
             const fd = new FormData();
             fd.append('image', file);
@@ -340,14 +332,14 @@
         }
 
         //回显到quill 文本框中
-        function insertToEditor(url) {
+        function insertToEditor(url,editor) {
             // push image url to rich editor.
-            var range = quillEditor.getSelection();
+            var range = editor.getSelection();
             var imagePosition = 0;
             if (range) {
                 imagePosition = range.index;
             }
-            quillEditor.insertEmbed(imagePosition, 'image', url + imageSize);
+            editor.insertEmbed(imagePosition, 'image', url + imageSize);
         }
 
 

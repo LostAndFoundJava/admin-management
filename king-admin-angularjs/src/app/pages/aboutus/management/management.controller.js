@@ -12,7 +12,6 @@
     function AboutUsCtrl($scope, $timeout, toastr, $stateParams, $state, AboutUsService) {
 
         var kt = this;
-        var quillEditor;
         kt.aboutus = {};
 
         if ($stateParams.isView) {
@@ -67,13 +66,11 @@
         /*========初始化quill==============*/
 
         $scope.editorCreated = function (editor) {
-            console.log(editor);
             $scope.readonly = kt.isView
-            quillEditor = editor;
             if (editor) {
-                var toolbar = quillEditor.getModule('toolbar');
+                var toolbar = editor.getModule('toolbar');
                 editor.getModule("toolbar").addHandler("image", function () {
-                    selectImage(toolbar);
+                    selectImage(toolbar,editor);
                 });
             }
 
@@ -86,7 +83,7 @@
         }
 
         //选择图片
-        function selectImage(toolbar) {
+        function selectImage(toolbar,editor) {
             var fileInput = toolbar.container.querySelector('input.ql-image[type=file]');
             if (fileInput == null) {
                 fileInput = document.createElement('input');
@@ -95,7 +92,7 @@
                 fileInput.classList.add('ql-image');
                 fileInput.addEventListener('change', function () {
                     if (fileInput.files != null && fileInput.files[0] != null) {
-                        saveToServer(fileInput.files[0]);
+                        saveToServer(fileInput.files[0],editor);
                     }
                 });
                 toolbar.container.appendChild(fileInput);
@@ -104,7 +101,7 @@
         };
 
         // 上传到服务器@param {File} file
-        function saveToServer(file) {
+        function saveToServer(file,editor) {
             //upload on server
             const fd = new FormData();
             fd.append('image', file);
@@ -112,20 +109,20 @@
             AboutUsService.uploadFile(fd,
                 function (data) {
                     if (data && data.code == 0) {
-                        insertToEditor(data.result[0]);
+                        insertToEditor(data.result[0],editor);
                     }
                 })
         }
 
         //回显到quill 文本框中
-        function insertToEditor(url) {
+        function insertToEditor(url,editor) {
             // push image url to rich editor.
-            var range = quillEditor.getSelection();
+            var range = editor.getSelection();
             var imagePosition = 0;
             if (range) {
                 imagePosition = range.index;
             }
-            quillEditor.insertEmbed(imagePosition, 'image', url + imageSize);
+            editor.insertEmbed(imagePosition, 'image', url + imageSize);
         }
 
 
