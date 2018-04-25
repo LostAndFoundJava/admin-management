@@ -118,17 +118,23 @@
 
         //保存新增／修改的数据
         kt.save = function () {
-            var flag = false;
             kt.exhibition.exhibitionDetail.files = [];
             kt.exhibition.startTime = formatDate(kt.exhibition.startTime);
             kt.exhibition.endTime = formatDate(kt.exhibition.endTime);
             kt.exhibition.exhibitionDetail.description = JSON.stringify(kt.customDetail);
             kt.exhibition.exhibitionDetail.briefInfo = JSON.stringify(kt.customBriefInfo);
+            var thumbrul = map[kt.thumbnailImg];
+            if(!map[kt.thumbnailImg]){
+                toastr.warning("缩略图设置不正确");
+                return;
+            }
+            if(!map[kt.carouselImg]){
+                toastr.warning("轮播图设置不正确");
+                return;
+            }
+            kt.exhibition.thumbnail = map[kt.thumbnailImg];
+            kt.exhibition.carousel = map[kt.carouselImg];
             for (var index in map) {
-                if (!flag) {
-                    kt.exhibition.thumbnail = map[index];
-                    flag = true;
-                }
                 var imageFile = {};
                 imageFile.fileUrl = map[index];
                 kt.exhibition.exhibitionDetail.files.push(imageFile);
@@ -217,7 +223,7 @@
                 addRemoveLinks: true,
                 parallelUploads: 3,
                 autoProcessQueue: false,
-                dictRemoveFile : 'Remove photo',
+                dictRemoveFile: 'Remove photo',
                 // uploadMultiple: true
             };
 
@@ -230,12 +236,12 @@
                     $scope.showBtns = true;
                     $scope.lastFile = file;
                     if (file.isMock) {
-                        var index = (++index_i);
+                        var index = (++index_i) + 5;
                         file.previewElement.querySelector("img")['id'] = index;
                         map[index] = file.serverImgUrl;
                         var text = "Remove(" + index + ")";
+                        $scope.dzOptions.dictRemoveFile = text;
                         $scope.myDz.options.dictRemoveFile = text;
-                        // file.previewElement.querySelector(".dz-remove").outerHTML = "<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>" + text + "</a>";
                         $scope.myDz.createThumbnailFromUrl(file, file.serverImgUrl + imageSize, null, true);
                     }
                 },
@@ -246,14 +252,14 @@
                         return;
                     }
                     angular.forEach(xhr.result, function (fileUrl) {
-                        var index = (++index_i);
+                        var index = (++index_i) + 10;
                         file.previewElement.querySelector("img")['id'] = index;
                         file.previewElement.querySelector("img")['src'] = fileUrl + imageSize;
                         var text = "Remove(" + index + ")";
                         $scope.dzOptions.dictRemoveFile = text;
-/*
-                        file.previewElement.querySelector(".dz-remove").outerHTML = "<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>" + text + "</a>";
-*/
+                        if ($scope.dzMethods.getDropzone() != null) {
+                            $scope.dzMethods.getDropzone().options.dictRemoveFile = text;
+                        }
                         map[index] = fileUrl;
                     })
 
