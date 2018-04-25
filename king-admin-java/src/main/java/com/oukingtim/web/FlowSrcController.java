@@ -2,6 +2,7 @@ package com.oukingtim.web;
 
 import com.oukingtim.domain.FlowSrcModel;
 import com.oukingtim.service.FlowSrcService;
+import com.oukingtim.util.BizException;
 import com.oukingtim.web.vm.ResultVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -61,7 +62,10 @@ public class FlowSrcController extends MgrBaseController<FlowSrcService,FlowSrcM
             if (list == null || list.isEmpty()) {
                 return ResultVM.error("导入的excel为空");
             }
-        } catch (Exception e) {
+        }catch (BizException e){
+            return  ResultVM.error(e.getMsg());
+        }
+        catch (Exception e) {
             e.printStackTrace();
            return  ResultVM.error("导入表格数据错误，请重新导入");
         }
