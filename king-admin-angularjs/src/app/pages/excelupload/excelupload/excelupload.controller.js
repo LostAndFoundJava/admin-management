@@ -26,10 +26,11 @@
                 }).success(function (data, status, headers, config) {
                     if(data && data.code == 500){
                         toastr.warning(data.msg);
-                        $scope.errorMsg = "失败";
+                        $scope.progress = "0";
                     }else{ toastr.success('导入成功');}
                 }).error(function (data, status, headers, config) {
-                    $scope.errorMsg = status;
+                    toastr.warning(data.msg);
+                    $scope.progress = "0";
                 })
             }
         };
