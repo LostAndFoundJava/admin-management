@@ -68,7 +68,7 @@ public class VisaDetailServiceImpl extends ServiceImpl<VisaMapper, VisaModel> im
             List<VisaModel> visaModels = super.selectList(new EntityWrapper<>(model));
             if (!CollectionUtils.isEmpty(visaModels)) {
                 logger.error("[国家id-{}]-签证已有", visaModel.getCountry());
-                throw new BizException("该国签证信息已存在");
+                return false;
             }
             flag = super.insert(visaModel);
             if (!CollectionUtils.isEmpty(visaModel.getFileList())) {
@@ -93,6 +93,16 @@ public class VisaDetailServiceImpl extends ServiceImpl<VisaMapper, VisaModel> im
             if (visaId == null) {
                 return flag;
             }
+
+            //查询是否存已在国家签证
+           /* VisaModel model = new VisaModel();
+            model.setCountry(visaModel.getCountry());
+            List<VisaModel> visaModels = super.selectList(new EntityWrapper<>(model));
+            if (!CollectionUtils.isEmpty(visaModels)) {
+                logger.error("[国家id-{}]-签证已有", visaModel.getCountry());
+                throw new BizException("该国签证信息已存在");
+            }*/
+
             File file = new File();
             file.setTypeId(visaId);
             //删除visaid已有文件
