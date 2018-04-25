@@ -1,21 +1,38 @@
-<div ba-panel ba-panel-title="EXCEL导入" ba-panel-class="xmedium-panel with-scroll light-text">
-
-    <div>
-        <button ngf-select="uploadFiles($files)" multiple
-                accept="*">Select Files
+<div ba-panel ba-panel-title="导入用户来源" ba-panel-class="xmedium-panel with-scroll light-text">
+    <div class="form-group">
+        <button ngf-select="uploadFiles($files)" accept="application/msexcel" class="btn btn-primary btn-with-icon" ng-if="!kt.isView">
+            <i class="ion-ios-folder-outline"></i>选择文件
         </button>
-        <br>
-        <br>Files:
-        <ul>
+
+        <!--<ul>
             <li ng-repeat="f in files" style="font:smaller">
                 {{f.name}}
             </li>
-        </ul>
-        <span class="progress" ng-show="progress >= 0">
-        <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
-    </span>
-        {{errorMsg}}
-
+        </ul>-->
     </div>
-
+    <div class="form-group">
+        <label >文件列表:</label>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>文件名</th>
+                <th>进度</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="file in kt.files track by $index">
+                <td>{{$index+1}}</td>
+                <td>
+                    {{file.name}}
+                </td>
+                <td><span class="progress" ng-show="progress >= 0">
+                    <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+                </span>
+                    {{errorMsg}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
