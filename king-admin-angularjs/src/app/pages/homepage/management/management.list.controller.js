@@ -7,6 +7,7 @@
     /** @ngInject */
     function HomepageListCtrl($scope, HomepageService) {
         var kt = this;
+        kt.onlyOne = false;
         kt.homepagelist = [];
         kt.LoadPage = function (tableState) {
             tableState = tableState || kt.tableState;
@@ -15,6 +16,9 @@
                 function (data) {
                     tableState.pagination.numberOfPages = data.result.pages;
                     tableState.pagination.totalItemCount = data.result.total;
+                    if(tableState.pagination.totalItemCount > 0){
+                        kt.onlyOne = true;
+                    }
                     kt.tableState = tableState;
                     kt.homepagelist = [];
                     angular.forEach(data.result.records,function (record) {

@@ -18,8 +18,8 @@
         //提交服务器
         kt.homepageConfig = {};
         kt.homepageConfig.extension = {};
-        kt.homepageConfig.homePageCategoryList = [];
-        kt.homepageConfig.categoryExhibitionList = [];
+        // kt.homepageConfig.homePageCategoryList = [];
+        // kt.homepageConfig.categoryExhibitionList = [];
 
         kt.category = {};
 
@@ -65,8 +65,8 @@
 
         //保存新增／修改的数据
         kt.save = function () {
-            // kt.homepageConfig.homePageCategoryList = [];
-            // kt.homepageConfig.categoryExhibitionList = [];
+            kt.homepageConfig.homePageCategoryList = [];
+            kt.homepageConfig.categoryExhibitionList = [];
 
             //首页精选行业
             angular.forEach(kt.homepage.categoryList, function (category) {
@@ -90,6 +90,8 @@
 
             var carouselNum = 0;
             var hotNum = 0;
+            var overHot = false;
+            var overCarousel = false;
             //首页设置
             angular.forEach(kt.homepage.exhibitionList, function (exhibition) {
                 if (exhibition.hot || exhibition.hasCarousel) {
@@ -99,16 +101,31 @@
                     if (exhibition.hot) {
                         categoryExhibition.isHot = 1;
                         hotNum++;
+                        if(hotNum > kt.homepage.extension.hotSum){
+                            overHot = true;
+                        }
                     }
                     if (exhibition.hasCarousel) {
                         categoryExhibition.isCarousel = 1;
                         carouselNum++;
+                        if(carouselNum > kt.homepage.extension.carouselSum){
+                            overCarousel = true;
+                        }
                     }
                     kt.homepageConfig.categoryExhibitionList.push(categoryExhibition);
                 }
 
             })
 
+            if(overHot){
+                toastr.warning("已超出推荐数");
+                return;
+            }
+
+            if(overCarousel){
+                toastr.warning("已超出轮播数");
+                return;
+            }
             kt.homepage.extension.hotNum = hotNum;
             kt.homepage.extension.carouselNum = carouselNum;
 
@@ -123,6 +140,9 @@
             // kt.homepageConfig.categoryExhibitionList =  JSON.stringify(kt.homepageConfig.categoryExhibitionList);
             kt.homepageConfig.title = kt.homepage.title;
             kt.homepageConfig.extension = JSON.stringify(kt.homepage.extension);
+            if(kt.homepage.id) {
+                kt.homepageConfig.id = kt.homepage.id;
+            }
             HomepageService.save(kt.homepageConfig, function (data) {
                 $state.go('homepage.management');
             });

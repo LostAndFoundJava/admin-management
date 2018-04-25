@@ -1,7 +1,6 @@
 package com.oukingtim.web;
 
 import com.oukingtim.domain.RegionData;
-import com.oukingtim.domain.SysRole;
 import com.oukingtim.service.RegionDataService;
 import com.oukingtim.web.vm.ResultVM;
 import io.swagger.annotations.Api;
@@ -24,11 +23,17 @@ import java.util.List;
 @RestController
 @Api(description = "地域管理")
 @RequestMapping("/mgr/regionData/management")
-public class RegionDateController  {
-    private static final Logger logger = LoggerFactory.getLogger(RegionDateController.class);
+public class RegionDataController {
+    private static final Logger logger = LoggerFactory.getLogger(RegionDataController.class);
 
     @Autowired
     RegionDataService service;
+
+    @GetMapping("/getContinentList")
+    public ResultVM getContinentList() {
+        List<RegionData> regionDataList = service.getContinentList();
+        return ResultVM.ok(regionDataList);
+    }
 
     @GetMapping("/getCountryList")
     public ResultVM getCountryList() {
@@ -42,5 +47,15 @@ public class RegionDateController  {
         return ResultVM.ok(regionDataList);
     }
 
+    @GetMapping("/country")
+    public ResultVM getCountryList(@RequestParam(required = false) Integer continentId) {
+        List<RegionData> regionDataList = service.getCountryList(continentId);
+        return ResultVM.ok(regionDataList);
+    }
 
+    @GetMapping("/regionData")
+    public ResultVM getRegionData(@RequestParam(required = false) Integer pid){
+        List<RegionData> regionDataList = service.getRegionDataList(pid);
+        return ResultVM.ok(regionDataList);
+    }
 }

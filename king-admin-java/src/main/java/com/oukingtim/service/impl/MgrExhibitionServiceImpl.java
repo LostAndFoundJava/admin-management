@@ -25,6 +25,8 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
 
     @Autowired
     private MgrExhibitionDetailMapper mgrExhibitionDetailMapper;
+    @Autowired
+    private MgrExhibitionMapper mgrExhibitionMapper;
 
     @Autowired
     private MgrFileMapper mgrFileMapper;
@@ -108,11 +110,12 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
                 exhibitionDetail.setUpdateTime(new Date());
                 //插入展会详情
                 mgrExhibitionDetailMapper.insert(exhibitionDetail);
+                File file = new File();
+                file.setTypeId(exhibitionDetail.getId());
+                //删除展会详情相关的文件(图片)
+                mgrFileMapper.delete(new EntityWrapper<>(file));
                 if (!CollectionUtils.isEmpty(exhibitionDetail.getFiles())) {
-                    File file = new File();
-                    file.setTypeId(exhibitionDetail.getId());
-                    //删除展会详情相关的文件(图片)
-                    mgrFileMapper.delete(new EntityWrapper<>(file));
+
 
                     //更新展会详情文件
                     for (File fileEntity : exhibitionDetail.getFiles()) {
@@ -147,6 +150,12 @@ public class MgrExhibitionServiceImpl extends ServiceImpl<MgrExhibitionMapper, E
             }
         }
         return exhibitions;
+    }
+
+    @Override
+    public List<Exhibition> selectTitleById() {
+        List<Exhibition> list = mgrExhibitionMapper.selectTitleById();
+        return list;
     }
 
 

@@ -1,12 +1,28 @@
 (function () {
     'use strict';
 
-    angular.module('KingAdmin.pages.visaupload.visaupload')
-        .factory('VisaUploadService', VisaUploadService);
+    angular.module('KingAdmin.pages.excelupload.flowsrc')
+        .factory('FlowSrcService', FlowSrcService);
 
-    //ng-js
     /** @ngInject */
-    function VisaUploadService($scope, Upload) {
+    function FlowSrcService($resource, Upload, toastr, CommonService) {
+        var rest = $resource('mgr/flowsrc/management/:id', {}, {
+            'create': {method: 'POST'},
+            'update': {method: 'PUT'},
+        });
+
+        function getSmartData(param, callback) {
+            $resource('mgr/flowsrc/management/getSmartData', {}, {
+                'query': {method: 'POST'}
+            }).query(param,
+                function (data) {
+                    console.log(data);
+                    callback(data)
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                });
+        }
+
         function del(param, callback) {
             CommonService.danger('确定删除?', function () {
                 rest.delete(param,
@@ -22,6 +38,7 @@
                     })
             })
         }
+
         function save(param, callback) {
             CommonService.info('确定保存?', function () {
                 if (angular.isDefined(param.id) && param.id != null) {
@@ -45,11 +62,33 @@
                 }
             });
         }
+
+        function getInfo(param, callback) {
+            rest.get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
+        function getList(param, callback) {
+            $resource('mgr/flowsrc/management/getlist').get(param,
+                function (data) {
+                    console.log(data);
+                    callback(data);
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                })
+        }
+
         return {
-            // getSmartData:getSmartData,
+            getSmartData: getSmartData,
             del: del,
             save: save,
-            // getList:getList,
+            getInfo: getInfo,
+            getList: getList,
         };
 
     }

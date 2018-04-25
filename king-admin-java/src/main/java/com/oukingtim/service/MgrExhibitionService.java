@@ -20,4 +20,6 @@ public interface MgrExhibitionService extends IService<Exhibition>{
 
 
     List<Exhibition> getExhibitionsByCategoryId(List<String> categoryIds);
+
+    public List<Exhibition> selectTitleById();
 }

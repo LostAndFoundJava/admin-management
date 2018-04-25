@@ -1,7 +1,7 @@
 <div ba-panel ba-panel-title="首页自定义列表" ba-panel-class="xmedium-panel with-scroll light-text">
     <div class="row add-row-editable-table">
         <div class="col-md-4">
-            <button has-perms='homepage.management.add' class="btn btn-success btn-with-icon" ui-sref="homepage.management.add">
+            <button has-perms='homepage.management.add' class="btn btn-success btn-with-icon" ui-sref="homepage.management.add" ng-if="!kt.onlyOne">
                 <i class="ion-plus-round"></i>新增
             </button>
         </div>
@@ -73,9 +73,9 @@
                     <button has-perms='homepage.management.edit' class="btn btn-warning editable-table-button btn-xs btn-with-icon"
                             ui-sref="homepage.management.edit({id:homepage.id})"><i class="ion-edit"></i>编辑
                     </button>
-                    <button has-perms='homepage.management.delete' class="btn btn-danger editable-table-button btn-xs btn-with-icon"
+                   <!-- <button has-perms='homepage.management.delete' class="btn btn-danger editable-table-button btn-xs btn-with-icon"
                             ng-click="kt.del(homepage.id)"><i class="ion-trash-a"></i>设置为首页
-                    </button>
+                    </button>-->
                 </div>
             </td>
         </tr>

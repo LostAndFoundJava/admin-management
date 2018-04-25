@@ -192,20 +192,31 @@ public class ReadExcel {
                         if (cell != null) {
                             cell.setCellType(Cell.CELL_TYPE_STRING);
                         }
-                        flowSrcModel.setSrc(cell.getStringCellValue());
-                    } else if (c == 7) {
+                        flowSrcModel.setExhibition(cell.getStringCellValue());
+                    }
+                    else if (c == 7) {
                         if (cell != null) {
                             cell.setCellType(Cell.CELL_TYPE_STRING);
                         }
-                        flowSrcModel.setUid(cell.getStringCellValue());
+                        flowSrcModel.setSrc(cell.getStringCellValue());
                     } else if (c == 8) {
                         if (cell != null) {
                             cell.setCellType(Cell.CELL_TYPE_STRING);
                         }
-                        flowSrcModel.setCreateTime(DateUtil.stringToDate(cell.getStringCellValue()));
+                        flowSrcModel.setUid(cell.getStringCellValue());
                     } else if (c == 9) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setCreateTime(DateUtil.stringToDate(cell.getStringCellValue()));
+                    } else if (c == 10) {
+                        if (cell != null) {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        flowSrcModel.setCreateTime(DateUtil.stringToDate(cell.getStringCellValue()));
                     }
                 }
+                flowSrcModel.setSrcType("1");
             }
             flowSrcModels.add(flowSrcModel);
         }

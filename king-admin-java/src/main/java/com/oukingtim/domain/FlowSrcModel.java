@@ -22,6 +22,9 @@ public class FlowSrcModel extends MgrBaseModel<FlowSrcModel> {
     private String qqNo;
     private String email;
     private String mobileNo;
+    private String exhibition;
+    private String applicationType;
+    private String srcType;
 
 
 }

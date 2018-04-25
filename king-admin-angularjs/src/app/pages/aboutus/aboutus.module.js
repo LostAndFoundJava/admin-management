@@ -1,18 +1,18 @@
 (function () {
     'use strict';
 
-    angular.module('KingAdmin.pages.excelupload', [
-        'KingAdmin.pages.excelupload.excelupload',
+    angular.module('KingAdmin.pages.aboutus', [
+        'KingAdmin.pages.aboutus.management',
     ]).config(routeConfig);
 
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('excelupload', {
-                url: '/mgr/excel',
+            .state('aboutus', {
+                url: '/mgr/aboutus',
                 template: '<ui-view></ui-view>',
                 abstract: true,
-                title: 'excel导入',
+                title: '关于我们',
                 sidebarMeta: {
                     icon: 'ion-grid',
                     order: 300,

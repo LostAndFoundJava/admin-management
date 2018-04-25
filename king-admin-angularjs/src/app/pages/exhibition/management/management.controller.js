@@ -46,15 +46,24 @@
         //获取国家级类别
         RegionService.getCountryList({}, function (data) {
             kt.CountryList = data.result;
+            kt.ProvinceList = [];
+            kt.CityList = [];
         })
 
-        //获取国家级类别
+        //获取省份类别
         $scope.selectCountry = function () {
-            RegionService.getCityList({countryId: kt.exhibition.country}, function (data) {
-                kt.CityList = data.result;
+            RegionService.getRegionList({pid: kt.exhibition.country}, function (data) {
+                kt.ProvinceList = data.result;
+                kt.CityList = [];
             })
         }
 
+        //获取城市类别
+        $scope.selectProvince = function () {
+            RegionService.getRegionList({pid: kt.exhibition.province}, function (data) {
+                kt.CityList = data.result;
+            })
+        }
 
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
@@ -63,9 +72,11 @@
                     kt.exhibition = data;
 
                     if (kt.exhibition.country) {
-                        RegionService.getCityList({countryId: kt.exhibition.country}, function (data) {
-                            kt.CityList = data.result;
-                        })
+                        $scope.selectCountry();
+                    }
+
+                    if (kt.exhibition.province) {
+                        $scope.selectProvince();
                     }
 
                     angular.forEach(kt.exhibition.exhibitionDetail.files, function (file) {
@@ -107,15 +118,17 @@
 
         //保存新增／修改的数据
         kt.save = function () {
+            var flag = false;
             kt.exhibition.exhibitionDetail.files = [];
             kt.exhibition.startTime = formatDate(kt.exhibition.startTime);
             kt.exhibition.endTime = formatDate(kt.exhibition.endTime);
-            kt.exhibition.hot = kt.exhibition.hot ? 1 : 0;
-            kt.exhibition.hasCarousel = kt.exhibition.hasCarousel ? 1 : 0;
             kt.exhibition.exhibitionDetail.description = JSON.stringify(kt.customDetail);
             kt.exhibition.exhibitionDetail.briefInfo = JSON.stringify(kt.customBriefInfo);
-            // kt.exhibition.exhibitionDetail.description = quillEditor.getText();
             for (var index in map) {
+                if (!flag) {
+                    kt.exhibition.thumbnail = map[index];
+                    flag = true;
+                }
                 var imageFile = {};
                 imageFile.fileUrl = map[index];
                 kt.exhibition.exhibitionDetail.files.push(imageFile);
@@ -202,8 +215,9 @@
                 maxFilesize: '10',
                 acceptedFiles: 'image/jpeg, images/jpg, image/png',
                 addRemoveLinks: true,
-                parallelUploads: 5,
+                parallelUploads: 3,
                 autoProcessQueue: false,
+                dictRemoveFile : 'Remove photo',
                 // uploadMultiple: true
             };
 
@@ -216,9 +230,12 @@
                     $scope.showBtns = true;
                     $scope.lastFile = file;
                     if (file.isMock) {
-                        var index = Date.parse(new Date()) + (++index_i);
+                        var index = (++index_i);
                         file.previewElement.querySelector("img")['id'] = index;
                         map[index] = file.serverImgUrl;
+                        var text = "Remove(" + index + ")";
+                        $scope.myDz.options.dictRemoveFile = text;
+                        // file.previewElement.querySelector(".dz-remove").outerHTML = "<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>" + text + "</a>";
                         $scope.myDz.createThumbnailFromUrl(file, file.serverImgUrl + imageSize, null, true);
                     }
                 },
@@ -229,9 +246,14 @@
                         return;
                     }
                     angular.forEach(xhr.result, function (fileUrl) {
-                        var index = Date.parse(new Date()) + (++index_i);
+                        var index = (++index_i);
                         file.previewElement.querySelector("img")['id'] = index;
                         file.previewElement.querySelector("img")['src'] = fileUrl + imageSize;
+                        var text = "Remove(" + index + ")";
+                        $scope.dzOptions.dictRemoveFile = text;
+/*
+                        file.previewElement.querySelector(".dz-remove").outerHTML = "<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>" + text + "</a>";
+*/
                         map[index] = fileUrl;
                     })
 
