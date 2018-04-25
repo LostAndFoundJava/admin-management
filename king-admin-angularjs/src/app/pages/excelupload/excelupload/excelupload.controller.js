@@ -26,6 +26,7 @@
                 }).success(function (data, status, headers, config) {
                     if(data && data.code == 500){
                         toastr.warning(data.msg);
+                        $scope.errorMsg = "失败";
                     }else{ toastr.success('导入成功');}
                 }).error(function (data, status, headers, config) {
                     $scope.errorMsg = status;
