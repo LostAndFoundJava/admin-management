@@ -37,6 +37,7 @@
 
                 kt.newsEdition.category=data.result
                 angular.forEach(data.result, function (category) {
+
                     kt.newsEdition.categoryName.push(category.name)
                 })
 
