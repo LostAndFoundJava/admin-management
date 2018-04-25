@@ -4,7 +4,7 @@
     angular.module('KingAdmin.pages.excelupload.flowsrc')
         .controller('FlowSrcCtrl', FlowSrcCtrl);
     /** @ngInject */
-    function FlowSrcCtrl($scope, $timeout, $stateParams, FlowSrcService,$state) {
+    function FlowSrcCtrl($scope, $timeout, $stateParams, FlowSrcService, $state) {
         var kt = this;
         kt.flowsrc = {};
 
@@ -47,7 +47,10 @@
             'plugins': ['types', "wholerow", 'checkbox'],
             'version': 1
         };
-
+        kt.applicationTypeList = {
+             "个人" : 0,
+            "企业" : 1
+        };
 
     }
 
