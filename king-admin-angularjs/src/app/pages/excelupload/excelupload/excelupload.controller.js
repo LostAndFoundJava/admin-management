@@ -4,28 +4,33 @@
     angular.module('KingAdmin.pages.excelupload.excelupload')
         .controller('ExcelUploadCtrl', ExcelUploadCtrl);
     /** @ngInject */
-    function ExcelUploadCtrl($scope, Upload, $timeout) {
+    function ExcelUploadCtrl($scope, Upload, $timeout,toastr) {
         var kt = this;
+        kt.files = [];
         $scope.uploadFiles = function (files) {
-            $scope.files = files;
             if (files && files.length) {
+                angular.forEach(files, function (file) {
+                    var wjzl = {};
+                    wjzl.name = file.name;
+                    kt.files.push(wjzl);
+                })
+
                 Upload.upload({
-                    url: '/api/mgr/excel/excelupload',
+                    url: '/mgr/flowsrc/management/excelupload',
                     data: {
                         files: files
                     }
-                }).then(function (response) {
-                    $timeout(function () {
-                        $scope.result = response.data;
-                    });
-                }, function (response) {
-                    if (response.status > 0) {
-                        $scope.errorMsg = response.status + ': ' + response.data;
-                    }
-                }, function (evt) {
-                    $scope.progress =
-                        Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                });
+                }).progress(function (evt) {
+                    $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+                    // toastr.warning('progress: ' + $scope.progress + '% ' );
+                }).success(function (data, status, headers, config) {
+                    if(data && data.code == 500){
+                        toastr.warning(data.msg);
+                        $scope.errorMsg = "失败";
+                    }else{ toastr.success('导入成功');}
+                }).error(function (data, status, headers, config) {
+                    $scope.errorMsg = status;
+                })
             }
         };
 

@@ -1,21 +1,84 @@
-<div ba-panel ba-panel-title="用户报名信息" ba-panel-class="xmedium-panel with-scroll light-text">
+<div class="row">
+    <!--<div class="col-md-6">-->
+    <div ba-panel ba-panel-class="large-panel with-scroll light-text" ba-panel-title="用户报名信息">
+        <form name="Form" ng-submit="kt.save()">
+            <div class="form-group ">
+                <button ui-sref="excelupload.flowsrc" type="button" class="btn btn-default btn-with-icon">
+                    <i class="ion-reply"></i>返回
+                </button>
+                <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
+                    <i class="ion-heart"></i>保存
+                </button>
+            </div>
+            <div class="form-group ">
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="title">渠道信息</label>
+                        <input ng-disabled="kt.isView" type="text" class="form-control" id="title" placeholder="渠道信息"
+                               ng-model="kt.flowsrc.src" required>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="subtitle">渠道信息-标题</label>
+                        <input ng-disabled="kt.isView" type="text" class="form-control" id="subtitle"
+                               placeholder="渠道信息-标题"
+                               ng-model="kt.flowsrc.uid">
+                    </div>
 
-    <div>
-        <button ngf-select="uploadFiles($files)" multiple
-                accept="*">Select Files
-        </button>
-        <br>
-        <br>Files:
-        <ul>
-            <li ng-repeat="f in files" style="font:smaller">
-                {{f.name}}
-            </li>
-        </ul>
-        <span class="progress" ng-show="progress >= 0">
-        <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
-    </span>
-        {{errorMsg}}
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="company">公司名称</label>
+                        <input ng-disabled="kt.isView" type="text" class="form-control" id="company" placeholder="公司名称"
+                               ng-model="kt.flowsrc.company">
+                    </div>
 
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="tag">用户姓名</label>
+                        <input id="tag" type="text"
+                               class="form-control tags medium" placeholder="用户姓名" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.flowsrc.clientName">
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="location">地址</label>
+                        <input id="location" type="text" required
+                               class="form-control tags medium" placeholder="地址" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.flowsrc.address">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="qq">QQ号</label>
+                        <input id="qq" type="text" required
+                               class="form-control tags medium" placeholder="QQ号" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.flowsrc.qqNo">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="email">邮箱</label>
+                        <input id="email" type="text" required
+                               class="form-control tags medium" placeholder="邮箱" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.flowsrc.email">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="mobile">手机号</label>
+                        <input id="mobile" type="text" required
+                               class="form-control tags medium" placeholder="手机号" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.flowsrc.mobileNo">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="exhibition">报名展会名称</label>
+                        <input id="exhibition" type="text" required
+                               class="form-control tags medium" placeholder="报名展会名称" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.flowsrc.exhibition">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="applicationType">报名类型</label>
+                        <select ng-disabled="kt.isView" class="form-control" ng-model="kt.flowsrc.applicationType"
+                                id="applicationType" title="报名类型" data-container="body"
+                                ng-options="x for (x, y) in kt.applicationTypeList">
+                        </select>
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
     </div>
-
 </div>
