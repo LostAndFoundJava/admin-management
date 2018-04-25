@@ -242,7 +242,6 @@
                         var text = "Remove(" + index + ")";
                         $scope.dzOptions.dictRemoveFile = text;
                         $scope.myDz.options.dictRemoveFile = text;
-                        // file.previewElement.querySelector(".dz-remove").outerHTML = "<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>" + text + "</a>";
                         $scope.myDz.createThumbnailFromUrl(file, file.serverImgUrl + imageSize, null, true);
                     }
                 },
@@ -258,12 +257,9 @@
                         file.previewElement.querySelector("img")['src'] = fileUrl + imageSize;
                         var text = "Remove(" + index + ")";
                         $scope.dzOptions.dictRemoveFile = text;
-                        if ($scope.myDz != null) {
-                            $scope.myDz.options.dictRemoveFile = text;
+                        if ($scope.dzMethods.getDropzone() != null) {
+                            $scope.dzMethods.getDropzone().options.dictRemoveFile = text;
                         }
-                        /*
-                         file.previewElement.querySelector(".dz-remove").outerHTML = "<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>" + text + "</a>";
-                         */
                         map[index] = fileUrl;
                     })
 
