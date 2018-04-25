@@ -22,7 +22,7 @@ public class Exhibition extends MgrBaseModel<Exhibition> {
     private String title;
 
     private String subtitle;
-
+    private String carousel;
     private String thumbnail;
     @JsonDeserialize(using = CustomJsonDateDeserilizer.class)
     private Date startTime;
