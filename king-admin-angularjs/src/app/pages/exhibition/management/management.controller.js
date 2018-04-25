@@ -215,8 +215,9 @@
                 maxFilesize: '10',
                 acceptedFiles: 'image/jpeg, images/jpg, image/png',
                 addRemoveLinks: true,
-                parallelUploads: 5,
+                parallelUploads: 3,
                 autoProcessQueue: false,
+                dictRemoveFile : 'Remove photo',
                 // uploadMultiple: true
             };
 
@@ -229,9 +230,12 @@
                     $scope.showBtns = true;
                     $scope.lastFile = file;
                     if (file.isMock) {
-                        var index = Date.parse(new Date()) + (++index_i);
+                        var index = (++index_i);
                         file.previewElement.querySelector("img")['id'] = index;
                         map[index] = file.serverImgUrl;
+                        var text = "Remove(" + index + ")";
+                        $scope.myDz.options.dictRemoveFile = text;
+                        // file.previewElement.querySelector(".dz-remove").outerHTML = "<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>" + text + "</a>";
                         $scope.myDz.createThumbnailFromUrl(file, file.serverImgUrl + imageSize, null, true);
                     }
                 },
@@ -242,9 +246,14 @@
                         return;
                     }
                     angular.forEach(xhr.result, function (fileUrl) {
-                        var index = Date.parse(new Date()) + (++index_i);
+                        var index = (++index_i);
                         file.previewElement.querySelector("img")['id'] = index;
                         file.previewElement.querySelector("img")['src'] = fileUrl + imageSize;
+                        var text = "Remove(" + index + ")";
+                        $scope.dzOptions.dictRemoveFile = text;
+/*
+                        file.previewElement.querySelector(".dz-remove").outerHTML = "<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>" + text + "</a>";
+*/
                         map[index] = fileUrl;
                     })
 
