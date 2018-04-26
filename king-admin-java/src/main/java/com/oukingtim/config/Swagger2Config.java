@@ -20,8 +20,8 @@ public class Swagger2Config {
      * UI页面显示信息
      */
     private final String SWAGGER2_API_BASEPACKAGE = "com";
-    private final String SWAGGER2_API_TITLE = "ms-API";
-    private final String SWAGGER2_API_DESCRIPTION = "com.*.web";
+    private final String SWAGGER2_API_TITLE = "honger-API";
+    private final String SWAGGER2_API_DESCRIPTION = "com.honger.web";
     private final String SWAGGER2_API_CONTACT = "0000";
     private final String SWAGGER2_API_VERSION = "1.0";
     /**

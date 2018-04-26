@@ -4,12 +4,26 @@
             <button has-perms='excelupload.flowsrc.add' class="btn btn-success btn-with-icon" ui-sref="excelupload.flowsrc.add">
                 <i class="ion-plus-round"></i>新增
             </button>
+            <!--添加导出-->
+            <button class="btn btn-link" ng-click="exportToTable()">
+                <span class="glyphicon glyphicon-share"></span> 导出
+            </button>
         </div>
-        <div class="col-md-2 col-md-offset-6 ">
-            <div class="form-group">
-                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.title"
-                       input-keyup="kt.LoadPage" placeholder="名称">
+
+
+        <div class="col-md-4 col-md-offset-4 ">
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.company"
+                       input-keyup="kt.LoadPage" placeholder="公司">
             </div>
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.clientName"
+                       input-keyup="kt.LoadPage" placeholder="用户名">
+            </div>
+            <!--<div class="form-group col-md-6">-->
+                <!--<input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.email"-->
+                       <!--input-keyup="kt.LoadPage" placeholder="邮箱">-->
+            <!--</div>-->
         </div>
     </div>
     <table class="table table-bordered table-hover table-condensed" st-pipe="kt.LoadPage"
