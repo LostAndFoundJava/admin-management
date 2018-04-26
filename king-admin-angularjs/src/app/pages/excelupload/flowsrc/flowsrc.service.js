@@ -11,35 +11,6 @@
             'update': {method: 'PUT'},
         });
 
-        //导出模块
-        function excelExport($window) {
-            var uri = 'data:application/vnd.ms-excel;base64,',
-                template = '<html>' +
-                    '<head>' +
-                    '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets>' +
-                    '<x:ExcelWorksheet><x:Name>{worksheet}</x:Name>' +
-                    '<x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>' +
-                    '</x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->' +
-                    '</head><body><table>{table}</table></body></html>',
-                base64 = function (s) {
-                    return $window.btoa(unescape(encodeURIComponent(s)));
-                },
-                format = function (s, c) {
-                    return s.replace(/{(\w+)}/g, function (m, p) {
-                        return c[p];
-                    })
-                };
-            return {
-                tableToExcel: function (tableId, worksheetName) {
-                    var table=$(tableId),
-                        ctx={worksheet:worksheetName,table:table.html()},
-                        href=uri+base64(format(template,ctx));
-                    return href;
-                }
-            }
-        }
-
-
         function getSmartData(param, callback) {
             $resource('mgr/flowsrc/management/getSmartData', {}, {
                 'query': {method: 'POST'}
@@ -47,8 +18,7 @@
                 function (data) {
                     console.log(data);
                     callback(data)
-                },
-                function (error) {
+                }, function (error) {
                     toastr.error(error, "提示", {"progressBar": true,});
                 });
         }
@@ -119,7 +89,6 @@
             save: save,
             getInfo: getInfo,
             getList: getList,
-            excelExport: excelExport,
         };
 
     }
