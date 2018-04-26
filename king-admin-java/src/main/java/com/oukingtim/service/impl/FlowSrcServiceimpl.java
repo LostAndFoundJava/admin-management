@@ -5,13 +5,13 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.FlowSrcModel;
-import com.oukingtim.domain.RegionData;
-import com.oukingtim.domain.VisaModel;
+import com.oukingtim.domain.SysUser;
 import com.oukingtim.mapper.FlowSrcMapper;
 import com.oukingtim.service.FlowSrcService;
 import com.oukingtim.service.MgrExhibitionService;
-import com.oukingtim.service.RegionDataService;
 import com.oukingtim.util.ReadExcel;
+import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -33,6 +33,7 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
 
     @Autowired
     private MgrExhibitionService mgrExhibitionService;
+
     @Override
     public List<FlowSrcModel> importExcel(String fileName, MultipartFile file) {
         List<FlowSrcModel> list = readExcel.gotExcelInfo(fileName, file);
@@ -42,24 +43,32 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
 
     @Override
     public Page<FlowSrcModel> selectPage(Page<FlowSrcModel> page, Wrapper<FlowSrcModel> wrapper) {
-        super.selectPage(page,wrapper);
-        if(page != null && !CollectionUtils.isEmpty(page.getRecords())) {
+        super.selectPage(page, wrapper);
+        SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        if (page != null && !CollectionUtils.isEmpty(page.getRecords())) {
             for (FlowSrcModel flowSrcModel : page.getRecords()) {
-                if("0".equals(flowSrcModel.getSrcType())) {
-                   List<Exhibition> list =  mgrExhibitionService.selectTitleById();
-                   if(list !=null && !list.isEmpty()){
-                       for(Exhibition e:list){
-                           if(flowSrcModel.getExhibition() != null&&!flowSrcModel.getExhibition().isEmpty()) {
-                               if (flowSrcModel.getExhibition().equals(e.getId())) {
-                                   flowSrcModel.setExhibition(e.getTitle());
-                                   break;
-                               }
-                           }
-                       }
-                   }
+                if ("0".equals(flowSrcModel.getSrcType())) {
+                    //没有权限走脱敏渠道
+                    if (user != null && StringUtils.isNotBlank(user.getDesensitization()) && "0".equals(user.getDesensitization())) {
+                        if (StringUtils.isNotBlank(flowSrcModel.getMobileNo())) {
+                            flowSrcModel.setMobileNo(flowSrcModel.getMobileNo().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                        }
+                    }
+                }
+                List<Exhibition> list = mgrExhibitionService.selectTitleById();
+                if (list != null && !list.isEmpty()) {
+                    for (Exhibition e : list) {
+                        if (flowSrcModel.getExhibition() != null && !flowSrcModel.getExhibition().isEmpty()) {
+                            if (flowSrcModel.getExhibition().equals(e.getId())) {
+                                flowSrcModel.setExhibition(e.getTitle());
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
+
         return page;
     }
 }

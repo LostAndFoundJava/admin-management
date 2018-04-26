@@ -77,7 +77,8 @@ public class ReadExcel {
             is = multipartFile.getInputStream();
             //验证文件名是否合格
             if (!validateExcel(fileName)) {
-                return null;
+                throw new BizException("该文件不是excel文件!");
+//                return null;
             }
             //根据文件名判断文件是2003版本还是2007版本
             boolean isExcel2003 = true;
@@ -86,7 +87,11 @@ public class ReadExcel {
             }
             customerList = getExcelInfo(is, isExcel2003);
             is.close();
-        } catch (Exception e) {
+        }catch (BizException e){
+            e.printStackTrace();
+            throw new BizException("该文件不是excel文件!");
+        }
+        catch (Exception e) {
             e.printStackTrace();
             throw new BizException("导入excel数据发生错误，请重新导入");
         } finally {
