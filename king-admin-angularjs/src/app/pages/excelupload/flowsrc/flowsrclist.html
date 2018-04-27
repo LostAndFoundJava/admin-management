@@ -30,14 +30,28 @@
         </div>
         <div class="col-md-2">
             <div class="form-group ">
-                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.startTime"
-                       input-keyup="kt.LoadPage" placeholder="输入报名起始日期">
+                <datetimepicker
+                        ng-model="kt.tableState.search.startTime"
+                        ng-disabled="kt.isView"
+                        show-meridian="false"
+                        hidden-time="true"
+                        date-format="yyyy-MM-dd"
+                        date-options="dateOptions"
+                        placeholder="输入起始日期查询">
+                </datetimepicker>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group ">
-                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.endTime"
-                       input-keyup="kt.LoadPage" placeholder="输入报名截止日期">
+                <datetimepicker
+                        ng-model="kt.tableState.search.endTime"
+                        ng-disabled="kt.isView"
+                        show-meridian="false"
+                        hidden-time="true"
+                        date-format="yyyy-MM-dd"
+                        date-options="dateOptions"
+                        placeholder="输入截止日期查询">
+                </datetimepicker>
             </div>
         </div>
         <div class="col-md-1">
@@ -47,6 +61,32 @@
             </button>
         </div>
     </div>
+    <!--<div class="form-group">
+        <label class="col-sm-2 control-label">From</label>
+        <div class="form-group col-md-6 col-sm-6 col-xs-6">
+            <label>结束日期：</label>
+            <datetimepicker ng-model="kt.tableState.search.startTime"
+                            ng-disabled="kt.isView"
+                            show-meridian="false"
+                            date-format="yyyy-MM-dd"
+                            hidden-time="true"
+                            date-options="dateOptions">
+            </datetimepicker>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">To</label>
+        <div class="form-group col-md-6 col-sm-6 col-xs-6">
+            <label>结束日期：</label>
+            <datetimepicker ng-model="kt.tableState.search.endTime"
+                            ng-disabled="kt.isView"
+                            show-meridian="false"
+                            hidden-time="true"
+                            date-format="yyyy-MM-dd"
+                            date-options="dateOptions">
+            </datetimepicker>
+        </div>
+    </div>-->
     <table class="table table-bordered table-hover table-condensed" st-pipe="kt.LoadPage"
            st-table="kt.flowsrcList">
         <thead>

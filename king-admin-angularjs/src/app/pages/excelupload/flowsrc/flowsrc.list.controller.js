@@ -8,6 +8,7 @@
     function FlowSrcListCtrl($http, $scope, $window, $timeout, FlowSrcService) {
         var kt = this;
         kt.flowsrcList = [];
+        kt.flowsrc = {};
         kt.LoadPage = function (tableState) {
             tableState = tableState || kt.tableState;
             tableState.pagination.number = tableState.pagination.number || 5;
@@ -36,6 +37,17 @@
                 kt.checkboxes.items[item.id] = value;
             });
         });
+
+        $scope.isDisabledDate = function (currentDate, mode) {
+            return mode === 'day' && (currentDate.getDay() === 0 || currentDate.getDay() === 6);
+        };
+
+        $scope.dateOptions = {
+            minDate: null
+        };
+
+
+
     }
 
 })();
