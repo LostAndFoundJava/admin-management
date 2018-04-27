@@ -1,56 +1,143 @@
 <div ba-panel ba-panel-title="用户报名列表" ba-panel-class="xmedium-panel with-scroll light-text">
     <div class="row add-row-editable-table">
-        <div class="col-md-4">
-            <button has-perms='excelupload.flowsrc.add' class="btn btn-success btn-with-icon" ui-sref="excelupload.flowsrc.add">
-                <i class="ion-plus-round"></i>新增
-            </button>
-        </div>
-        <div class="col-md-2 col-md-offset-6 ">
-            <div class="form-group">
-                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.title"
-                       input-keyup="kt.LoadPage" placeholder="名称">
+
+        <div class="col-md-2 col-md-offset-5">
+            <div class="form-group ">
+                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.exhibition"
+                       input-keyup="kt.LoadPage" placeholder="输入展会名称查询">
             </div>
         </div>
+        <div class="col-md-2">
+            <div class="form-group ">
+                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.src"
+                       input-keyup="kt.LoadPage" placeholder="输入src查询">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group ">
+                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.uid"
+                       input-keyup="kt.LoadPage" placeholder="输入uid查询">
+            </div>
+        </div>
+
     </div>
+    <div class="row add-row-editable-table">
+        <div class="col-md-2 col-md-offset-5">
+            <div class="form-group ">
+                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.company"
+                       input-keyup="kt.LoadPage" placeholder="输入公司名称查询">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group ">
+                <datetimepicker
+                        ng-model="kt.tableState.search.startTime"
+                        ng-disabled="kt.isView"
+                        show-meridian="false"
+                        hidden-time="true"
+                        date-format="yyyy-MM-dd"
+                        date-options="dateOptions"
+                        placeholder="输入起始日期查询">
+                </datetimepicker>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group ">
+                <datetimepicker
+                        ng-model="kt.tableState.search.endTime"
+                        ng-disabled="kt.isView"
+                        show-meridian="false"
+                        hidden-time="true"
+                        date-format="yyyy-MM-dd"
+                        date-options="dateOptions"
+                        placeholder="输入截止日期查询">
+                </datetimepicker>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-success btn-with-icon"
+                    ui-sref="excelupload.flowsrc.export">
+                <i class="ion-ios-download-outline"></i>导出
+            </button>
+        </div>
+    </div>
+    <!--<div class="form-group">
+        <label class="col-sm-2 control-label">From</label>
+        <div class="form-group col-md-6 col-sm-6 col-xs-6">
+            <label>结束日期：</label>
+            <datetimepicker ng-model="kt.tableState.search.startTime"
+                            ng-disabled="kt.isView"
+                            show-meridian="false"
+                            date-format="yyyy-MM-dd"
+                            hidden-time="true"
+                            date-options="dateOptions">
+            </datetimepicker>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">To</label>
+        <div class="form-group col-md-6 col-sm-6 col-xs-6">
+            <label>结束日期：</label>
+            <datetimepicker ng-model="kt.tableState.search.endTime"
+                            ng-disabled="kt.isView"
+                            show-meridian="false"
+                            hidden-time="true"
+                            date-format="yyyy-MM-dd"
+                            date-options="dateOptions">
+            </datetimepicker>
+        </div>
+    </div>-->
     <table class="table table-bordered table-hover table-condensed" st-pipe="kt.LoadPage"
            st-table="kt.flowsrcList">
         <thead>
         <tr class="sortable">
             <!--<th>-->
-                <!--<label class="table-checkbox checkbox-inline custom-checkbox nowrap">-->
-                    <!--<input type="checkbox" ng-model="kt.checkboxes.checked">-->
-                    <!--<span></span>-->
-                <!--</label>-->
+            <!--<label class="table-checkbox checkbox-inline custom-checkbox nowrap">-->
+            <!--<input type="checkbox" ng-model="kt.checkboxes.checked">-->
+            <!--<span></span>-->
+            <!--</label>-->
             <!--</th>-->
-            <th>序号</th>
-            <th >公司名称</th>
-            <th >姓名</th>
-            <th >手机</th>
-            <th >报名展会</th>
-            <th >src</th>
-            <th >uid</th>
-            <th>操作</th>
+            <!--<th>序号</th>-->
+            <!--<th></th>-->
+            <th>姓名</th>
+            <th>公司名称</th>
+            <th>手机</th>
+            <th>邮箱</th>
+            <th>地址</th>
+            <th st-sort="exhibition">报名展会</th>
+            <th st-sort="src">src</th>
+            <th st-sort="uid">uid</th>
+            <th st-sort="createTime">报名时间</th>
+            <!--<th st-sort="updateTime">更新时间</th>-->
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="flowsrc in kt.flowsrcList">
             <!--<td class="check-td">-->
-                <!--<div class="mail-checkbox">-->
-                    <!--<label class="checkbox-inline custom-checkbox nowrap">-->
-                        <!--<input type="checkbox" ng-model="kt.checkboxes.items[exhibition.id]">-->
-                        <!--<span></span>-->
-                    <!--</label>-->
-                <!--</div>-->
+            <!--<div class="mail-checkbox">-->
+            <!--<label class="checkbox-inline custom-checkbox nowrap">-->
+            <!--<input type="checkbox" ng-model="kt.checkboxes.items[exhibition.id]">-->
+            <!--<span></span>-->
+            <!--</label>-->
+            <!--</div>-->
             <!--</td>-->
-            <td>{{$index+1}}</td>
-            <td>
-                {{flowsrc.company}}
-            </td>
+            <!--<td>{{$index+1}}</td>-->
+            <!--<td></td>-->
             <td>
                 {{flowsrc.clientName}}
             </td>
             <td>
+                {{flowsrc.company}}
+            </td>
+
+            <td>
                 {{flowsrc.mobileNo}}
+            </td>
+            <td>
+                {{flowsrc.email}}
+            </td>
+            <td>
+                {{flowsrc.address}}
             </td>
             <td>
                 {{flowsrc.exhibition}}
@@ -63,23 +150,27 @@
             </td>
 
             <td>
-                <div class="buttons">
+                {{flowsrc.createTime}}
+                <!--<div class="buttons">
                     <button has-perms='excelupload.flowsrc.view' class="btn btn-info editable-table-button btn-xs btn-with-icon"
                             ui-sref="excelupload.flowsrc.view({id:flowsrc.id,isView:true})"><i class="ion-search"></i>查看
                     </button>
                     <button has-perms='excelupload.flowsrc.edit' class="btn btn-warning editable-table-button btn-xs btn-with-icon"
                             ui-sref="excelupload.flowsrc.edit({id:flowsrc.id})"><i class="ion-edit"></i>编辑
                     </button>
-                    <!--<button has-perms='excelupload.flowsrc.delete' class="btn btn-danger editable-table-button btn-xs btn-with-icon"
+                    <button has-perms='excelupload.flowsrc.delete' class="btn btn-danger editable-table-button btn-xs btn-with-icon"
                             ng-click="kt.del(flowsrc.id)"><i class="ion-trash-a"></i>删除
-                    </button>-->
-                </div>
+                    </button>
+                </div>-->
             </td>
+            <!-- <td>
+                 {{flowsrc.updateTime}}
+             </td>-->
         </tr>
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="8" class="text-center">
+            <td colspan="11" class="text-center">
                 <div st-pagination="" st-items-by-page="5"
                      st-template="app/pages/common/pagination.html"></div>
             </td>

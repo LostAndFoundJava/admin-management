@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-1 col-md-1 col-sm-1 ">
         <select class="form-control selectpicker show-tick "
-                ng-model="stItemsByPage" ng-options="i for i in [5,10,20,25,30]">
+                ng-model="stItemsByPage" ng-options="i.key as i.value for i in [{key:5,value:5},{key:10,value:10},{key:20,value:20},{key:30,value:30},{key:100000,value:'ALL'}]">
         </select>
     </div>
     <div class="col-xs-9 col-md-9 col-sm-9 col-xs-offset-2 col-md-offset-2 col-sm-offset-2">

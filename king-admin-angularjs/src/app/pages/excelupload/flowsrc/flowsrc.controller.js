@@ -47,11 +47,13 @@
             'plugins': ['types', "wholerow", 'checkbox'],
             'version': 1
         };
-        kt.applicationTypeList = {
-             "个人" : 0,
-            "企业" : 1
-        };
-
+        kt.applicationTypeList = [{
+            key: "0",
+            value: "个人"
+        }, {
+            key: "1",
+            value: "企业"
+        }];
     }
 
 })();

@@ -1,8 +1,13 @@
 package com.oukingtim.domain;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.oukingtim.config.CustomJsonDateDeserilizer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.Date;
 
 /**
  * <br>创建日期：2018/3/31
@@ -25,6 +30,16 @@ public class FlowSrcModel extends MgrBaseModel<FlowSrcModel> {
     private String exhibition;
     private String applicationType;
     private String srcType;
+
+
+    @JsonDeserialize(using = CustomJsonDateDeserilizer.class)
+    @TableField(exist = false)
+    private Date startTime;
+
+
+    @JsonDeserialize(using = CustomJsonDateDeserilizer.class)
+    @TableField(exist = false)
+    private Date endTime;
 
 
 }

@@ -179,30 +179,65 @@
         </form>
         <hr>
         <h5 class="form-section">展会图片</h5>
-
         <div class="form-group">
+            <div class="row">
+
+                <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                    <div class="dropzone md" options="dzOptions" methods="dzMethods1"
+                         ng-disabled="kt.isView" ng-model="kt.exhibition.thumbnail"
+                         callbacks="dzCallbacks1" ng-dropzone>
+                    </div>
+                    <div style="text-align:center;">
+                        <button ng-show="!readonly" class="btn btn-primary btn-with-icon" style="width: 100%"
+                                ng-click="dzMethods1.processQueue();">
+                            <i class="ion-upload">上传缩略图片</i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                    <div class="dropzone sm" options="dzOptions" methods="dzMethods2"
+                         ng-disabled="kt.isView" ng-model="kt.exhibition.carousel"
+                         callbacks="dzCallbacks2" ng-dropzone>
+                    </div>
+                    <div style="text-align:center;">
+                        <button ng-show="!readonly" class="btn btn-primary btn-with-icon" style="width: 100%"
+                                ng-click="dzMethods2.processQueue();">
+                            <i class="ion-upload">上传轮播图片</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+
             <div class="row">
                 <div class="form-group col-md-12 col-sm-5 col-xs-5">
 
                     <div id="dropzone2" class="dropzone sm" options="dzOptions" methods="dzMethods"
                          ng-disabled="kt.isView"
                          callbacks="dzCallbacks" ng-dropzone></div>
-                    <div style="text-align:center;" id="startUpload" ng-show="showBtns">
-                        <button ng-show="!readonly" class="btn btn-primary btn-with-icon" ng-click="dzMethods.processQueue();">上传图片</button>
+                    <div style="text-align:center;" id="startUpload">
+                        <button ng-show="!readonly" class="btn btn-primary btn-with-icon" style="width: 100%"
+                                ng-click="dzMethods.processQueue();">
+                            <i class="ion-upload">上传详情图片</i>
+                        </button>
                     </div>
                 </div>
-
-                <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                    <label for="thumbNailImg">设置图片为缩略图(从展会图片栏选择数字作为缩略图序号)</label>
-                    <input ng-disabled="kt.isView" type="number" class="form-control" id="thumbNailImg" title="从展会图片栏顺序选择数字作为缩略图序号"
-                           placeholder="从展会图片栏顺序选择数字作为缩略图序号" ng-model="kt.thumbnailImg" required>
-                </div>
-                <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                    <label for="carouselImg">设置图片为轮播图(从展会图片栏选择数字作为轮播图序号)</label>
-                    <input ng-disabled="kt.isView" type="number" class="form-control" id="carouselImg" title="从展会图片栏顺序选择数字作为轮播图序号"
-                           placeholder="从展会图片栏顺序选择数字作为轮播图序号" ng-model="kt.carouselImg" required>
-                </div>
+                <!--
+                                <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                                    <label for="thumbNailImg">设置图片为缩略图(从展会图片栏选择数字作为缩略图序号)</label>
+                                    <input ng-disabled="kt.isView" type="number" class="form-control" id="thumbNailImg"
+                                           title="从展会图片栏顺序选择数字作为缩略图序号"
+                                           placeholder="从展会图片栏顺序选择数字作为缩略图序号" ng-model="kt.thumbnailImg" required>
+                                </div>
+                                <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                                    <label for="carouselImg">设置图片为轮播图(从展会图片栏选择数字作为轮播图序号)</label>
+                                    <input ng-disabled="kt.isView" type="number" class="form-control" id="carouselImg"
+                                           title="从展会图片栏顺序选择数字作为轮播图序号"
+                                           placeholder="从展会图片栏顺序选择数字作为轮播图序号" ng-model="kt.carouselImg" required>
+                                </div>-->
             </div>
         </div>
+
     </div>
 </div>

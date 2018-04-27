@@ -37,9 +37,9 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
      */
     @PostMapping("/getSmartData")
     public ResultVM getSmartData(@RequestBody SmartPageVM<T> spage) {
+
         Page<T> page = new Page<T>(spage.getPagination().getStart()
                 , spage.getPagination().getNumber());
-
 
         if (StringUtils.isBlank(spage.getSort().getPredicate())) {
             spage.getSort().setPredicate("update_time");
