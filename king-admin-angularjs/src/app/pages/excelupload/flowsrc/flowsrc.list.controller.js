@@ -8,7 +8,7 @@
     function FlowSrcListCtrl($http, $scope, $window, $timeout, FlowSrcService) {
         var kt = this;
         kt.flowsrcList = [];
-        kt.flowsrc = {};
+        kt.flowsrc = [];
         kt.LoadPage = function (tableState) {
             tableState = tableState || kt.tableState;
             tableState.pagination.number = tableState.pagination.number || 5;
@@ -46,6 +46,13 @@
             minDate: null
         };
 
+        $scope.exportData = function (tableState) {
+            tableState = tableState || kt.tableState;
+            tableState.pagination.number = tableState.pagination.number || 5;
+            FlowSrcService.exportData(tableState,
+                function (data) {
+                });
+        }
 
 
     }
