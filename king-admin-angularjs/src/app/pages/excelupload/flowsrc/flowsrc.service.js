@@ -12,7 +12,7 @@
         });
 
         function getSmartData(param, callback) {
-            $resource('mgr/flowsrc/management/getSmartData', {}, {
+            $resource('mgr/flowsrc/management/flowsrcs', {}, {
                 'query': {method: 'POST'}
             }).query(param,
                 function (data) {
