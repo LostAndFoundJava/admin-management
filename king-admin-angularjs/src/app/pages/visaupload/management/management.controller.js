@@ -52,6 +52,8 @@
                         $scope.selectContinent();
                     }
                     kt.visa = data;
+                    kt.visa.continent = parseInt(kt.visa.continent);
+                    kt.visa.country = parseInt(kt.visa.country);
                     angular.forEach(kt.visa.fileList, function (file) {
                         var wj = {};
                         var fileUrl = file.fileUrl;
