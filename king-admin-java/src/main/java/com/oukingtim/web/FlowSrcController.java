@@ -123,7 +123,7 @@ public class FlowSrcController {
     }
 
     @RequestMapping(value = "/export", method = RequestMethod.POST)
-    public ResultVM export(SmartPageVM<FlowSrcModel> spage) {
+    public ResultVM export(@RequestBody SmartPageVM<FlowSrcModel> spage) {
         ResultVM resultVM = getSmartData(spage);
 
 
