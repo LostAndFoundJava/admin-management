@@ -1,5 +1,6 @@
 package com.oukingtim.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.oukingtim.domain.AboutUsModel;
 import com.oukingtim.mapper.AboutUsMapper;
@@ -14,4 +15,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AboutUsServiceImpl extends ServiceImpl<AboutUsMapper, AboutUsModel> implements AboutUsService {
+
+    @Override
+    public AboutUsModel getAboutUsInfo() {
+        AboutUsModel aboutUsModel;
+        aboutUsModel = super.selectOne(new EntityWrapper<>());
+        return aboutUsModel;
+    }
 }

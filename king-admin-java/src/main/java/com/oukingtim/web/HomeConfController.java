@@ -1,5 +1,6 @@
 package com.oukingtim.web;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.HomePageHotConfig;
 import com.oukingtim.service.HomePageService;
@@ -8,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,5 +36,11 @@ public class HomeConfController extends MgrBaseController<HomePageService,HomePa
     public ResultVM getExhibitionsByHomepageId(@RequestParam(required = false) String homepageId,@RequestParam(required = false) List<String> categoryIds) {
         List<Exhibition> exhibitions = service.getExhibitionsByHomepageId(homepageId,categoryIds);
         return ResultVM.ok(exhibitions);
+    }
+
+
+    @GetMapping("/getHomePageInfo")
+    public HomePageHotConfig getHomePageInfo() {
+        return service.selectOne(new EntityWrapper<>());
     }
 }
