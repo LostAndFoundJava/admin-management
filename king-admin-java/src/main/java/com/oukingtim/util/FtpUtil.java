@@ -88,6 +88,12 @@ public class FtpUtil {
         return result;
     }
 
+    public static boolean uploadFile(String basePath, String filePath, String filename, InputStream input) {
+        boolean result = false;
+
+        return result;
+    }
+
     /**
      * Description: 从FTP服务器下载文件
      *
@@ -144,7 +150,7 @@ public class FtpUtil {
     public static void main(String[] args) {
         try {
             FileInputStream in = new FileInputStream(new File("C:\\Users\\xufan\\Pictures\\new image - zvkau.jpg"));
-            boolean flag = uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.BASE_PATH, "/2018/03/23", "honger.jpg", in);
+            boolean flag = uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.PIC_BASE_PATH, "/2018/03/23", "honger.jpg", in);
             System.out.println(flag);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
