@@ -16,7 +16,8 @@
         kt.visa = {};
         kt.files = []
         kt.visa.fileList = [];
-
+        kt.countryName = "china";
+        kt.fileName="";
         if ($stateParams.isView) {
             kt.isView = true;
         } else {
@@ -116,13 +117,15 @@
                 angular.forEach(files, function (file) {
                     var wjzl = {};
                     wjzl.name = file.name;
+                    kt.fileName = file.name;
                     kt.files.push(wjzl);
                     // kt.visa.fileList.push(wjzl);
                 })
                 Upload.upload({
-                    url: '/api/mgr/image/upload',
+                    url: '/api/mgr/image/document',
                     data: {
-                        files: files
+                        files: files,
+                        countryName: kt.countryName
                     }
                 }).then(function (response) {
 
@@ -131,6 +134,7 @@
                         angular.forEach(response.data.result, function (fileUrl) {
                             var wjzl = {};
                             wjzl.fileUrl = fileUrl;
+                            wjzl.fileName = kt.fileName;
                             kt.visa.fileList.push(wjzl);
                         })
                     });
