@@ -69,7 +69,7 @@ public class FtpUtil {
             //设置上传文件的类型为二进制类型
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
             //上传文件
-            if (!ftp.storeFile(filename, input)) {
+            if (!ftp.storeFile(new String(filename.toString().getBytes("UTF-8"), "ISO-8859-1"), input)) {
                 return result;
             }
             input.close();
