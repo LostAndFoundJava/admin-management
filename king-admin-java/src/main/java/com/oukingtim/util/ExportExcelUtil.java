@@ -34,7 +34,7 @@ public class ExportExcelUtil {
         String titleName = "用户展会报名来源表";
         String fileName = "用户展会报名来源导出";
         int columnNumber = 10;
-        int[] columnWidth = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
+        int[] columnWidth = {15, 10, 50,20,20,20,20,10,10,30};
         String[][] dataList = {{"001", "2015-01-01", "IT"},
                 {"002", "2015-01-02", "市场部"}, {"003", "2015-01-03", "测试"}};
         String[] columnName = {"公司名称", "姓名", "地址", "手机号", "QQ", "邮箱", "报名展会", "src", "uid", "报名时间"};
