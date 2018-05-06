@@ -1,126 +1,54 @@
 <div class="row">
-    <div class="col-md-6">
-        <div ba-panel ba-panel-class="large-panel with-scroll light-text" ba-panel-title="首页配置信息">
-            <form name="Form" ng-submit="kt.save()">
+    <div ba-panel ba-panel-class="large-panel with-scroll light-text" ba-panel-title="首页配置信息">
+        <form name="Form" ng-submit="kt.save()">
 
 
-                <div class="form-group ">
-                    <!--<button ui-sref="homepage.management" type="button" class="btn btn-default btn-with-icon">
-                        <i class="ion-reply"></i>返回
-                    </button>-->
-                    <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
-                        <i class="ion-heart"></i>保存
-                    </button>
-                </div>
-                <div class="form-group ">
-                    <div class="row">
-                        <!--<h5 class="form-section">首页自定义信息</h5>-->
-                        <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                            <label for="title">首页标题</label>
-                            <input ng-disabled="kt.isView" type="text" class="form-control" id="title"
-                                   placeholder="首页标题"
-                                   ng-model="kt.homepage.title" required>
-                        </div>
-
-                        <!-- <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                             <label for="extension.hotSum">总推荐数</label>
-                             <select ng-disabled="kt.isView" class="form-control" ng-model="kt.homepage.extension.hotSum"
-                                     id="extension.hotSum"
-                                     title="总推荐数量" data-container="body" required
-                                     ng-options="item.code as item.text for item in kt.types">
-                             </select>
-                         </div>-->
-
-
-                        <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                            <label for="extension.hotSum">总推荐数</label>
-                            <input id="extension.hotSum" type="text" required
-                                   class="form-control tags medium" placeholder="总推荐数量" type="text"
-                                   value="" ng-disabled="kt.isView" ng-model="kt.homepage.extension.hotSum">
-                        </div>
-
-                        <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                            <label for="extension.carouselSum">总轮播数</label>
-                            <input id="extension.carouselSum" type="text" required
-                                   class="form-control tags medium" placeholder="总轮播数量" type="text"
-                                   value="" ng-disabled="kt.isView" ng-model="kt.homepage.extension.carouselSum">
-                        </div>
-
-                    </div>
-
-                </div>
-                <hr>
-                <table class="table table-bordered table-hover table-condensed" st-pipe="kt.LoadPage"
-                       st-table="kt.homepage.exhibitionList">
-                    <thead>
-                    <tr class="sortable">
-
-                        <th>序号</th>
-                        <th st-sort="title">展会名称</th>
-                        <th st-sort="categoryName">所属行业</th>
-                        <th>标签</th>
-                        <th>设置推荐</th>
-                        <th>
-                            设置轮播
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="exhibition1 in kt.homepage.exhibitionList">
-
-                        <td>{{$index+1}}</td>
-                        <td>
-                            {{exhibition1.title}}
-                        </td>
-                        <td>
-                            {{exhibition1.categoryName}}
-                        </td>
-                        <td>
-                            {{exhibition1.tag}}
-                        </td>
-                        <td class="check-td">
-                            <div class="mail-checkbox">
-                                <label class="checkbox-inline custom-checkbox nowrap">
-                                    <input type="checkbox" ng-model="exhibition1.hot">
-                                    <span></span>
-                                </label>
-                            </div>
-                        </td>
-                        <td class="check-td">
-                            <div class="mail-checkbox">
-                                <label class="checkbox-inline custom-checkbox nowrap">
-                                    <input type="checkbox" ng-model="exhibition1.hasCarousel">
-                                    <span></span>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </form>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div ba-panel ba-panel-class="xmedium-panel with-scroll light-text" ba-panel-title="行业精选列表">
-            <div class="form-group">
-                <div class="input-demo checkbox-demo row">
-                    <div class="col-md-2" ng-repeat="category in kt.homepage.categoryList">
-                        <label class="checkbox-inline custom-checkbox nowrap">
-                            <input type="checkbox" id="category.id" ng-model="category.checked" ng-disabled="kt.isView">
-                            <span>{{category.name}}</span>
-                        </label>
-                    </div>
-                </div>
-                <br>
-                <!--<div class="col-md-2 col-md-offset-6 ">-->
-                    <button ng-click="getExhibitionByCategoryIds()" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
-                        <i class="ion-search"></i>查询
-                    </button>
-                <!--</div>-->
+            <div class="form-group ">
+                <!--<button ui-sref="homepage.management" type="button" class="btn btn-default btn-with-icon">
+                    <i class="ion-reply"></i>返回
+                </button>-->
+                <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
+                    <i class="ion-heart"></i>保存
+                </button>
             </div>
+            <div class="form-group ">
+                <div class="row">
+                    <!--<h5 class="form-section">首页自定义信息</h5>-->
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="title">首页标题</label>
+                        <input ng-disabled="kt.isView" type="text" class="form-control" id="title"
+                               placeholder="首页标题"
+                               ng-model="kt.homepage.title">
+                    </div>
 
+                    <!-- <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                         <label for="extension.hotSum">总推荐数</label>
+                         <select ng-disabled="kt.isView" class="form-control" ng-model="kt.homepage.extension.hotSum"
+                                 id="extension.hotSum"
+                                 title="总推荐数量" data-container="body" required
+                                 ng-options="item.code as item.text for item in kt.types">
+                         </select>
+                     </div>-->
+
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="extension.hotSum">总推荐数</label>
+                        <input id="extension.hotSum" type="text"
+                               class="form-control tags medium" placeholder="总推荐数量" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.homepage.extension.hotSum">
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                        <label for="extension.carouselSum">总轮播数</label>
+                        <input id="extension.carouselSum" type="text"
+                               class="form-control tags medium" placeholder="总轮播数量" type="text"
+                               value="" ng-disabled="kt.isView" ng-model="kt.homepage.extension.carouselSum">
+                    </div>
+
+                </div>
+
+            </div>
             <hr>
-
             <table class="table table-bordered table-hover table-condensed" st-pipe="kt.LoadPage"
                    st-table="kt.homepage.exhibitionList">
                 <thead>
@@ -129,30 +57,38 @@
                     <th>序号</th>
                     <th st-sort="title">展会名称</th>
                     <th st-sort="categoryName">所属行业</th>
-
                     <th>标签</th>
+                    <th>设置推荐</th>
                     <th>
-                        设置精选
+                        设置轮播
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="exhibition in kt.homepage.exhibitions">
+                <tr ng-repeat="exhibition1 in kt.homepage.exhibitionList">
 
                     <td>{{$index+1}}</td>
                     <td>
-                        {{exhibition.title}}
+                        {{exhibition1.title}}
                     </td>
                     <td>
-                        {{exhibition.categoryName}}
+                        {{exhibition1.categoryName}}
                     </td>
                     <td>
-                        {{exhibition.tag}}
+                        {{exhibition1.tag}}
                     </td>
                     <td class="check-td">
                         <div class="mail-checkbox">
                             <label class="checkbox-inline custom-checkbox nowrap">
-                                <input type="checkbox" id="exhibition.id" ng-model="exhibition.isChoice">
+                                <input type="checkbox" ng-model="exhibition1.hot">
+                                <span></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="check-td">
+                        <div class="mail-checkbox">
+                            <label class="checkbox-inline custom-checkbox nowrap">
+                                <input type="checkbox" ng-model="exhibition1.hasCarousel">
                                 <span></span>
                             </label>
                         </div>
@@ -160,6 +96,66 @@
                 </tr>
                 </tbody>
             </table>
+        </form>
+    </div>
+    <div ba-panel ba-panel-class="xmedium-panel with-scroll light-text" ba-panel-title="行业精选列表">
+        <div class="form-group">
+            <div class="input-demo checkbox-demo row">
+                <div class="col-md-2" ng-repeat="category in kt.homepage.categoryList">
+                    <label class="checkbox-inline custom-checkbox nowrap">
+                        <input type="checkbox" id="category.id" ng-model="category.checked" ng-disabled="kt.isView">
+                        <span>{{category.name}}</span>
+                    </label>
+                </div>
+            </div>
+            <br>
+            <!--<div class="col-md-2 col-md-offset-6 ">-->
+            <button ng-click="getExhibitionByCategoryIds()" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
+                <i class="ion-search"></i>查询
+            </button>
+            <!--</div>-->
         </div>
+
+        <hr>
+
+        <table class="table table-bordered table-hover table-condensed" st-pipe="kt.LoadPage"
+               st-table="kt.homepage.exhibitionList">
+            <thead>
+            <tr class="sortable">
+
+                <th>序号</th>
+                <th st-sort="title">展会名称</th>
+                <th st-sort="categoryName">所属行业</th>
+
+                <th>标签</th>
+                <th>
+                    设置精选
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="exhibition in kt.homepage.exhibitions">
+
+                <td>{{$index+1}}</td>
+                <td>
+                    {{exhibition.title}}
+                </td>
+                <td>
+                    {{exhibition.categoryName}}
+                </td>
+                <td>
+                    {{exhibition.tag}}
+                </td>
+                <td class="check-td">
+                    <div class="mail-checkbox">
+                        <label class="checkbox-inline custom-checkbox nowrap">
+                            <input type="checkbox" id="exhibition.id" ng-model="exhibition.isChoice">
+                            <span></span>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

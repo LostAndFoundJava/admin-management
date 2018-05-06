@@ -3,8 +3,10 @@ package com.oukingtim.web;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.oukingtim.domain.FlowSrcModel;
+import com.oukingtim.domain.SysUser;
 import com.oukingtim.service.FlowSrcService;
 import com.oukingtim.util.BizException;
+import com.oukingtim.util.ShiroUtils;
 import com.oukingtim.util.StringTools;
 import com.oukingtim.web.vm.ResultVM;
 import com.oukingtim.web.vm.SmartPageVM;
@@ -79,6 +81,11 @@ public class FlowSrcController {
 
     @PostMapping("/flowsrcs")
     public ResultVM getSmartData(@RequestBody SmartPageVM<FlowSrcModel> spage) {
+
+        //获取当前用户
+        SysUser user = ShiroUtils.getUser();
+        //用户关联渠道
+        String src = user.getChannel();
         Page<FlowSrcModel> page = new Page<>(spage.getPagination().getStart()
                 , spage.getPagination().getNumber());
 
@@ -88,6 +95,12 @@ public class FlowSrcController {
         page.setOrderByField(spage.getSort().getPredicate());
         page.setAsc(spage.getSort().getReverse());
         EntityWrapper<FlowSrcModel> wrapper = new EntityWrapper<>();
+
+        //设置渠道
+        if(StringUtils.isNotEmpty(src)) {
+            wrapper.like("SRC", src);
+        }
+
         if (spage.getSearch() != null) {
             Field[] fields = spage.getSearch().getClass().getDeclaredFields();
             Object startTime = new Date(0);
