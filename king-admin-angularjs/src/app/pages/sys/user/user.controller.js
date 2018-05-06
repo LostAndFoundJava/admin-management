@@ -35,6 +35,9 @@
             kt.user.rolelist = data.result;
         })
         kt.save = function () {
+            if(!kt.user.channel){
+                kt.user.channel = "";
+            }
             UserService.save(kt.user,function (data) {
                 $state.go('sys.user');
             });

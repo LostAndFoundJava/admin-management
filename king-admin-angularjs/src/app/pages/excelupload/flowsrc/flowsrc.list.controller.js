@@ -51,7 +51,18 @@
             tableState.pagination.number = tableState.pagination.number || 5;
             FlowSrcService.exportData(tableState,
                 function (data) {
-                });
+                    /*console.log(data);
+                    var dataSoruce = Session["userlist"] as DataTable;
+                    Helper.ExportExcel(dataSoruce, "用户列表");*/
+
+                    /*var data = new Blob([response.data], {type: response.headers('Content-Type')});
+                    var filename = response.headers('Content-Disposition').split(';')[1].trim().substr('filename='.length);
+                    FileSaver.saveAs(data, filename);*/
+                    var aForExcel = $("<a><span class='forExcel'>下载excel</span></a>").attr("href",data.result);
+                    $("body").append(aForExcel);
+                    $(".forExcel").click();
+                    aForExcel.remove();
+            });
         }
 
 

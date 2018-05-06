@@ -25,8 +25,8 @@
 
         function exportData(param, callback) {
             $resource('mgr/flowsrc/management/export', {}, {
-                'query': {method: 'POST'}
-            }).query(param,
+                'query': {method: 'POST'},
+            },{responseType: 'arraybuffer'}).query(param,
                 function (data) {
                     console.log(data);
                     callback(data)

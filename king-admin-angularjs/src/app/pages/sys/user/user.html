@@ -1,13 +1,14 @@
 <div class="row">
     <div class="col-md-6">
-        <div ba-panel ba-panel-class="xmedium-panel with-scroll light-text"ba-panel-title="用户信息">
+        <div ba-panel ba-panel-class="xmedium-panel with-scroll light-text" ba-panel-title="用户信息">
             <form name="Form" ng-submit="kt.save()">
                 <div class="form-group">
                     <button ui-sref="sys.user" type="button" class="btn btn-default btn-with-icon">
                         <i class="ion-reply"></i>返回
                     </button>
                     <button type="submit" class="btn btn-danger btn-with-icon" ng-if="!kt.isView">
-                        <i class="ion-heart"></i>保存</button>
+                        <i class="ion-heart"></i>保存
+                    </button>
                 </div>
                 <div class="form-group">
                     <label for="username">名称</label>
@@ -41,6 +42,7 @@
                             id="src"
                             title="渠道" data-container="body"
                             ng-options="item.src as item.src for item in kt.srclist">
+                        <option label="其他..." value="666666">其他...</option>
                     </select>
                 </div>
                 <div class="form-group" ng-if="kt.isShowStatus">
@@ -54,7 +56,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div ba-panel ba-panel-class="xmedium-panel with-scroll light-text"ba-panel-title="角色列表">
+        <div ba-panel ba-panel-class="xmedium-panel with-scroll light-text" ba-panel-title="角色列表">
             <div class="form-group">
                 <!--<label>角色</label>-->
                 <div class="input-demo checkbox-demo row">

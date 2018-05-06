@@ -158,7 +158,7 @@
 
         /*========初始化quill==============*/
 
-        var imageSize = !200-200;
+        var imageSize = "!5000-5000";
 
         $scope.editorCreated = function (editor) {
             $scope.readonly = kt.isView;
