@@ -423,7 +423,7 @@
             ExhibitionService.uploadFile(fd,
                 function (data) {
                     if (data && data.code == 0) {
-                        insertToEditor(data.result[0]);
+                        insertToEditor(data.result[0],editor);
                     }
                 })
         }
