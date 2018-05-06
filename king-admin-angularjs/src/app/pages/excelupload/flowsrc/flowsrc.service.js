@@ -42,7 +42,7 @@
 
         function getSmartData(param, callback) {
             // $resource('mgr/flowsrc/management/getSmartData', {}, {
-            $resource('mgr/flowsrc/management/getFlowSrctData', {}, {
+            $resource('mgr/flowsrc/management/getSmartData', {}, {
                 'query': {method: 'POST'}
             }).query(param,
                 function (data) {

@@ -63,6 +63,21 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
                     if (user != null && StringUtils.isNotBlank(user.getDesensitization()) && "0".equals(user.getDesensitization())) {
                         if (StringUtils.isNotBlank(flowSrcModel.getMobileNo())) {
                             flowSrcModel.setMobileNo(flowSrcModel.getMobileNo().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                            //客户姓名
+                            if (StringUtils.isNotBlank(flowSrcModel.getClientName())) {
+                                flowSrcModel.setClientName((flowSrcModel.getClientName()).substring(0) + "**");
+                            }
+                            //客户姓名
+                            if (StringUtils.isNotBlank(flowSrcModel.getClientName())) {
+                                flowSrcModel.setClientName(flowSrcModel.getClientName().substring(0) + "**");
+                            }
+                            //邮箱
+                            if (StringUtils.isNotBlank(flowSrcModel.getEmail())) {
+                                String[] emailArr = flowSrcModel.getEmail().split("@");
+                                if (StringUtils.isNotBlank(emailArr[emailArr.length - 1])) {
+                                    flowSrcModel.setEmail("****" + "@" + emailArr[emailArr.length - 1]);
+                                }
+                            }
                         }
                     }
                 }
@@ -90,27 +105,45 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
         if (page != null && !CollectionUtils.isEmpty(page.getRecords())) {
             for (FlowSrcModel flowSrcModel : page.getRecords()) {
                 if ("0".equals(flowSrcModel.getSrcType())) {
-                    //没有权限走脱敏渠道
-                    if (user != null && StringUtils.isNotBlank(user.getDesensitization()) && "0".equals(user.getDesensitization())) {
-                        if (StringUtils.isNotBlank(flowSrcModel.getMobileNo())) {
-                            flowSrcModel.setMobileNo(flowSrcModel.getMobileNo().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
-                        }
-                    }
-                }
-                List<Exhibition> list = mgrExhibitionService.selectTitleById();
-                if (list != null && !list.isEmpty()) {
-                    for (Exhibition e : list) {
-                        if (flowSrcModel.getExhibition() != null && !flowSrcModel.getExhibition().isEmpty()) {
-                            if (flowSrcModel.getExhibition().equals(e.getId())) {
-                                flowSrcModel.setExhibition(e.getTitle());
-                                break;
+
+
+                    List<Exhibition> list = mgrExhibitionService.selectTitleById();
+                    if (list != null && !list.isEmpty()) {
+                        for (Exhibition e : list) {
+                            if (flowSrcModel.getExhibition() != null && !flowSrcModel.getExhibition().isEmpty()) {
+                                if (flowSrcModel.getExhibition().equals(e.getId())) {
+                                    flowSrcModel.setExhibition(e.getTitle());
+                                    break;
+                                }
                             }
                         }
                     }
                 }
+                //没有权限走脱敏渠道
+                if (user != null && StringUtils.isNotBlank(user.getDesensitization()) && "0".equals(user.getDesensitization())) {
+                    //手机号
+                    if (StringUtils.isNotBlank(flowSrcModel.getMobileNo())) {
+                        flowSrcModel.setMobileNo(flowSrcModel.getMobileNo().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                    }
+                    //客户姓名
+                    if (StringUtils.isNotBlank(flowSrcModel.getClientName())) {
+                        flowSrcModel.setClientName((flowSrcModel.getClientName()).substring(0,1) + "**");
+                    }
+                    //邮箱
+                    if (StringUtils.isNotBlank(flowSrcModel.getEmail())) {
+                        String[] emailArr = flowSrcModel.getEmail().split("@");
+                        if (StringUtils.isNotBlank(emailArr[emailArr.length - 1])) {
+                            flowSrcModel.setEmail("****" + "@" + emailArr[emailArr.length - 1]);
+                        }
+                    }
+                    //地址
+                    if (StringUtils.isNotBlank(flowSrcModel.getAddress())) {
+                        flowSrcModel.setAddress("*****");
+                    }
+                }
             }
-        }
 
+        }
         return page;
     }
 }
