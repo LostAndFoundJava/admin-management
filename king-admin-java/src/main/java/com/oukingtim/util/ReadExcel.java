@@ -165,6 +165,8 @@ public class ReadExcel {
 
             for (int c = 0; c < this.totalCells; c++) {
                 Cell cell = row.getCell(c);
+//                1. 公司名称2.用户姓名3.用户地址4.用户手机号5.用户qq号6.用户邮箱7.报名展会8.用户来源src
+//                9.用户uid10.创建时间
                 if (null != cell) {
                     if (c == 0) {//第一列不读
                         flowSrcModel.setCompany(cell.getStringCellValue());

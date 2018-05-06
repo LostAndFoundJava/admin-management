@@ -1,14 +1,21 @@
 package com.oukingtim.web;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.oukingtim.domain.FlowSrcModel;
 import com.oukingtim.service.FlowSrcService;
 import com.oukingtim.util.BizException;
+import com.oukingtim.util.StringTools;
 import com.oukingtim.web.vm.ResultVM;
+import com.oukingtim.web.vm.SmartPageVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -70,5 +78,37 @@ public class FlowSrcController extends MgrBaseController<FlowSrcService,FlowSrcM
            return  ResultVM.error("导入表格数据错误，请重新导入");
         }
         return ResultVM.ok();
+    }
+
+    @PostMapping("/getFlowSrctData")
+    public ResultVM geFlowSrctSmartData(@RequestBody SmartPageVM<FlowSrcModel> spage){
+
+
+        Page<FlowSrcModel> page = new Page<FlowSrcModel>(spage.getPagination().getStart()
+                , spage.getPagination().getNumber());
+
+        if (StringUtils.isBlank(spage.getSort().getPredicate())) {
+            spage.getSort().setPredicate("update_time");
+        }
+        page.setOrderByField(spage.getSort().getPredicate());
+        page.setAsc(spage.getSort().getReverse());
+        EntityWrapper<FlowSrcModel> wrapper = new EntityWrapper<FlowSrcModel>();
+        if (spage.getSearch() != null) {
+            Field[] fields = spage.getSearch().getClass().getDeclaredFields();
+            for (int i = 0; i < fields.length; i++) {
+                try {
+                    fields[i].setAccessible(true);
+                    Object value = fields[i].get(spage.getSearch());
+                    if (null != value && !value.equals("")) {
+                        String fieldname = StringTools.underscoreName(fields[i].getName());
+                        wrapper.like(fieldname, value.toString());
+                    }
+                    fields[i].setAccessible(false);
+                } catch (Exception e) {
+                    return ResultVM.error("查询失败");
+                }
+            }
+        }
+        return  ResultVM.ok(flowSrcService.selectDataByChannel(page,wrapper));
     }
 }

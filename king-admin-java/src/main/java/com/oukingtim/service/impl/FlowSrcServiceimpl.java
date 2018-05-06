@@ -7,6 +7,7 @@ import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.FlowSrcModel;
 import com.oukingtim.domain.SysUser;
 import com.oukingtim.mapper.FlowSrcMapper;
+import com.oukingtim.service.ChannelService;
 import com.oukingtim.service.FlowSrcService;
 import com.oukingtim.service.MgrExhibitionService;
 import com.oukingtim.util.ReadExcel;
@@ -18,6 +19,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <br>创建日期：2018/3/31
@@ -34,10 +36,50 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
     @Autowired
     private MgrExhibitionService mgrExhibitionService;
 
+    @Autowired
+    private ChannelService channelService;
+
     @Override
     public List<FlowSrcModel> importExcel(String fileName, MultipartFile file) {
         List<FlowSrcModel> list = readExcel.gotExcelInfo(fileName, file);
         return list;
+    }
+
+    @Override
+    public Page<FlowSrcModel> selectDataByChannel(Page<FlowSrcModel> page, Wrapper<FlowSrcModel> wrapper) {
+
+        SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        Map<String, Object> condition = page.getCondition();
+        if (!condition.isEmpty()) {
+            condition.put("channel", user.getChannel());
+            page.setCondition(condition);
+        }
+        super.selectPage(page, wrapper);
+        Page<FlowSrcModel> pages = new Page<>();
+        if (page != null && !CollectionUtils.isEmpty(page.getRecords())) {
+            for (FlowSrcModel flowSrcModel : page.getRecords()) {
+                if ("0".equals(flowSrcModel.getSrcType())) {
+                    //没有权限走脱敏渠道
+                    if (user != null && StringUtils.isNotBlank(user.getDesensitization()) && "0".equals(user.getDesensitization())) {
+                        if (StringUtils.isNotBlank(flowSrcModel.getMobileNo())) {
+                            flowSrcModel.setMobileNo(flowSrcModel.getMobileNo().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                        }
+                    }
+                }
+                List<Exhibition> exhibitions = mgrExhibitionService.selectTitleById();
+                if (exhibitions != null && !exhibitions.isEmpty()) {
+                    for (Exhibition e : exhibitions) {
+                        if (flowSrcModel.getExhibition() != null && !flowSrcModel.getExhibition().isEmpty()) {
+                            if (flowSrcModel.getExhibition().equals(e.getId())) {
+                                flowSrcModel.setExhibition(e.getTitle());
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return page;
     }
 
 

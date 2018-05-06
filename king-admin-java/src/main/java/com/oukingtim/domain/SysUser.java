@@ -21,6 +21,7 @@ public class SysUser extends BaseModel<SysUser> {
     private String mobile;
     private String status;
     private String desensitization;
+    private String channel;
 
     @TableField(exist=false)
     private List<SysRole> rolelist;

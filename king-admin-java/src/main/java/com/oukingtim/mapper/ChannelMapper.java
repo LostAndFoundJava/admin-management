@@ -11,5 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @version 1.****</b>
  */
 @Mapper
-public interface ChannelMapper extends BaseMapper<ChannelModel>{
+public interface ChannelMapper extends BaseMapper<ChannelModel> {
+
 }
