@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Date;
 import java.util.List;
@@ -60,18 +61,18 @@ public class HomePageServiceImpl extends ServiceImpl<HomePageMapper, HomePageHot
             categoryExhibition.setHomepageId(homepageId);
             EntityWrapper wrapper = new EntityWrapper(categoryExhibition);
             List<CategoryExhibition> categoryExhibitions = categoryExhibitionMapper.selectList(wrapper);
-                for (CategoryExhibition categoryExhibition1 : categoryExhibitions) {
-                    for (Exhibition exhibition : exhibitions) {
-                        if (exhibition.getId().equals(categoryExhibition1.getExhibitionId())) {
-                            if (Integer.valueOf(1).equals(categoryExhibition1.getIsCarousel())) {
-                                exhibition.setHasCarousel(categoryExhibition1.getIsCarousel());
-                            }
-                            if (Integer.valueOf(1).equals(categoryExhibition1.getIsHot())) {
-                                exhibition.setHot(categoryExhibition1.getIsHot());
-                            }
-                            if (Integer.valueOf(1).equals(categoryExhibition1.getIsChoice())) {
-                                exhibition.setIsChoice(categoryExhibition1.getIsChoice());
-                            }
+            for (CategoryExhibition categoryExhibition1 : categoryExhibitions) {
+                for (Exhibition exhibition : exhibitions) {
+                    if (exhibition.getId().equals(categoryExhibition1.getExhibitionId())) {
+                        if (Integer.valueOf(1).equals(categoryExhibition1.getIsCarousel())) {
+                            exhibition.setHasCarousel(categoryExhibition1.getIsCarousel());
+                        }
+                        if (Integer.valueOf(1).equals(categoryExhibition1.getIsHot())) {
+                            exhibition.setHot(categoryExhibition1.getIsHot());
+                        }
+                        if (Integer.valueOf(1).equals(categoryExhibition1.getIsChoice())) {
+                            exhibition.setIsChoice(categoryExhibition1.getIsChoice());
+                        }
                         break;
                     }
                 }

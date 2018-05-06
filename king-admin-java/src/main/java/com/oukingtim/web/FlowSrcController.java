@@ -3,8 +3,11 @@ package com.oukingtim.web;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.oukingtim.domain.FlowSrcModel;
+import com.oukingtim.domain.SysUser;
 import com.oukingtim.service.FlowSrcService;
 import com.oukingtim.util.BizException;
+import com.oukingtim.util.ExportExcelUtil;
+import com.oukingtim.util.ShiroUtils;
 import com.oukingtim.util.StringTools;
 import com.oukingtim.web.vm.ResultVM;
 import com.oukingtim.web.vm.SmartPageVM;
@@ -14,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -37,6 +41,7 @@ import java.util.List;
 @RequestMapping("/mgr/flowsrc/management")
 public class FlowSrcController {
 
+    private static String SPECIAL_SRC = "666666";
     private static Logger LOGGER = LoggerFactory.getLogger(FlowSrcController.class);
 
     @Autowired
@@ -79,6 +84,11 @@ public class FlowSrcController {
 
     @PostMapping("/flowsrcs")
     public ResultVM getSmartData(@RequestBody SmartPageVM<FlowSrcModel> spage) {
+
+        //获取当前用户
+        SysUser user = ShiroUtils.getUser();
+        //用户关联渠道
+        String src = user.getChannel();
         Page<FlowSrcModel> page = new Page<>(spage.getPagination().getStart()
                 , spage.getPagination().getNumber());
 
@@ -88,6 +98,12 @@ public class FlowSrcController {
         page.setOrderByField(spage.getSort().getPredicate());
         page.setAsc(spage.getSort().getReverse());
         EntityWrapper<FlowSrcModel> wrapper = new EntityWrapper<>();
+
+        //设置渠道
+        if(StringUtils.isNotEmpty(src) && !SPECIAL_SRC.equals(src)) {
+            wrapper.like("SRC", src);
+        }
+
         if (spage.getSearch() != null) {
             Field[] fields = spage.getSearch().getClass().getDeclaredFields();
             Object startTime = new Date(0);
@@ -112,6 +128,8 @@ public class FlowSrcController {
 
                     }
                     fields[i].setAccessible(false);
+
+
                 } catch (Exception e) {
                     LOGGER.error("查询列表异常-{}", page.toString(), e);
                     return ResultVM.error("查询失败");
@@ -123,11 +141,18 @@ public class FlowSrcController {
     }
 
     @RequestMapping(value = "/export", method = RequestMethod.POST)
-    public ResultVM export(SmartPageVM<FlowSrcModel> spage) {
+    public ResultVM export(@RequestBody SmartPageVM<FlowSrcModel> spage,HttpServletRequest request,HttpServletResponse response) {
         ResultVM resultVM = getSmartData(spage);
+        Page<FlowSrcModel> page = (Page<FlowSrcModel>) resultVM.getResult();
+        List<FlowSrcModel> flowSrcModels = page.getRecords();
+        Object path = "";
+        if(!CollectionUtils.isEmpty(flowSrcModels)){
+            path = ExportExcelUtil.exportExcel(flowSrcModels);
+            if(path == null){
+                return ResultVM.error(500,"文件导出失败!");
+            }
+        }
+        return ResultVM.ok(path);
 
-
-        return ResultVM.ok();
     }
-
 }

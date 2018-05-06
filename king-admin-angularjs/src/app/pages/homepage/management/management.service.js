@@ -117,6 +117,18 @@
                 });
         }
 
+        function getHomePageInfo(param, callback) {
+            $resource('mgr/homepage/management/getHomePageInfo', {}, {
+                'query': {method: 'GET'}
+            }).query(param,
+                function (data) {
+                    console.log(data);
+                    callback(data)
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                });
+        }
+
         return {
             getSmartData: getSmartData,
             del: del,
@@ -125,7 +137,8 @@
             getList: getList,
             uploadFile: uploadFile,
             getExhibitions: getExhibitions,
-            getSomeExhibitions:getSomeExhibitions
+            getSomeExhibitions:getSomeExhibitions,
+            getHomePageInfo:getHomePageInfo
         };
 
     }

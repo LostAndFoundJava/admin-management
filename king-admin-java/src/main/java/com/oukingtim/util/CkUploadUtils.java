@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +59,7 @@ public class CkUploadUtils {
      * @throws IOException
      * @Title upload
      */
-    public static List<String> upload(HttpServletRequest request, String savePath, String filePath)
+    public static List<String> upload(HttpServletRequest request, String savePath, String filePath, String serverBasePath)
             throws IllegalStateException, IOException {
 
         List<String> upLoadFileUrl = new ArrayList<>();
@@ -113,7 +112,11 @@ public class CkUploadUtils {
                     // List 返回图片size 原图 200*200 400*400 600*600 图采用600*600
                     in = new FileInputStream(file2);
                     //TODO 上传文件到服务器
-                    FtpUtil.uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.BASE_PATH, filePath, fileName, in);
+                    boolean result =FtpUtil.uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, serverBasePath, filePath, fileName, in);
+                    if(!result){
+                        throw new RuntimeException("上传文档文件出错!");
+                    }
+
                     upLoadFileUrl.add(fileName);
                 }
             } catch (IOException e) {

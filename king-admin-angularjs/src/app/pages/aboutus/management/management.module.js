@@ -9,10 +9,10 @@
         $stateProvider
             .state('aboutus.management', {
                 url: '/management',
-                templateUrl: 'app/pages/aboutus/management/managementlist.html',
-                controller: 'AboutUsListCtrl',
+                templateUrl: 'app/pages/aboutus/management/management.html',
+                controller: 'AboutUsCtrl',
                 controllerAs: 'kt',
-                title: '友情链接列表',
+                title: '友情链接信息',
                 sidebarMeta: {
                     order: 1,
                 },

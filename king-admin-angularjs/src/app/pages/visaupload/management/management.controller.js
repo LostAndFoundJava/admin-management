@@ -16,7 +16,8 @@
         kt.visa = {};
         kt.files = []
         kt.visa.fileList = [];
-
+        kt.countryName = "china";
+        kt.fileName="";
         if ($stateParams.isView) {
             kt.isView = true;
         } else {
@@ -52,6 +53,8 @@
                         $scope.selectContinent();
                     }
                     kt.visa = data;
+                    kt.visa.continent = parseInt(kt.visa.continent);
+                    kt.visa.country = parseInt(kt.visa.country);
                     angular.forEach(kt.visa.fileList, function (file) {
                         var wj = {};
                         var fileUrl = file.fileUrl;
@@ -114,13 +117,15 @@
                 angular.forEach(files, function (file) {
                     var wjzl = {};
                     wjzl.name = file.name;
+                    kt.fileName = file.name;
                     kt.files.push(wjzl);
                     // kt.visa.fileList.push(wjzl);
                 })
                 Upload.upload({
-                    url: '/api/mgr/image/upload',
+                    url: '/api/mgr/image/document',
                     data: {
-                        files: files
+                        files: files,
+                        countryName: kt.countryName
                     }
                 }).then(function (response) {
 
@@ -129,6 +134,7 @@
                         angular.forEach(response.data.result, function (fileUrl) {
                             var wjzl = {};
                             wjzl.fileUrl = fileUrl;
+                            wjzl.fileName = kt.fileName;
                             kt.visa.fileList.push(wjzl);
                         })
                     });
@@ -152,7 +158,7 @@
 
         /*========初始化quill==============*/
 
-        var imageSize = !200-200;
+        var imageSize = "!5000-5000";
 
         $scope.editorCreated = function (editor) {
             $scope.readonly = kt.isView;

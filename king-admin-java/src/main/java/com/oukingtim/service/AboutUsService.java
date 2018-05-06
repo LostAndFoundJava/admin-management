@@ -11,4 +11,5 @@ import com.oukingtim.domain.AboutUsModel;
  */
 
 public interface AboutUsService extends IService<AboutUsModel> {
+    AboutUsModel getAboutUsInfo();
 }

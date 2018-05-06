@@ -166,9 +166,11 @@
             kt.exhibition.carousel = map[kt.carouselImg];*/
             if(!kt.exhibition.carousel) {
                 toastr.warning("轮播图未设置");
+                return;
             }
             if(!kt.exhibition.thumbnail) {
                 toastr.warning("缩略图未设置");
+                return;
             }
 
             for (var index in map) {
@@ -421,7 +423,7 @@
             ExhibitionService.uploadFile(fd,
                 function (data) {
                     if (data && data.code == 0) {
-                        insertToEditor(data.result[0]);
+                        insertToEditor(data.result[0],editor);
                     }
                 })
         }

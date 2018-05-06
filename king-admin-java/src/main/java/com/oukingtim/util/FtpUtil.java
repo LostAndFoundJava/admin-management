@@ -69,7 +69,7 @@ public class FtpUtil {
             //设置上传文件的类型为二进制类型
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
             //上传文件
-            if (!ftp.storeFile(filename, input)) {
+            if (!ftp.storeFile(new String(filename.toString().getBytes("UTF-8"), "ISO-8859-1"), input)) {
                 return result;
             }
             input.close();
@@ -85,6 +85,12 @@ public class FtpUtil {
                 }
             }
         }
+        return result;
+    }
+
+    public static boolean uploadFile(String basePath, String filePath, String filename, InputStream input) {
+        boolean result = false;
+
         return result;
     }
 
@@ -144,7 +150,7 @@ public class FtpUtil {
     public static void main(String[] args) {
         try {
             FileInputStream in = new FileInputStream(new File("C:\\Users\\xufan\\Pictures\\new image - zvkau.jpg"));
-            boolean flag = uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.BASE_PATH, "/2018/03/23", "honger.jpg", in);
+            boolean flag = uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, Constants.PIC_BASE_PATH, "/2018/03/23", "honger.jpg", in);
             System.out.println(flag);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

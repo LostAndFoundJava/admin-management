@@ -24,7 +24,7 @@
         }
 
         //回显图片大小
-        var imageSize = "!400-400";
+        var imageSize = "!5000-5000";
 
         //用户存图片上传后的url
         var map = {};
@@ -60,6 +60,13 @@
             for (var index in map) {
                 kt.link.picUrl  = map[index];
             }
+            var strRegex = "^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+";
+            var result = new RegExp(strRegex);
+            if(!result.test(kt.link.linkUrl)){
+                toastr.warning("链接格式不正确,请确定以http、https等开头!");
+                return;
+            }
+
 
             LinkService.save(kt.link, function (data) {
                 $state.go('link.management');

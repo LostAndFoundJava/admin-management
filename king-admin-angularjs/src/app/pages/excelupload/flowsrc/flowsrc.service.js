@@ -23,6 +23,18 @@
                 });
         }
 
+        function exportData(param, callback) {
+            $resource('mgr/flowsrc/management/export', {}, {
+                'query': {method: 'POST'},
+            },{responseType: 'arraybuffer'}).query(param,
+                function (data) {
+                    console.log(data);
+                    callback(data)
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                });
+        }
+
         function del(param, callback) {
             CommonService.danger('确定删除?', function () {
                 rest.delete(param,
@@ -89,6 +101,7 @@
             save: save,
             getInfo: getInfo,
             getList: getList,
+            exportData: exportData
         };
 
     }

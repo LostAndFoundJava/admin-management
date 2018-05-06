@@ -20,7 +20,7 @@
             kt.isView = false;
         }
 
-        var imageSize = "!200-200";
+        var imageSize = "!5000-5000";
 
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {
@@ -70,7 +70,7 @@
             if (editor) {
                 var toolbar = editor.getModule('toolbar');
                 editor.getModule("toolbar").addHandler("image", function () {
-                    selectImage(toolbar,editor);
+                    selectImage(toolbar, editor);
                 });
             }
 
@@ -83,7 +83,7 @@
         }
 
         //选择图片
-        function selectImage(toolbar,editor) {
+        function selectImage(toolbar, editor) {
             var fileInput = toolbar.container.querySelector('input.ql-image[type=file]');
             if (fileInput == null) {
                 fileInput = document.createElement('input');
@@ -92,7 +92,7 @@
                 fileInput.classList.add('ql-image');
                 fileInput.addEventListener('change', function () {
                     if (fileInput.files != null && fileInput.files[0] != null) {
-                        saveToServer(fileInput.files[0],editor);
+                        saveToServer(fileInput.files[0], editor);
                     }
                 });
                 toolbar.container.appendChild(fileInput);
@@ -101,7 +101,7 @@
         };
 
         // 上传到服务器@param {File} file
-        function saveToServer(file,editor) {
+        function saveToServer(file, editor) {
             //upload on server
             const fd = new FormData();
             fd.append('image', file);
@@ -109,13 +109,13 @@
             AboutUsService.uploadFile(fd,
                 function (data) {
                     if (data && data.code == 0) {
-                        insertToEditor(data.result[0],editor);
+                        insertToEditor(data.result[0], editor);
                     }
                 })
         }
 
         //回显到quill 文本框中
-        function insertToEditor(url,editor) {
+        function insertToEditor(url, editor) {
             // push image url to rich editor.
             var range = editor.getSelection();
             var imagePosition = 0;
@@ -143,23 +143,15 @@
             kt.customDetail.splice(index, 1);
         }
 
-        /*//自定义展会简介
-         kt.customBriefInfo = [];
-         var briefInfo = {
-         key: '',
-         value: ''
-         };
+        AboutUsService.getAboutUsInfo({},function (data) {
+            if(data){
+                kt.aboutus = data;
 
-         $scope.addBriefInfo = function () {
-         var copyDetail = angular.copy(briefInfo);
-         kt.customBriefInfo.push(copyDetail);
-         }
-
-         $scope.removeBriefInfo = function (item) {
-         var index = kt.customBriefInfo.indexOf(item);
-         kt.customBriefInfo.splice(index, 1);
-         }
-         */
+                if (kt.aboutus.detail) {
+                    kt.customDetail = JSON.parse(kt.aboutus.detail);
+                }
+            }
+        })
 
     }
 })();

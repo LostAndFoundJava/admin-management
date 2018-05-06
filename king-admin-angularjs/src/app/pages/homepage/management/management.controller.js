@@ -29,24 +29,7 @@
             kt.isView = false;
         }
 
-        CategoryService.getList({homepageId: $stateParams.id}, function (data) {
-            kt.homepage.categoryList = data.result;
-            $scope.getExhibitionByCategoryIds();
-        })
 
-        HomepageService.getExhibitions({homepageId: $stateParams.id}, function (data) {
-            kt.homepage.exhibitionList = data.result;
-            angular.forEach(kt.homepage.exhibitionList, function (exhibition) {
-                if (exhibition.hot == 1) {
-                    exhibition.hot = true;
-                }
-
-                if (exhibition.hasCarousel == 1) {
-                    exhibition.hasCarousel = true;
-                }
-            })
-            // kt.homepage.exhibitions = data.result;
-        })
 
 
         //由id判断是新增还是修改/查看（回显数据）
@@ -101,14 +84,14 @@
                     if (exhibition.hot) {
                         categoryExhibition.isHot = 1;
                         hotNum++;
-                        if(hotNum > kt.homepage.extension.hotSum){
+                        if (hotNum > kt.homepage.extension.hotSum) {
                             overHot = true;
                         }
                     }
                     if (exhibition.hasCarousel) {
                         categoryExhibition.isCarousel = 1;
                         carouselNum++;
-                        if(carouselNum > kt.homepage.extension.carouselSum){
+                        if (carouselNum > kt.homepage.extension.carouselSum) {
                             overCarousel = true;
                         }
                     }
@@ -117,12 +100,12 @@
 
             })
 
-            if(overHot){
+            if (overHot) {
                 toastr.warning("已超出推荐数");
                 return;
             }
 
-            if(overCarousel){
+            if (overCarousel) {
                 toastr.warning("已超出轮播数");
                 return;
             }
@@ -140,7 +123,7 @@
             // kt.homepageConfig.categoryExhibitionList =  JSON.stringify(kt.homepageConfig.categoryExhibitionList);
             kt.homepageConfig.title = kt.homepage.title;
             kt.homepageConfig.extension = JSON.stringify(kt.homepage.extension);
-            if(kt.homepage.id) {
+            if (kt.homepage.id) {
                 kt.homepageConfig.id = kt.homepage.id;
             }
             HomepageService.save(kt.homepageConfig, function (data) {
@@ -174,7 +157,7 @@
             )
             if (categoryIds.length > 0) {
                 HomepageService.getSomeExhibitions({
-                    homepageId: $stateParams.id,
+                    homepageId: kt.homepage.id,
                     categoryIds: categoryIds
                 }, function (data) {
                     kt.homepage.exhibitions = data.result;
@@ -188,6 +171,40 @@
             }
 
         }
+
+        HomepageService.getHomePageInfo({},
+            function (data) {
+                if (data) {
+                    kt.homepage = data;
+                    if (data.extension) {
+                        var extension = JSON.parse(data.extension);
+                        kt.homepage.extension = extension;
+                    }
+
+                    //获取首页精选的行业
+                    CategoryService.getList({homepageId: data.id}, function (data) {
+                        kt.homepage.categoryList = data.result;
+                        //获取对应行业的展会信息
+                        $scope.getExhibitionByCategoryIds();
+                    })
+
+                    //获取所有展会信息，并设置轮播、热门
+                    HomepageService.getExhibitions({homepageId: data.id}, function (data) {
+                        kt.homepage.exhibitionList = data.result;
+                        angular.forEach(kt.homepage.exhibitionList, function (exhibition) {
+                            if (exhibition.hot == 1) {
+                                exhibition.hot = true;
+                            }
+
+                            if (exhibition.hasCarousel == 1) {
+                                exhibition.hasCarousel = true;
+                            }
+                        })
+                        // kt.homepage.exhibitions = data.result;
+                    })
+                }
+            })
+
 
     }
 })();

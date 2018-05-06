@@ -1,0 +1,71 @@
+<div ba-panel ba-panel-title="渠道来源列表" ba-panel-class="xmedium-panel with-scroll light-text">
+    <div class="row add-row-editable-table">
+        <div has-perms='sys.src.add' class="col-md-4">
+            <button class="btn btn-success btn-with-icon" ui-sref="sys.src.add">
+                <i class="ion-plus-round"></i>新增
+            </button>
+        </div>
+        <div class="col-md-offset-8">
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control form-control-rounded" ng-model="kt.tableState.search.src"
+                       input-keyup="kt.LoadPage" placeholder="渠道来源">
+            </div>
+
+        </div>
+    </div>
+    <table class="table table-bordered table-hover table-condensed" st-pipe="kt.LoadPage"
+           st-table="kt.srclist">
+        <thead>
+        <tr class="sortable">
+            <th>
+                <label class="table-checkbox checkbox-inline custom-checkbox nowrap">
+                    <input type="checkbox" ng-model="kt.checkboxes.checked">
+                    <span></span>
+                </label>
+            </th>
+            <th>序号</th>
+            <th st-sort="src">渠道来源</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="src in kt.srclist">
+            <td class="check-td">
+                <div class="mail-checkbox">
+                    <label class="checkbox-inline custom-checkbox nowrap">
+                        <input type="checkbox" ng-model="kt.checkboxes.items[src.id]">
+                        <span></span>
+                    </label>
+                </div>
+            </td>
+            <td>{{$index+1}}</td>
+            <td>
+                {{src.src}}
+            </td>
+
+            <td>
+                <div class="buttons">
+                    <button has-perms='sys.src.view' class="btn btn-info editable-table-button btn-xs btn-with-icon"
+                            ui-sref="sys.src.view({id:src.id,isView:true})"><i class="ion-search"></i>查看
+                    </button>
+                    <button has-perms='sys.src.edit' class="btn btn-warning editable-table-button btn-xs btn-with-icon"
+                            ui-sref="sys.src.view({id:src.id})"><i class="ion-edit"></i>编辑
+                    </button>
+                    <button has-perms='sys.src.delete' class="btn btn-danger editable-table-button btn-xs btn-with-icon"
+                            ng-click="kt.del(src.id)"><i class="ion-trash-a"></i>删除
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="7" class="text-center">
+                <div st-pagination="" st-items-by-page="5"
+                     st-template="app/pages/common/pagination.html"></div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
