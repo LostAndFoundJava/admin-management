@@ -27,22 +27,24 @@
             }
         }
         $rootScope.content = {};
-        $q.all(whatToWait).then(function () {
-            UserService.isLogin(
-                function (data) {
-                    if (data.code == '0') {
-                        $rootScope.account = data.result.user;
-                        $rootScope.menuItems = data.result.menu;
-                        hasPermsService.setPermissions(data.result.perms);
-                        $rootScope.$pageFinishedLoading = true;
-                        stateHandler.initialize();
-                    } else {
-                        // $window.open('auth.html', '_self');
-                        window.location.href = 'auth.html';
-                    }
+        // $q.all(whatToWait).then(function () {
+        //
+        // });
+
+        UserService.isLogin(
+            function (data) {
+                if (data.code == '0') {
+                    $rootScope.account = data.result.user;
+                    $rootScope.menuItems = data.result.menu;
+                    hasPermsService.setPermissions(data.result.perms);
+                    $rootScope.$pageFinishedLoading = true;
+                    stateHandler.initialize();
+                } else {
+                    // $window.open('auth.html', '_self');
+                    window.location.href = 'auth.html';
                 }
-            );
-        });
+            }
+        );
         $rootScope.$baSidebarService = baSidebarService;
     }
 
