@@ -16,7 +16,8 @@
         kt.visa = {};
         kt.files = []
         kt.visa.fileList = [];
-
+        kt.countryName = "china";
+        kt.fileName="";
         if ($stateParams.isView) {
             kt.isView = true;
         } else {
@@ -52,6 +53,8 @@
                         $scope.selectContinent();
                     }
                     kt.visa = data;
+                    kt.visa.continent = parseInt(kt.visa.continent);
+                    kt.visa.country = parseInt(kt.visa.country);
                     angular.forEach(kt.visa.fileList, function (file) {
                         var wj = {};
                         var fileUrl = file.fileUrl;
@@ -114,13 +117,15 @@
                 angular.forEach(files, function (file) {
                     var wjzl = {};
                     wjzl.name = file.name;
+                    kt.fileName = file.name;
                     kt.files.push(wjzl);
                     // kt.visa.fileList.push(wjzl);
                 })
                 Upload.upload({
-                    url: '/api/mgr/image/upload',
+                    url: '/api/mgr/image/document',
                     data: {
-                        files: files
+                        files: files,
+                        countryName: kt.countryName
                     }
                 }).then(function (response) {
 
@@ -129,6 +134,7 @@
                         angular.forEach(response.data.result, function (fileUrl) {
                             var wjzl = {};
                             wjzl.fileUrl = fileUrl;
+                            wjzl.fileName = kt.fileName;
                             kt.visa.fileList.push(wjzl);
                         })
                     });
@@ -148,5 +154,71 @@
             kt.files.splice(index, 1);
             kt.visa.fileList.splice(index, 1);
         }
+
+
+        /*========初始化quill==============*/
+
+        var imageSize = !200-200;
+
+        $scope.editorCreated = function (editor) {
+            $scope.readonly = kt.isView;
+            if (editor) {
+                var toolbar = editor.getModule('toolbar');
+                editor.getModule("toolbar").addHandler("image", function () {
+                    selectImage(toolbar,editor);
+                });
+            }
+
+        }
+
+        //
+        $scope.contentChanged = function (editor, html, text) {
+            $scope.changeDetected = true;
+            kt.exhibition.exhibitionDetail.description = html;
+        }
+
+        //选择图片
+        function selectImage(toolbar,editor) {
+            var fileInput = toolbar.container.querySelector('input.ql-image[type=file]');
+            if (fileInput == null) {
+                fileInput = document.createElement('input');
+                fileInput.setAttribute('type', 'file');
+                fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+                fileInput.classList.add('ql-image');
+                fileInput.addEventListener('change', function () {
+                    if (fileInput.files != null && fileInput.files[0] != null) {
+                        saveToServer(fileInput.files[0],editor);
+                    }
+                });
+                toolbar.container.appendChild(fileInput);
+            }
+            fileInput.click();
+        };
+
+        // 上传到服务器@param {File} file
+        function saveToServer(file,editor) {
+            //upload on server
+            const fd = new FormData();
+            fd.append('image', file);
+
+            VisaUploadService.uploadFile(fd,
+                function (data) {
+                    if (data && data.code == 0) {
+                        insertToEditor(data.result[0]);
+                    }
+                })
+        }
+
+        //回显到quill 文本框中
+        function insertToEditor(url,editor) {
+            // push image url to rich editor.
+            var range = editor.getSelection();
+            var imagePosition = 0;
+            if (range) {
+                imagePosition = range.index;
+            }
+            editor.insertEmbed(imagePosition, 'image', url + imageSize);
+        }
+
     }
 })();

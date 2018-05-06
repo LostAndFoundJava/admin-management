@@ -41,7 +41,36 @@ public class ImageUploadController {
         String savePath = session.getServletContext().getRealPath("/");
         String filePath = "/" + DateUtil.date2Str("yyyy/MM/dd", new Date());//当前日期作为文件目录
         try {
-            uploadFileUrls = CkUploadUtils.upload(request, savePath, filePath);
+            uploadFileUrls = CkUploadUtils.upload(request, savePath, filePath, Constants.PIC_BASE_PATH);
+
+            if (!CollectionUtils.isEmpty(uploadFileUrls)) {
+                for (String uploadFileUrl : uploadFileUrls) {
+                    uploadFileUrl = fastIp + filePath + "/" + uploadFileUrl;
+                    fileUrlVO.add(uploadFileUrl);
+                }
+            }
+        } catch (IOException e) {
+            logger.error("上传出错", e);
+            return ResultVM.error("上传出错");
+        }
+        /*try {
+            CkUploadUtils.ckeditor(request, response, fastIp, savePath);
+        } catch (IOException e) {
+            logger.error("上传出错", e);
+        }*/
+        return ResultVM.ok(fileUrlVO);
+    }
+
+    @ApiOperation(value = "上传文档文件", notes = "上传文档文件")
+    @RequestMapping(value = "/document", method = RequestMethod.POST)
+    public ResultVM uploadDocument(HttpSession session, HttpServletRequest request, HttpServletResponse response, MultipartFile file, String countryName) {
+        List<String> uploadFileUrls;
+        List<String> fileUrlVO = new ArrayList<>();
+        String fastIp = Constants.VISA_SERVER_ADMIN;
+        String savePath = session.getServletContext().getRealPath("/");
+        String filePath = "/" + countryName;//国家作为文件目录
+        try {
+            uploadFileUrls = CkUploadUtils.upload(request, savePath, filePath, Constants.VISA_BASE_PATH);
 
             if (!CollectionUtils.isEmpty(uploadFileUrls)) {
                 for (String uploadFileUrl : uploadFileUrls) {

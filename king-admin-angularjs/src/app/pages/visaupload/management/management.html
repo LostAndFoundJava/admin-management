@@ -13,7 +13,7 @@
                 </button>
                 <button type="button" ng-if="!kt.isView"
                         class="btn btn-success btn-with-icon" ngf-select="uploadFiles($files)" accept="*" multiple>
-                    <i class="icon-plus-round">添加文件</i>
+                    <i class="ion-plus-round"></i>添加签证文件
                 </button>
                 <!--                <button ngf-select="uploadFiles($files)" multiple
                                         accept="*">Select Files
@@ -65,7 +65,7 @@
 
         </form>
         <div class="form-group">
-            <label>签证资料</label>
+            <label>签证文件</label>
             <table class="table table-bordered table-hover table-condensed">
                 <thead>
                 <tr>
@@ -107,6 +107,13 @@
                     </td>
                 </tr>
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="10" class="text-center">
+                        <div st-pagination="" st-items-by-page="5"></div>
+                    </td>
+                </tr>
+                </tfoot>
             </table>
         </div>
 

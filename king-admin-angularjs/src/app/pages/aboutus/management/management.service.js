@@ -97,6 +97,17 @@
                 });
         }
 
+        function getAboutUsInfo(param, callback) {
+            $resource('mgr/aboutus/management/getAboutUsInfo', {}, {
+                'query': {method: 'GET'}
+            }).query(param,
+                function (data) {
+                    callback(data)
+                }, function (error) {
+                    toastr.error(error, "提示", {"progressBar": true,});
+                });
+        }
+
         return {
             getSmartData: getSmartData,
             del: del,
@@ -104,6 +115,7 @@
             getInfo: getInfo,
             getList: getList,
             uploadFile: uploadFile,
+            getAboutUsInfo:getAboutUsInfo
         };
 
     }

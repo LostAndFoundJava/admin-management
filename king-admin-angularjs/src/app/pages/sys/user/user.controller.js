@@ -6,11 +6,12 @@
         .controller('UserCtrl', UserCtrl);
 
     /** @ngInject */
-    function UserCtrl($scope,$stateParams,$state,UserService,RoleService,DictService) {
+    function UserCtrl($scope,$stateParams,$state,UserService,RoleService,DictService,SrcService) {
 
         var kt = this;
         kt.user = {};
         kt.user.rolelist = [];
+        kt.srclist=[];
         kt.statuses = [];
 
         if($stateParams.isView){
@@ -41,6 +42,10 @@
         kt.arePasswordsEqual = function () {
             return kt.user.password == kt.password;
         };
+        SrcService.getList({},function (data) {
+            kt.srclist = data.result;
+        })
+
     }
 
 })();

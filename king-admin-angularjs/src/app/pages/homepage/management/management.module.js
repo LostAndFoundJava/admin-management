@@ -9,8 +9,8 @@
         $stateProvider
             .state('homepage.management', {
                 url: '/management',
-                templateUrl: 'app/pages/homepage/management/managementlist.html',
-                controller: 'HomepageListCtrl',
+                templateUrl: 'app/pages/homepage/management/management.html',
+                controller: 'HomepageCtrl',
                 controllerAs: 'kt',
                 title: '首页管理',
                 sidebarMeta: {

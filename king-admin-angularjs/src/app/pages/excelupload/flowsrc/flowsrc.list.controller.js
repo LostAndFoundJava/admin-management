@@ -8,7 +8,7 @@
     function FlowSrcListCtrl($http, $scope, $window, $timeout, FlowSrcService) {
         var kt = this;
         kt.flowsrcList = [];
-        var selectCondition = this;
+        kt.flowsrc = [];
         kt.LoadPage = function (tableState) {
             tableState = tableState || kt.tableState;
             tableState.pagination.number = tableState.pagination.number || 5;
@@ -38,24 +38,23 @@
             });
         });
 
-        $scope.exportToExcel = function (tableId) { // ex: '#my-table'
-            $scope.exportHref = FlowSrcService.excelExport($window).tableToExcel(tableId, 'sheet name');
-            $timeout(function () {
-                location.href = $scope.exportHref;
-            }, 100); // trigger download
-
+        $scope.isDisabledDate = function (currentDate, mode) {
+            return mode === 'day' && (currentDate.getDay() === 0 || currentDate.getDay() === 6);
         };
 
-        $scope.exportToTable = function () {
-            $http({
-                url: url + "export",
-                responseType: 'arraybuffer'
-            }).success(function (res) {
-                var blob = new Blob([res], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;"});
-                //var blob = new Blob([res], {type: "application/octet-stream"});  这种类型的转换同样可行
-                saveAs(blob, "考题信息.xlsx");
-            });
+        $scope.dateOptions = {
+            minDate: null
         };
+
+        $scope.exportData = function (tableState) {
+            tableState = tableState || kt.tableState;
+            tableState.pagination.number = tableState.pagination.number || 5;
+            FlowSrcService.exportData(tableState,
+                function (data) {
+                });
+        }
+
+
     }
 
 })();

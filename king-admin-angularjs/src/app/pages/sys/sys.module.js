@@ -5,6 +5,7 @@
         'KingAdmin.pages.sys.user',
         'KingAdmin.pages.sys.menu',
         'KingAdmin.pages.sys.role',
+        'KingAdmin.pages.sys.src',
 
     ])
         .config(routeConfig);

@@ -1,6 +1,6 @@
 <div ba-panel ba-panel-title="导入用户来源" ba-panel-class="xmedium-panel with-scroll light-text">
     <div class="form-group">
-        <button ngf-select="uploadFiles($files)" accept="application/ms-excel" class="btn btn-primary btn-with-icon" ng-if="!kt.isView">
+        <button ngf-select="uploadFiles($files)" accept="application/msexcel" class="btn btn-primary btn-with-icon" ng-if="!kt.isView">
             <i class="ion-ios-folder-outline"></i>选择文件
         </button>
 
@@ -33,6 +33,13 @@
                 </td>
             </tr>
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="7" class="text-center">
+                    <div st-pagination="" st-items-by-page="5" ></div>
+                </td>
+            </tr>
+            </tfoot>
         </table>
     </div>
 </div>

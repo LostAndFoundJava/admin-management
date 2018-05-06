@@ -72,7 +72,7 @@
                         <label for="applicationType">报名类型</label>
                         <select ng-disabled="kt.isView" class="form-control" ng-model="kt.flowsrc.applicationType"
                                 id="applicationType" title="报名类型" data-container="body"
-                                ng-options="x for (x, y) in kt.applicationTypeList">
+                                ng-options="item.key as item.value for item in kt.applicationTypeList">
                         </select>
                     </div>
 

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.oukingtim.domain.FlowSrcModel;
 import com.oukingtim.service.FlowSrcService;
 import com.oukingtim.util.BizException;
+import com.oukingtim.util.ShiroUtils;
 import com.oukingtim.util.StringTools;
 import com.oukingtim.web.vm.ResultVM;
 import com.oukingtim.web.vm.SmartPageVM;
@@ -14,10 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -25,9 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <br>创建日期：2018/4/1
@@ -38,7 +36,7 @@ import java.util.Map;
 @RestController
 @Api(description = "用户信息execel导入")
 @RequestMapping("/mgr/flowsrc/management")
-public class FlowSrcController extends MgrBaseController<FlowSrcService,FlowSrcModel> {
+public class FlowSrcController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(FlowSrcController.class);
 
@@ -63,23 +61,86 @@ public class FlowSrcController extends MgrBaseController<FlowSrcService,FlowSrcM
                 fileName = file.getOriginalFilename();
                 list = flowSrcService.importExcel(fileName, file);
                 Boolean flag = flowSrcService.insertBatch(list);
-                if(!flag){
-                   return ResultVM.error("导入表格数据错误，请重新导入");
+                if (!flag) {
+                    return ResultVM.error("导入表格数据错误，请重新导入");
                 }
             }
             if (list == null || list.isEmpty()) {
                 return ResultVM.error("导入的excel为空");
             }
-        }catch (BizException e){
-            return  ResultVM.error(e.getMsg());
-        }
-        catch (Exception e) {
+        } catch (BizException e) {
+            return ResultVM.error(e.getMsg());
+        } catch (Exception e) {
             e.printStackTrace();
-           return  ResultVM.error("导入表格数据错误，请重新导入");
+            return ResultVM.error("导入表格数据错误，请重新导入");
         }
         return ResultVM.ok();
     }
 
+
+    @PostMapping("/flowsrcs")
+    public ResultVM getSmartData(@RequestBody SmartPageVM<FlowSrcModel> spage) {
+
+        //获取当前用户
+        SysUser user = ShiroUtils.getUser();
+        //用户关联渠道
+        String src = user.getChannel();
+        Page<FlowSrcModel> page = new Page<>(spage.getPagination().getStart()
+                , spage.getPagination().getNumber());
+
+        if (StringUtils.isBlank(spage.getSort().getPredicate())) {
+            spage.getSort().setPredicate("update_time");
+        }
+        page.setOrderByField(spage.getSort().getPredicate());
+        page.setAsc(spage.getSort().getReverse());
+        EntityWrapper<FlowSrcModel> wrapper = new EntityWrapper<>();
+
+        //设置渠道
+        if(StringUtils.isNotEmpty(src)) {
+            wrapper.like("SRC", src);
+        }
+
+        if (spage.getSearch() != null) {
+            Field[] fields = spage.getSearch().getClass().getDeclaredFields();
+            Object startTime = new Date(0);
+            Object endTime = new Date();
+            for (int i = 0; i < fields.length; i++) {
+                try {
+                    fields[i].setAccessible(true);
+                    Object value = fields[i].get(spage.getSearch());
+                    if (null != value && !value.equals("")) {
+                        String fieldname = StringTools.underscoreName(fields[i].getName());
+                        if (!"START_TIME".equals(fieldname) && !"END_TIME".equals(fieldname)) {
+                            wrapper.like(fieldname, value.toString());
+                        }
+                        if ("START_TIME".equals(fieldname)) {
+                            startTime = value;
+                        }
+
+                        if ("END_TIME".equals(fieldname)) {
+                            endTime = value;
+                        }
+
+
+                    }
+                    fields[i].setAccessible(false);
+                } catch (Exception e) {
+                    LOGGER.error("查询列表异常-{}", page.toString(), e);
+                    return ResultVM.error("查询失败");
+                }
+            }
+            wrapper.between("CREATE_TIME", startTime, endTime);
+        }
+        return ResultVM.ok(flowSrcService.selectPage(page, wrapper));
+    }
+
+    @RequestMapping(value = "/export", method = RequestMethod.POST)
+    public ResultVM export(@RequestBody SmartPageVM<FlowSrcModel> spage) {
+        ResultVM resultVM = getSmartData(spage);
+
+
+        return ResultVM.ok();
+    }
     @PostMapping("/getFlowSrctData")
     public ResultVM geFlowSrctSmartData(@RequestBody SmartPageVM<FlowSrcModel> spage){
 
@@ -111,4 +172,5 @@ public class FlowSrcController extends MgrBaseController<FlowSrcService,FlowSrcM
         }
         return  ResultVM.ok(flowSrcService.selectDataByChannel(page,wrapper));
     }
+
 }

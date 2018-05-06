@@ -4,19 +4,16 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.oukingtim.domain.MgrBaseModel;
-import com.oukingtim.domain.SysUser;
 import com.oukingtim.util.StringTools;
 import com.oukingtim.web.vm.ResultVM;
 import com.oukingtim.web.vm.SmartPageVM;
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.util.Date;
 
