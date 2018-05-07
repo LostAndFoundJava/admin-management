@@ -1,5 +1,7 @@
 package com.oukingtim.config;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -9,10 +11,15 @@ import org.springframework.stereotype.Component;
  * @author JackieChan</b>
  * @version 1.****</b>
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Component
 @ConfigurationProperties(prefix="fileUploadPath")
 public class HongerEnvironment {
 
-    private String filePaht;
+    private String filePath;
 
+    private String localExcelUrl;
+
+    private String serverExcelUrl;
 }

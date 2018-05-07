@@ -1,15 +1,17 @@
 package com.oukingtim.util;
 
 import com.oukingtim.domain.FlowSrcModel;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <br>创建日期：2018/5/6
@@ -18,33 +20,36 @@ import java.util.List;
  * @version 1.****</b>
  */
 @SuppressWarnings({"deprecation"})
-public class ExportExcelUtil {
+public class CreateExcelUtil {
 
-    public static void exportExcel(HttpServletResponse response, List<FlowSrcModel> list) {
+    public static String exportExcel( List<FlowSrcModel> list) {
         if (list == null || list.isEmpty()) {
             throw new BizException("没有查询到数据!");
         }
-        buildExcel(response, list);
+        String filePath = buildExcel(list);
+        return filePath;
     }
-    private static void buildExcel(HttpServletResponse response, List<FlowSrcModel> list) {
+
+    private static String buildExcel(List<FlowSrcModel> list) {
         //                1. 公司名称2.用户姓名3.用户地址4.用户手机号5.用户qq号6.用户邮箱7.报名展会8.用户来源src
-       //                9.用户uid10.创建时间
+        //                9.用户uid10.创建时间
         String sheetName = "用户展会来源导出表";
         String titleName = "用户展会报名来源表";
         String fileName = "用户展会报名来源导出";
-        int columnNumber = 3;
-        int[] columnWidth = {10, 20, 30};
-        String[][] dataList = {{"001", "2015-01-01", "IT"},
-                {"002", "2015-01-02", "市场部"}, {"003", "2015-01-03", "测试"}};
+        int columnNumber = 10;
+        int[] columnWidth = {15, 10, 50,20,20,20,20,10,10,30};
         String[] columnName = {"公司名称", "姓名", "地址", "手机号", "QQ", "邮箱", "报名展会", "src", "uid", "报名时间"};
-        exportWithResponse(response, list, sheetName, titleName,
+        String filePath = exportWithResponse(list, sheetName, titleName,
                 fileName, columnNumber, columnWidth,
                 columnName, list);
+
+        return filePath;
     }
 
-    private static void exportWithResponse(HttpServletResponse response, List<FlowSrcModel> list, String sheetName, String titleName,
-                                           String fileName, int columnNumber, int[] columnWidth,
-                                           String[] columnName, List<FlowSrcModel> dataList) {
+    private static String exportWithResponse( List<FlowSrcModel> list, String sheetName, String titleName,
+                                             String fileName, int columnNumber, int[] columnWidth,
+                                             String[] columnName, List<FlowSrcModel> dataList) {
+       String  creteFile = StringUtils.EMPTY;
         if (columnNumber == columnWidth.length && columnWidth.length == columnName.length) {
             // 第一步，创建一个webbook，对应一个Excel文件
             HSSFWorkbook wb = new HSSFWorkbook();
@@ -72,42 +77,35 @@ public class ExportExcelUtil {
             headerFont1.setFontName("黑体"); // 设置字体类型
             headerFont1.setFontHeightInPoints((short) 15); // 设置字体大小
             style2.setFont(headerFont1); // 为标题样式设置字体样式
-
             HSSFCell cell1 = row1.createCell(0);// 创建标题第一列
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0,
                     columnNumber - 1)); // 合并列标题
             cell1.setCellValue(titleName); // 设置值标题
             cell1.setCellStyle(style2); // 设置标题样式
-
             // 创建第1行 也就是表头
             HSSFRow row = sheet.createRow((int) 1);
             row.setHeightInPoints(37);// 设置表头高度
-
             // 第四步，创建表头单元格样式 以及表头的字体样式
             HSSFCellStyle style = wb.createCellStyle();
             style.setWrapText(true);// 设置自动换行
             style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
             style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-
             style.setBottomBorderColor(HSSFColor.BLACK.index);
             style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
             style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
             style.setBorderRight(HSSFCellStyle.BORDER_THIN);
             style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-
             HSSFFont headerFont = (HSSFFont) wb.createFont(); // 创建字体样式
             headerFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD); // 字体加粗
             headerFont.setFontName("黑体"); // 设置字体类型
             headerFont.setFontHeightInPoints((short) 10); // 设置字体大小
             style.setFont(headerFont); // 为标题样式设置字体样式
-
             // 第四.一步，创建表头的列
             for (int i = 0; i < columnNumber; i++) {
                 HSSFCell cell = row.createCell(i);
                 cell.setCellValue(columnName[i]);
                 cell.setCellStyle(style);
             }
-
             // 第五步，创建单元格，并设置值
             for (int i = 0; i < dataList.size(); i++) {
                 row = sheet.createRow((int) i + 2);
@@ -126,34 +124,48 @@ public class ExportExcelUtil {
                 createCell(6, flowSrcModel.getExhibition(), cellStyle, row);
                 createCell(7, flowSrcModel.getSrc(), cellStyle, row);
                 createCell(8, flowSrcModel.getUid(), cellStyle, row);
-                datacell = row.createCell(columnNumber);
-                datacell.setCellValue(flowSrcModel.getCreateTime());
+                datacell = row.createCell(columnNumber-1);
+                if(flowSrcModel.getCreateTime() != null) {
+                    String stringDate =  DateUtil.date2Str(DateUtil.DATE_FORMAT.yyyy_MM_ddHHmmss,flowSrcModel.getCreateTime());
+                    datacell.setCellValue(stringDate);
+                }else {
+                    datacell.setCellValue(DateUtil.date2Str(DateUtil.DATE_FORMAT.yyyy_MM_ddHHmmss,new Date()));
+
+                }
                 datacell.setCellStyle(cellStyle);
             }
+            //自定义文件存储路径
+//            String fileUrl = null;
+            String fileUrl = "/Users/JackieChan";
+            String dateString = DateUtil.date2Str(DateUtil.DATE_FORMAT.yyyyMMdd, new Date());
+
             //发送响应流方法
-            String filename = fileName + ".xls";
-            setResponseHeader(response, fileName);
-            // 第六步，将文件存到浏览器设置的下载位置
-            OutputStream out = null;
+            creteFile = fileUrl + "/" + "报名展会" + "—" + dateString+ (UUID.randomUUID().toString()).substring(0,5) + ".xls";
+            FileOutputStream fos = null;
             try {
-                out = response.getOutputStream();
-                wb.write(out);// 将数据写出去
-            } catch (Exception e) {
+                fos = new FileOutputStream(new File(creteFile));
+                wb.write(fos);
+                fos.close();
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                String str1 = "导出" + fileName + "失败！";
-                throw new BizException("导出excel文件失败");
-            } finally {
+                throw new BizException("导出文件错误");
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new BizException("导出文件错误");
+            }finally {
                 try {
-                    out.close();
+                    if(fos != null) {
+                        fos.close();
+                    }
+                    wb.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-
         }
-
-
+        return creteFile;
     }
+
     private static HSSFCellStyle setCellStyle(HSSFWorkbook wb) {
         HSSFCellStyle zidonghuanhang = wb.createCellStyle();
         zidonghuanhang.setWrapText(true);// 设置自动换行
@@ -181,6 +193,7 @@ public class ExportExcelUtil {
         zidonghuanhang2.setBorderTop(HSSFCellStyle.BORDER_THIN);
         return zidonghuanhang2;
     }
+
     private static void createCell(int i, String cell, HSSFCellStyle hssfCellStyle,// 创建第1行 也就是表头
                                    HSSFRow row) {
         HSSFCell datacell = null;
@@ -189,6 +202,7 @@ public class ExportExcelUtil {
         datacell.setCellStyle(hssfCellStyle);
 
     }
+
     //发送响应流方法
     private static void setResponseHeader(HttpServletResponse response, String fileName) {
         try {
@@ -205,5 +219,17 @@ public class ExportExcelUtil {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+    public static void main(String[]args){
+        FlowSrcModel flowSrcModel =  new FlowSrcModel();
+        flowSrcModel.setAddress("sh");
+        flowSrcModel.setEmail("46423@qq.com");
+        flowSrcModel.setMobileNo("13127637588");
+        flowSrcModel.setCreateTime(new Date());
+        List<FlowSrcModel> list = new ArrayList<>();
+        list.add(flowSrcModel);
+       String file =  exportExcel(list);
+       System.out.println(file);
+
     }
 }

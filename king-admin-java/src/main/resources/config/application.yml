@@ -53,7 +53,8 @@ mybatis-plus:
     cache-enabled: false
 
 fileUploadPath:
-filePaht:
+    filePath:
+    localExcelUrl: /Users/JackieChan
 
 #
 #swagger:
