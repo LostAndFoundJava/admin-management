@@ -45,6 +45,13 @@
                         <option label="其他..." value="666666">其他...</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="desensitization">是否隐藏用户来源部分信息</label>
+                    <select ng-disabled="kt.isView" class="form-control" ng-model="kt.user.desensitization" id="desensitization"
+                            data-style="btn-primary" title="是否隐藏用户来源部分信息" data-container="body" selectpicker
+                            ng-options="item.code as item.text for item in kt.desensitizations">
+                    </select>
+                </div>
                 <div class="form-group" ng-if="kt.isShowStatus">
                     <label for="status">状态</label>
                     <select ng-disabled="kt.isView" class="form-control" ng-model="kt.user.status" id="status"
