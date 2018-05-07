@@ -34,7 +34,7 @@ public class ExportExcelUtil {
         String titleName = "用户展会报名来源表";
         String fileName = "用户展会报名来源导出";
         int columnNumber = 10;
-        int[] columnWidth = {15, 10, 50, 20, 20, 20, 20, 10, 10, 30};
+        int[] columnWidth = {15, 10, 40, 15, 20, 20, 30, 15, 15, 20};
         String[] columnName = {"公司名称", "姓名", "地址", "手机号", "QQ", "邮箱", "报名展会", "src", "uid", "报名时间"};
         String filePath = exportWithResponse(list, sheetName, titleName,
                 fileName, columnNumber, columnWidth,
@@ -128,7 +128,6 @@ public class ExportExcelUtil {
                     datacell.setCellValue("");
 
                 }
-                datacell.setCellValue(flowSrcModel.getCreateTime());
                 datacell.setCellStyle(cellStyle);
             }
             //自定义文件存储路径
