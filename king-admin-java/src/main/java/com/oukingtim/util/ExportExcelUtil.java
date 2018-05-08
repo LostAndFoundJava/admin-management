@@ -30,13 +30,11 @@ public class ExportExcelUtil {
     private static String buildExcel(List<FlowSrcModel> list) {
         //                1. 公司名称2.用户姓名3.用户地址4.用户手机号5.用户qq号6.用户邮箱7.报名展会8.用户来源src
         //                9.用户uid10.创建时间
-        String sheetName = "用户展会来源导出表";
+        String sheetName = "展会报名信息";
         String titleName = "用户展会报名来源表";
         String fileName = "用户展会报名来源导出";
         int columnNumber = 10;
-        int[] columnWidth = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
-        String[][] dataList = {{"001", "2015-01-01", "IT"},
-                {"002", "2015-01-02", "市场部"}, {"003", "2015-01-03", "测试"}};
+        int[] columnWidth = {15, 10, 40, 15, 20, 20, 30, 15, 15, 20};
         String[] columnName = {"公司名称", "姓名", "地址", "手机号", "QQ", "邮箱", "报名展会", "src", "uid", "报名时间"};
         String filePath = exportWithResponse(list, sheetName, titleName,
                 fileName, columnNumber, columnWidth,
@@ -62,7 +60,7 @@ public class ExportExcelUtil {
                 }
             }
             // 创建第0行 也就是标题
-            HSSFRow row1 = sheet.createRow((int) 0);
+            HSSFRow row1 = sheet.createRow(0);
             row1.setHeightInPoints(50);// 设备标题的高度
             // 第三步创建标题的单元格样式style2以及字体样式headerFont1
             HSSFCellStyle style2 = wb.createCellStyle();
@@ -70,7 +68,7 @@ public class ExportExcelUtil {
             style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
             style2.setFillForegroundColor(HSSFColor.LIGHT_TURQUOISE.index);
             style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-            HSSFFont headerFont1 = (HSSFFont) wb.createFont(); // 创建字体样式
+            HSSFFont headerFont1 = wb.createFont(); // 创建字体样式
             headerFont1.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD); // 字体加粗
             headerFont1.setFontName("黑体"); // 设置字体类型
             headerFont1.setFontHeightInPoints((short) 15); // 设置字体大小
@@ -81,7 +79,7 @@ public class ExportExcelUtil {
             cell1.setCellValue(titleName); // 设置值标题
             cell1.setCellStyle(style2); // 设置标题样式
             // 创建第1行 也就是表头
-            HSSFRow row = sheet.createRow((int) 1);
+            HSSFRow row = sheet.createRow(1);
             row.setHeightInPoints(37);// 设置表头高度
             // 第四步，创建表头单元格样式 以及表头的字体样式
             HSSFCellStyle style = wb.createCellStyle();
@@ -106,11 +104,11 @@ public class ExportExcelUtil {
             }
             // 第五步，创建单元格，并设置值
             for (int i = 0; i < dataList.size(); i++) {
-                row = sheet.createRow((int) i + 2);
+                row = sheet.createRow(i + 2);
                 FlowSrcModel flowSrcModel = dataList.get(i);
                 // 为数据内容设置特点新单元格样式1 自动换行 上下居中
                 HSSFCellStyle cellStyle = setCellStyle(wb);
-                HSSFCell datacell = null;
+                HSSFCell datacell;
                 //  1. 公司名称2.用户姓名3.用户地址4.用户手机号5.用户qq号6.用户邮箱7.报名展会8.用户来源src
                 // 9.用户uid10.创建时间
                 createCell(0, flowSrcModel.getCompany(), cellStyle, row);
@@ -130,16 +128,15 @@ public class ExportExcelUtil {
                     datacell.setCellValue("");
 
                 }
-                datacell.setCellValue(flowSrcModel.getCreateTime());
                 datacell.setCellStyle(cellStyle);
             }
             //自定义文件存储路径
-            String localPath = "C:\\Users\\xufan\\Documents";
-            String prodPath = Constants.EXCEL_BASE_PATH;
+            String localPath = "C:\\Users\\xufan\\Documents";//本地
+            String prodPath = Constants.EXCEL_BASE_PATH;//服务器
             //发送响应流方法
-            String excelName = "/" + "用户来源" + "—" + UUID.randomUUID().toString() + ".xls";
-            String creteFile = prodPath + excelName;
-            String responseFileUrl = Constants.EXCEL_SERVER_ADMIN + excelName;
+            String excelName = "/" + UUID.randomUUID().toString() + ".xls";
+            String creteFile = prodPath + excelName;//本地
+            String responseFileUrl = Constants.EXCEL_SERVER_ADMIN + excelName;//服务器
             FileOutputStream fos = null;
             try {
                 fos = new FileOutputStream(new File(creteFile));
@@ -192,7 +189,7 @@ public class ExportExcelUtil {
 
     private static void createCell(int i, String cell, HSSFCellStyle hssfCellStyle,// 创建第1行 也就是表头
                                    HSSFRow row) {
-        HSSFCell datacell = null;
+        HSSFCell datacell;
         datacell = row.createCell(i);
         datacell.setCellValue(cell);
         datacell.setCellStyle(hssfCellStyle);
