@@ -5,15 +5,15 @@
         .controller('MenuListCtrl', MenuListCtrl);
 
     /** @ngInject */
-    function MenuListCtrl($scope, $state, $timeout, MenuService, DictService) {
+    function MenuListCtrl($scope, $state, $timeout, MenuService) {
 
         var kt = this;
         kt.menulist = [];
         kt.types = [];
-        DictService.getList('MENUTYPE', function (data) {
-            kt.types = data.result;
-            kt.isShowType = true;
-        });
+        // DictService.getList('MENUTYPE', function (data) {
+        //     kt.types = data.result;
+        //     kt.isShowType = true;
+        // });
         //删除
         kt.del = function (id) {
             MenuService.del({id: id},

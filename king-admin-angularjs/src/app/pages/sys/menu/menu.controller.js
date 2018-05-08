@@ -5,7 +5,7 @@
         .controller('MenuCtrl', MenuCtrl);
 
     /** @ngInject */
-    function MenuCtrl($scope, $stateParams, $state,$uibModalInstance, MenuService,DictService) {
+    function MenuCtrl($scope, $stateParams, $state,$uibModalInstance, MenuService) {
 
         var kt = this;
         kt.menu = {};
@@ -24,10 +24,10 @@
         } else {
             kt.menu.parentId = $stateParams.id;
         }
-        DictService.getList('MENUTYPE',function (data) {
-            kt.types = data.result;
-            kt.isShowType = true;
-        });
+        // DictService.getList('MENUTYPE',function (data) {
+        //     kt.types = data.result;
+        //     kt.isShowType = true;
+        // });
         kt.save = function () {
             MenuService.save(kt.menu,function (data) {
                 $uibModalInstance.close(true);

@@ -5,14 +5,14 @@
         .controller('UserListCtrl', UserListCtrl);
 
     /** @ngInject */
-    function UserListCtrl($scope, $filter, UserService,DictService) {
+    function UserListCtrl($scope, $filter, UserService) {
 
         var kt = this;
         kt.userlist = [];
         kt.status = [];
-        DictService.getList('USERSTATUS',function (data) {
-            kt.status = data.result;
-        });
+        // DictService.getList('USERSTATUS',function (data) {
+        //     kt.status = data.result;
+        // });
         kt.LoadPage = function (tableState) {
             tableState = tableState || kt.tableState;
             tableState.pagination.number = tableState.pagination.number || 5;

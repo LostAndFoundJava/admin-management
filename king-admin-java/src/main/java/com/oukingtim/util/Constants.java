@@ -18,9 +18,9 @@ public final class Constants {
     public static final String EXCEL_BASE_PATH = "/home/admin/excel";
     public static final String USER = "admin";
     public static final String PASSWORD = "huamo123";
-    public static final String SM_IMAGE_SIZE = "200-200";
-    public static final String MD_IMAGE_SIZE = "400-400";
-    public static final String LG_IMAGE_SIZE = "600-600";
+    public static final String SM_IMAGE_SIZE = "200-200.jpg";
+    public static final String MD_IMAGE_SIZE = "400-400.jpg";
+    public static final String LG_IMAGE_SIZE = "600-600.jpg";
     /** ftp 上传文件等相关常量 **/
 
 

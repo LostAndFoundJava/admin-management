@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -111,8 +112,14 @@ public class CkUploadUtils {
                     }*/
                     // List 返回图片size 原图 200*200 400*400 600*600 图采用600*600
                     in = new FileInputStream(file2);
-                    //TODO 上传文件到服务器
-                    boolean result =FtpUtil.uploadFile(Constants.HOST, Constants.PORT, Constants.USER, Constants.PASSWORD, serverBasePath, filePath, fileName, in);
+
+                    boolean result = false;
+                    String hostAddress = InetAddress.getLocalHost().getHostAddress();
+                    if(!hostAddress.equals("172.16.252.223"))
+                        result = FtpUtil.uploadFile(Constants.HOST, Constants.PORT, Constants.USER,
+                                Constants.PASSWORD, serverBasePath, filePath, fileName, in);
+                    else
+                        result = LocalUploadUtil.localUploadFile(serverBasePath,filePath,fileName,in);
                     if(!result){
                         throw new RuntimeException("上传文档文件出错!");
                     }
