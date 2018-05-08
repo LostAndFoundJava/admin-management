@@ -20,7 +20,7 @@
             kt.isView = false;
         }
 
-        var imageSize = "!5000-5000";
+        var imageSize = "!5000-5000.jpg";
 
         //由id判断是新增还是修改/查看（回显数据）
         if ($stateParams.id) {

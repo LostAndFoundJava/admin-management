@@ -18,7 +18,7 @@
         $scope.mockFiles1 = [];//缩略
         $scope.mockFiles2 = [];//轮播
 
-        var imageSize = "!400-400";
+        var imageSize = "!400-400.jpg";
 
         //初始化dropzone
         initDropzone();

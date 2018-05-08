@@ -24,7 +24,7 @@
         }
 
         //回显图片大小
-        var imageSize = "!5000-5000";
+        var imageSize = "!5000-5000.jpg";
 
         //用户存图片上传后的url
         var map = {};

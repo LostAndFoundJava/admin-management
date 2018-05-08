@@ -5,7 +5,11 @@
         .controller('UserCtrl', UserCtrl);
 
     /** @ngInject */
+<<<<<<< HEAD
+    function UserCtrl($scope,$stateParams,$state,UserService,RoleService,SrcService) {
+=======
     function UserCtrl($scope, $stateParams, $state, UserService, RoleService, DictService, SrcService) {
+>>>>>>> 2ce3296235b1ee9366c3fb28ae5543f4c9a1d001
 
         var kt = this;
         kt.user = {};
@@ -26,11 +30,12 @@
         } else {
             kt.isAdd = true;
         }
-        DictService.getList('USERSTATUS', function (data) {
-            kt.statuses = data.result;
-            kt.isShowStatus = true;
-        });
-        RoleService.getList({userId: $stateParams.id}, function (data) {
+        // DictService.getList('USERSTATUS',function (data) {
+        //     kt.statuses = data.result;
+        //     kt.isShowStatus = true;
+        // });
+        RoleService.getList({userId:$stateParams.id},function (data) {
+
             kt.user.rolelist = data.result;
         })
         kt.save = function () {
