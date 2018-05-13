@@ -52,13 +52,13 @@
                             ng-options="item.code as item.text for item in kt.desensitizations">
                     </select>
                 </div>
-                <div class="form-group" ng-if="kt.isShowStatus">
-                    <label for="status">状态</label>
-                    <select ng-disabled="kt.isView" class="form-control" ng-model="kt.user.status" id="status"
-                            data-style="btn-primary" title="状态" data-container="body" selectpicker required
-                            ng-options="item.code as item.text for item in kt.statuses">
-                    </select>
-                </div>
+                <!--<div class="form-group" ng-if="kt.isShowStatus">-->
+                    <!--<label for="status">状态</label>-->
+                    <!--<select ng-disabled="kt.isView" class="form-control" ng-model="kt.user.status" id="status"-->
+                            <!--data-style="btn-primary" title="状态" data-container="body" selectpicker required-->
+                            <!--ng-options="item.code as item.text for item in kt.statuses">-->
+                    <!--</select>-->
+                <!--</div>-->
             </form>
         </div>
     </div>
@@ -67,7 +67,7 @@
             <div class="form-group">
                 <!--<label>角色</label>-->
                 <div class="input-demo checkbox-demo row">
-                    <div class="col-md-2" ng-repeat="role in kt.user.rolelist">
+                    <div class="col-md-12" ng-repeat="role in kt.user.rolelist">
                         <label class="checkbox-inline custom-checkbox nowrap">
                             <input type="checkbox" id="role.id" ng-model="role.checked" ng-disabled="kt.isView">
                             <span>{{role.roleName}}</span>

@@ -5,11 +5,7 @@
         .controller('UserCtrl', UserCtrl);
 
     /** @ngInject */
-<<<<<<< HEAD
     function UserCtrl($scope,$stateParams,$state,UserService,RoleService,SrcService) {
-=======
-    function UserCtrl($scope, $stateParams, $state, UserService, RoleService, DictService, SrcService) {
->>>>>>> 2ce3296235b1ee9366c3fb28ae5543f4c9a1d001
 
         var kt = this;
         kt.user = {};
