@@ -47,38 +47,38 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
         SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
         if (page != null && !CollectionUtils.isEmpty(page.getRecords())) {
             for (FlowSrcModel flowSrcModel : page.getRecords()) {
-                if ("0".equals(flowSrcModel.getSrcType())) {
-                    //没有权限走脱敏渠道
-                    if (user != null && StringUtils.isNotBlank(user.getDesensitization()) && "0".equals(user.getDesensitization())) {
-                        //手机号
-                        if (StringUtils.isNotBlank(flowSrcModel.getMobileNo())) {
-                            flowSrcModel.setMobileNo(flowSrcModel.getMobileNo().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
-                        }
-                        //客户姓名
-                        if (StringUtils.isNotBlank(flowSrcModel.getClientName())) {
-                            flowSrcModel.setClientName((flowSrcModel.getClientName()).substring(0, 1) + "**");
-                        }
-                        //邮箱
+//                if ("0".equals(flowSrcModel.getSrcType())) {
+                //没有权限走脱敏渠道
+                if (user != null && StringUtils.isNotBlank(user.getDesensitization()) && "0".equals(user.getDesensitization())) {
+                    //手机号
+                    if (StringUtils.isNotBlank(flowSrcModel.getMobileNo())) {
+                        flowSrcModel.setMobileNo(flowSrcModel.getMobileNo().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                    }
+                    //客户姓名
+                    if (StringUtils.isNotBlank(flowSrcModel.getClientName())) {
+                        flowSrcModel.setClientName((flowSrcModel.getClientName()).substring(0, 1) + "**");
+                    }
+                    //邮箱
                         /*if (StringUtils.isNotBlank(flowSrcModel.getEmail())) {
                             String[] emailArr = flowSrcModel.getEmail().split("@");
                             if (StringUtils.isNotBlank(emailArr[emailArr.length - 1])) {
                                 flowSrcModel.setEmail("****" + "@" + emailArr[emailArr.length - 1]);
                             }
                         }*/
-                        String email = flowSrcModel.getEmail();
-                        if (StringUtils.isNotBlank(email)) {
-                            int atIndex = email.trim().lastIndexOf("@");
-                            if (atIndex > 0) {
-                                String suffix = email.trim().substring(atIndex);
-                                flowSrcModel.setEmail("****" + suffix);
-                            }
-                        }
-
-                        //地址
-                        if (StringUtils.isNotBlank(flowSrcModel.getAddress())) {
-                            flowSrcModel.setAddress("*****");
+                    String email = flowSrcModel.getEmail();
+                    if (StringUtils.isNotBlank(email)) {
+                        int atIndex = email.trim().lastIndexOf("@");
+                        if (atIndex > 0) {
+                            String suffix = email.trim().substring(atIndex);
+                            flowSrcModel.setEmail("****" + suffix);
                         }
                     }
+
+                    //地址
+                    if (StringUtils.isNotBlank(flowSrcModel.getAddress())) {
+                        flowSrcModel.setAddress("*****");
+                    }
+                }
                     /*List<Exhibition> list = mgrExhibitionService.selectTitleById();
                     if (list != null && !list.isEmpty()) {
                         for (Exhibition e : list) {
@@ -90,15 +90,15 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
                             }
                         }
                     }*/
-                    if(flowSrcModel.getExhibition() != null) {
-                        Exhibition exhibition = mgrExhibitionService.selectById(flowSrcModel.getExhibition());
-                        if (exhibition != null) {
-                            flowSrcModel.setExhibition(exhibition.getTitle());
-                        }
+                if (flowSrcModel.getExhibition() != null) {
+                    Exhibition exhibition = mgrExhibitionService.selectById(flowSrcModel.getExhibition());
+                    if (exhibition != null) {
+                        flowSrcModel.setExhibition(exhibition.getTitle());
                     }
-
                 }
+
             }
+//            }
         }
         return page;
     }
