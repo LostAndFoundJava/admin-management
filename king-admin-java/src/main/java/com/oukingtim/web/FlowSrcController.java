@@ -2,9 +2,11 @@ package com.oukingtim.web;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.FlowSrcModel;
 import com.oukingtim.domain.SysUser;
 import com.oukingtim.service.FlowSrcService;
+import com.oukingtim.service.MgrExhibitionService;
 import com.oukingtim.util.BizException;
 import com.oukingtim.util.ExportExcelUtil;
 import com.oukingtim.util.ShiroUtils;
@@ -46,6 +48,9 @@ public class FlowSrcController {
 
     @Autowired
     private FlowSrcService flowSrcService;
+
+    @Autowired
+    private MgrExhibitionService mgrExhibitionService;
 
     @ApiOperation(value = "导入excel", notes = "导入excel")
     @RequestMapping(value = "/excelupload")
@@ -100,7 +105,7 @@ public class FlowSrcController {
         EntityWrapper<FlowSrcModel> wrapper = new EntityWrapper<>();
 
         //设置渠道
-        if(StringUtils.isNotEmpty(src) && !SPECIAL_SRC.equals(src)) {
+        if (StringUtils.isNotEmpty(src) && !SPECIAL_SRC.equals(src)) {
             wrapper.like("SRC", src);
         }
 
@@ -114,8 +119,23 @@ public class FlowSrcController {
                     Object value = fields[i].get(spage.getSearch());
                     if (null != value && !value.equals("")) {
                         String fieldname = StringTools.underscoreName(fields[i].getName());
-                        if (!"START_TIME".equals(fieldname) && !"END_TIME".equals(fieldname)) {
-                            wrapper.like(fieldname, value.toString());
+                        if ("EXHIBITION".equals(fieldname)) {
+                            EntityWrapper<Exhibition> exhibitionEntityWrapper = new EntityWrapper<>();
+                            exhibitionEntityWrapper.like("TITLE", value.toString());
+                            List<Exhibition> exhibitions = mgrExhibitionService.selectList(exhibitionEntityWrapper);
+                            List<String> ids = new ArrayList<>();
+                            for (Exhibition exhibition : exhibitions) {
+                                ids.add(exhibition.getId());
+                            }
+                            if (!CollectionUtils.isEmpty(ids)) {
+                                wrapper.and().in("EXHIBITION", ids).or(fieldname + " like '%" + value.toString() + "%'");
+                            }else {
+                                wrapper.and().like(fieldname,value.toString());
+                            }
+                        }
+
+                        if (!"START_TIME".equals(fieldname) && !"END_TIME".equals(fieldname) && !"EXHIBITION".equals(fieldname)) {
+                            wrapper.and().like(fieldname, value.toString());
                         }
                         if ("START_TIME".equals(fieldname)) {
                             startTime = value;
@@ -135,21 +155,22 @@ public class FlowSrcController {
                     return ResultVM.error("查询失败");
                 }
             }
-            wrapper.between("CREATE_TIME", startTime, endTime);
+            wrapper.and().between("CREATE_TIME", startTime, endTime);
         }
+
         return ResultVM.ok(flowSrcService.selectPage(page, wrapper));
     }
 
     @RequestMapping(value = "/export", method = RequestMethod.POST)
-    public ResultVM export(@RequestBody SmartPageVM<FlowSrcModel> spage,HttpServletRequest request,HttpServletResponse response) {
+    public ResultVM export(@RequestBody SmartPageVM<FlowSrcModel> spage, HttpServletRequest request, HttpServletResponse response) {
         ResultVM resultVM = getSmartData(spage);
         Page<FlowSrcModel> page = (Page<FlowSrcModel>) resultVM.getResult();
         List<FlowSrcModel> flowSrcModels = page.getRecords();
         Object path = "";
-        if(!CollectionUtils.isEmpty(flowSrcModels)){
+        if (!CollectionUtils.isEmpty(flowSrcModels)) {
             path = ExportExcelUtil.exportExcel(flowSrcModels);
-            if(path == null){
-                return ResultVM.error(500,"文件导出失败!");
+            if (path == null) {
+                return ResultVM.error(500, "文件导出失败!");
             }
         }
         return ResultVM.ok(path);

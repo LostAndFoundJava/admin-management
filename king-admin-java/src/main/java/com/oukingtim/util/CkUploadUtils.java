@@ -93,7 +93,7 @@ public class CkUploadUtils {
                     MultipartFile file = multiRequest.getFile(iter.next());
                     fileName = file.getOriginalFilename();
                     if (fileName != null) {
-                        fileName = fileName.replaceAll(" ", "").toLowerCase();
+                        fileName = "" + System.currentTimeMillis() + "_" + fileName.replaceAll(" ", "").toLowerCase();
                     }
                     f = File.createTempFile("tmp", null);
                     file.transferTo(f);
