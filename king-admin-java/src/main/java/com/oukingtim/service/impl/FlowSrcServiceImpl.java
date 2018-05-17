@@ -26,7 +26,7 @@ import java.util.List;
  * @version 1.****</b>
  */
 @Service
-public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel> implements FlowSrcService {
+public class FlowSrcServiceImpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel> implements FlowSrcService {
 
     private static final String SRC_FROM_0 = "0";
 
