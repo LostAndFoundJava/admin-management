@@ -28,6 +28,8 @@ import java.util.List;
 @Service
 public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel> implements FlowSrcService {
 
+    private static final String SRC_FROM_0 = "0";
+
     @Autowired
     private ReadExcel readExcel;
 
@@ -90,7 +92,7 @@ public class FlowSrcServiceimpl extends ServiceImpl<FlowSrcMapper, FlowSrcModel>
                             }
                         }
                     }*/
-                if (flowSrcModel.getExhibition() != null) {
+                if (flowSrcModel.getExhibition() != null && SRC_FROM_0.equals(flowSrcModel.getSrcType())) {
                     Exhibition exhibition = mgrExhibitionService.selectById(flowSrcModel.getExhibition());
                     if (exhibition != null) {
                         flowSrcModel.setExhibition(exhibition.getTitle());
