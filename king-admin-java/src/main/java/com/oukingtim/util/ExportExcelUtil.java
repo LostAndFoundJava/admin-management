@@ -131,8 +131,8 @@ public class ExportExcelUtil {
                 datacell.setCellStyle(cellStyle);
             }
             //自定义文件存储路径
-            String localPath = "C:\\Users\\xufan\\Documents";//本地
-            String prodPath = Constants.EXCEL_BASE_PATH;//服务器
+            String localPath = "C:\\Users\\xufan\\Documents"; //本地
+            String prodPath = Constants.EXCEL_BASE_PATH; //服务器
             //发送响应流方法
             String excelName = "/" + UUID.randomUUID().toString() + ".xls";
             String creteFile = prodPath + excelName;//本地
