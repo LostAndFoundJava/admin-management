@@ -135,7 +135,7 @@ public class ExportExcelUtil {
             String prodPath = Constants.EXCEL_BASE_PATH;//服务器
             //发送响应流方法
             String excelName = "/" + UUID.randomUUID().toString() + ".xls";
-            String creteFile = localPath + excelName;//本地
+            String creteFile = prodPath + excelName;//本地
             String responseFileUrl = Constants.EXCEL_SERVER_ADMIN + excelName;//服务器
             FileOutputStream fos = null;
             try {
