@@ -5,7 +5,7 @@ package com.oukingtim.util;
  */
 public final class Constants {
 
-    public static final String SPRING_PROFILE_DEVELOPMENT = "dev";
+    public static final String SPRING_PROFILE_DEVELOPMENT = "prod";
 
     /** ftp 上传文件等相关常量 **/
     public static final String FILE_SERVER_ADMIN = "http://47.97.201.63:8081/pic";//47.97.201.63
