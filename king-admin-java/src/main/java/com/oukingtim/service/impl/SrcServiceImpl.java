@@ -23,4 +23,13 @@ public class SrcServiceImpl extends ServiceImpl<SrcMapper, SrcModel> implements 
         }
         return super.insert(t);
     }
+
+    @Override
+    public boolean updateById(SrcModel t){
+        SrcModel entity = super.selectOne(new EntityWrapper(new SrcModel(t.getSrc())));
+        if(entity != null){
+            return false;
+        }
+        return super.updateById(t);
+    }
 }
