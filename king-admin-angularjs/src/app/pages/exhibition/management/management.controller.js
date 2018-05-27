@@ -212,6 +212,7 @@
         $scope.today = function () {
             kt.exhibition.startTime = new Date();
             kt.exhibition.endTime = kt.exhibition.startTime;
+            kt.exhibition.exhibitionDetail.applyEndTime = kt.exhibition.startTime;
         };
         $scope.today();
 
