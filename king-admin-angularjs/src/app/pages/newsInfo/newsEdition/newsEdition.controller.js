@@ -16,6 +16,7 @@
         kt.newsEdition = {};
         kt.newsEditionVO = {}
 
+        var imageSize = "!400-400.jpg";
         var quillEditor;
         var delta;
 
@@ -85,7 +86,7 @@
                 }
             })
 
-
+            kt.newsEditionVO.id = $stateParams.id;
             kt.newsEditionVO.hot = kt.newsEdition.hot ? 1 : 0;
             kt.newsEditionVO.title = kt.newsEdition.title;
             kt.newsEditionVO.newsCategory = kt.newsEdition.newsCategory;
@@ -181,7 +182,7 @@
             if (range) {
                 imagePosition = range.index;
             }
-            quillEditor.insertEmbed(imagePosition, 'image', url);
+            quillEditor.insertEmbed(imagePosition, 'image', url+imageSize);
         }
     }
 })();

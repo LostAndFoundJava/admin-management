@@ -9,6 +9,7 @@
         var kt = this;
         kt.newsInfolist = [];
 
+
         //显示所有的行业
         newsEditionService.getSelectCategoryInfo(function (data) {
             kt.newsEdition = []
@@ -18,7 +19,17 @@
 
         kt.LoadPage = function (tableState) {
             tableState = tableState || kt.tableState;
+
             tableState.pagination.number = tableState.pagination.number || 5;
+
+            // if(tableState.categoryId != null){
+            //     angular.forEach(kt.newsInfolist, function (category) {
+            //         if(tableState.categoryId == category.categoryId){
+            //             tableState.categoryId = category.tempCategoryId
+            //         }
+            //     })
+            // }
+
             newsEditionService.getSmartData(tableState,
                 function (data) {
                     tableState.pagination.numberOfPages = data.result.pages;
@@ -28,6 +39,7 @@
                         angular.forEach(data.result.records, function (record) {
                             if(category.id == record.categoryId)
                                 record.categoryId = category.name
+                                record.tempCategoryId = category.id
                         })
                     })
                     kt.newsInfolist = data.result.records;

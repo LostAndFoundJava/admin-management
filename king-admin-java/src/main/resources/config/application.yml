@@ -2,7 +2,7 @@ spring:
   application:
     name: KingAdmin
   profiles:
-    active: dev
+    active: prod
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
@@ -54,6 +54,7 @@ mybatis-plus:
 
 fileUploadPath:
 filePaht:
+
 
 #
 #swagger:

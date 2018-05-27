@@ -6,12 +6,15 @@ import com.oukingtim.service.SysUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by oukingtim
@@ -23,10 +26,16 @@ public class ShiroRealm extends AuthorizingRealm {
     private SysUserService sysUserService;
     @Autowired
     private SysMenuService sysMenuService;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    private Cache<String, AtomicInteger> passwordRetryCache;
     /**
      * @Author : oukingtim
      * @Description : 授权(验证权限时调用)
      */
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SysUser user = (SysUser)principalCollection.getPrimaryPrincipal();
@@ -48,6 +57,7 @@ public class ShiroRealm extends AuthorizingRealm {
         String username = (String) authenticationToken.getPrincipal();
         String password = new String((char[]) authenticationToken.getCredentials());
 
+        passwordRetryCache = cacheManager.getCache("passwordRetryCache");
         //查询用户信息
         SysUser user = sysUserService.findByUserName(username);
 
@@ -58,7 +68,17 @@ public class ShiroRealm extends AuthorizingRealm {
 
         //密码错误
         if(!password.equals(user.getPassword())) {
-            throw new IncorrectCredentialsException("用户名或密码不正确");
+            AtomicInteger retryCount = passwordRetryCache.get(username);
+            if (retryCount == null) {
+                retryCount = new AtomicInteger(0);
+                passwordRetryCache.put(username, retryCount);
+            }
+            if (retryCount.incrementAndGet() >= 5) {
+                throw new ExcessiveAttemptsException("输入错误超过五次，账号锁定2分钟,忘记密码请联系管理员");
+            }else {
+                int i = 5 - passwordRetryCache.get(username).intValue();
+                throw new IncorrectCredentialsException("用户名或密码不正确，还有"+ i + "机会");
+            }
         }
 
         //账号禁用
@@ -67,6 +87,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+        passwordRetryCache.remove(username);
         return info;
     }
 }

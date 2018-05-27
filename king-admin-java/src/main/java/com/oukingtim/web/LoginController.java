@@ -10,10 +10,7 @@ import com.oukingtim.util.ShiroUtils;
 import com.oukingtim.web.vm.ResultVM;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +51,8 @@ public class LoginController {
         } catch (IncorrectCredentialsException e) {
             return ResultVM.error(e.getMessage());
         } catch (LockedAccountException e) {
+            return ResultVM.error(e.getMessage());
+        } catch (ExcessiveAttemptsException e){
             return ResultVM.error(e.getMessage());
         }
         return ResultVM.ok();
