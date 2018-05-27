@@ -16,4 +16,9 @@ public class SrcModel extends BaseModel<SrcModel> {
 
     private String src;
 
+    public SrcModel(){}
+    public SrcModel(String src){
+        this.src = src;
+    }
+
 }

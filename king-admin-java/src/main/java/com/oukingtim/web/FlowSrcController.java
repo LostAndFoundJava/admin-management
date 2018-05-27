@@ -3,8 +3,10 @@ package com.oukingtim.web;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.oukingtim.domain.Exhibition;
+import com.oukingtim.domain.FlowSrcLogModel;
 import com.oukingtim.domain.FlowSrcModel;
 import com.oukingtim.domain.SysUser;
+import com.oukingtim.service.FlowSrcLogService;
 import com.oukingtim.service.FlowSrcService;
 import com.oukingtim.service.MgrExhibitionService;
 import com.oukingtim.util.BizException;
@@ -50,6 +52,9 @@ public class FlowSrcController {
     private FlowSrcService flowSrcService;
 
     @Autowired
+    private FlowSrcLogService flowSrcLogService;
+
+    @Autowired
     private MgrExhibitionService mgrExhibitionService;
 
     @ApiOperation(value = "导入excel", notes = "导入excel")
@@ -64,8 +69,8 @@ public class FlowSrcController {
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             Iterator<String> iter = multipartRequest.getFileNames();
             List<FlowSrcModel> list = new ArrayList<>();
+            String fileName;
             while (iter.hasNext()) {
-                String fileName;
                 MultipartFile file = multipartRequest.getFile(iter.next());
                 fileName = file.getOriginalFilename();
                 list = flowSrcService.importExcel(fileName, file);
@@ -73,6 +78,9 @@ public class FlowSrcController {
                 if (!flag) {
                     return ResultVM.error("导入表格数据错误，请重新导入");
                 }
+
+                //记录日志
+                flowSrcLogService.insertLog(fileName);
             }
             if (list == null || list.isEmpty()) {
                 return ResultVM.error("导入的excel为空");
@@ -80,7 +88,6 @@ public class FlowSrcController {
         } catch (BizException e) {
             return ResultVM.error(e.getMsg());
         } catch (Exception e) {
-            e.printStackTrace();
             return ResultVM.error("导入表格数据错误，请重新导入");
         }
         return ResultVM.ok();
@@ -129,8 +136,8 @@ public class FlowSrcController {
                             }
                             if (!CollectionUtils.isEmpty(ids)) {
                                 wrapper.and().in("EXHIBITION", ids).or(fieldname + " like '%" + value.toString() + "%'");
-                            }else {
-                                wrapper.and().like(fieldname,value.toString());
+                            } else {
+                                wrapper.and().like(fieldname, value.toString());
                             }
                         }
 
@@ -176,4 +183,16 @@ public class FlowSrcController {
         return ResultVM.ok(path);
 
     }
+
+    @RequestMapping(value = "/logs", method = RequestMethod.GET)
+    public ResultVM getLogs() {
+        SysUser sysUser = ShiroUtils.getUser();
+        List<FlowSrcLogModel> logList = null;
+        if (sysUser != null) {
+            logList = flowSrcLogService.getLogs(sysUser.getId());
+        }
+        return ResultVM.ok(logList);
+    }
+
+
 }
