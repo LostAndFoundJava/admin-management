@@ -2,6 +2,8 @@ package com.oukingtim.domain;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.oukingtim.config.CustomJsonDateDeserilizer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,10 +18,6 @@ public class ExhibitionDetail extends MgrBaseModel<ExhibitionDetail> {
 
     private String exhibitionId;
 
-    private Date createTime;
-
-    private Date updateTime;
-
     private String description;
 
     private String fileId;
@@ -27,6 +25,10 @@ public class ExhibitionDetail extends MgrBaseModel<ExhibitionDetail> {
     private String picture;
 
     private String briefInfo;
+
+    //报名截止日期
+    @JsonDeserialize(using = CustomJsonDateDeserilizer.class)
+    private Date applyEndTime;
 
     @TableField(exist = false)
     private List<File> files;

@@ -24,7 +24,7 @@
             <tr ng-repeat="file in kt.files track by $index">
                 <td>{{$index+1}}</td>
                 <td>
-                    {{file.name}}
+                    {{file.fileName}}
                 </td>
                 <td><span class="progress" ng-show="progress >= 0">
                     <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
