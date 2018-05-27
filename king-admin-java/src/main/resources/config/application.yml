@@ -55,6 +55,7 @@ mybatis-plus:
 fileUploadPath:
 filePaht:
 
+
 #
 #swagger:
 #   enabled: true

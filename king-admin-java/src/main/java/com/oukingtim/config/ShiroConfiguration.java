@@ -1,9 +1,9 @@
 package com.oukingtim.config;
 
 import com.oukingtim.config.myIntercept.MySessionIntercept;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
-import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -91,6 +91,12 @@ public class ShiroConfiguration {
         return advisor;
     }
 
+    @Bean
+    public EhCacheManager ehCacheManager(){
+        EhCacheManager ehCacheManager = new EhCacheManager();
+        ehCacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+        return ehCacheManager;
+    }
     /**
      * 自定义拦截器
      * @return
