@@ -30,6 +30,10 @@ public class Exhibition extends MgrBaseModel<Exhibition> {
     @JsonDeserialize(using = CustomJsonDateDeserilizer.class)
     private Date endTime;
 
+    //报名截止日期
+    @JsonDeserialize(using = CustomJsonDateDeserilizer.class)
+    private Date applyEndTime;
+
     private String location;
 
     private String categoryId;
