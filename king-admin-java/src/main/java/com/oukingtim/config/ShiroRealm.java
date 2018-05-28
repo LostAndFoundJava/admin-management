@@ -58,6 +58,11 @@ public class ShiroRealm extends AuthorizingRealm {
         String password = new String((char[]) authenticationToken.getCredentials());
 
         passwordRetryCache = cacheManager.getCache("passwordRetryCache");
+        AtomicInteger retryCount = passwordRetryCache.get(username);
+
+        if (retryCount != null && retryCount.intValue() >= 5)
+            throw new ExcessiveAttemptsException("输入错误超过五次，账号锁定5分钟,忘记密码请联系管理员");
+
         //查询用户信息
         SysUser user = sysUserService.findByUserName(username);
 
@@ -68,13 +73,12 @@ public class ShiroRealm extends AuthorizingRealm {
 
         //密码错误
         if(!password.equals(user.getPassword())) {
-            AtomicInteger retryCount = passwordRetryCache.get(username);
             if (retryCount == null) {
                 retryCount = new AtomicInteger(0);
                 passwordRetryCache.put(username, retryCount);
             }
             if (retryCount.incrementAndGet() >= 5) {
-                throw new ExcessiveAttemptsException("输入错误超过五次，账号锁定2分钟,忘记密码请联系管理员");
+                throw new ExcessiveAttemptsException("输入错误超过五次，账号锁定5分钟,忘记密码请联系管理员");
             }else {
                 int i = 5 - passwordRetryCache.get(username).intValue();
                 throw new IncorrectCredentialsException("用户名或密码不正确，还有"+ i + "机会");
