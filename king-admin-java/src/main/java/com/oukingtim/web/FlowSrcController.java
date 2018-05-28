@@ -45,6 +45,8 @@ import java.util.List;
 @RequestMapping("/mgr/flowsrc/management")
 public class FlowSrcController {
 
+    private static int NUMBER = 10000000;
+
     private static String SPECIAL_SRC = "666666";
     private static Logger LOGGER = LoggerFactory.getLogger(FlowSrcController.class);
 
@@ -170,6 +172,8 @@ public class FlowSrcController {
 
     @RequestMapping(value = "/export", method = RequestMethod.POST)
     public ResultVM export(@RequestBody SmartPageVM<FlowSrcModel> spage, HttpServletRequest request, HttpServletResponse response) {
+        spage.getPagination().setStart(0);
+        spage.getPagination().setNumber(NUMBER);
         ResultVM resultVM = getSmartData(spage);
         Page<FlowSrcModel> page = (Page<FlowSrcModel>) resultVM.getResult();
         List<FlowSrcModel> flowSrcModels = page.getRecords();
