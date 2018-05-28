@@ -20,6 +20,8 @@ import java.util.UUID;
 @SuppressWarnings({"deprecation"})
 public class ExportExcelUtil {
 
+    private static final String localPath = "C:\\Users\\xufan\\Documents"; //本地
+
     public static String exportExcel(List<FlowSrcModel> list) {
         if (list == null || list.isEmpty()) {
             throw new BizException("没有查询到数据!");
@@ -132,11 +134,10 @@ public class ExportExcelUtil {
                 datacell.setCellStyle(cellStyle);
             }
             //自定义文件存储路径
-            String localPath = "C:\\Users\\xufan\\Documents"; //本地
             String prodPath = Constants.EXCEL_BASE_PATH; //服务器
             //发送响应流方法
             String excelName = "/用户来源-" + UUID.randomUUID().toString() + ".xls";
-            String creteFile = localPath + excelName;//本地
+            String creteFile = prodPath + excelName;//本地
             String responseFileUrl = Constants.EXCEL_SERVER_ADMIN + excelName;//服务器
             FileOutputStream fos = null;
             try {
@@ -149,7 +150,7 @@ public class ExportExcelUtil {
                 throw new BizException("导出文件错误");
             } finally {
                 try {
-                    if(fos != null){
+                    if (fos != null) {
                         fos.close();
                     }
                 } catch (IOException e) {
@@ -218,7 +219,6 @@ public class ExportExcelUtil {
     }
 
 
-
     public static String exportAdviceExcel(List<AdviceModel> list) {
         if (list == null || list.isEmpty()) {
             throw new BizException("没有查询到数据!");
@@ -235,7 +235,7 @@ public class ExportExcelUtil {
         String fileName = "用户咨询列表导出";
         int columnNumber = 4;
         int[] columnWidth = {15, 10, 40, 30};
-        String[] columnName = { "姓名", "手机号", "公司名称","所需资料"};
+        String[] columnName = {"姓名", "手机号", "公司名称", "所需资料"};
         String filePath = exportAdviceWithResponse(list, sheetName, titleName,
                 fileName, columnNumber, columnWidth,
                 columnName, list);
@@ -244,8 +244,8 @@ public class ExportExcelUtil {
     }
 
     private static String exportAdviceWithResponse(List<AdviceModel> list, String sheetName, String titleName,
-                                             String fileName, int columnNumber, int[] columnWidth,
-                                             String[] columnName, List<AdviceModel> dataList) {
+                                                   String fileName, int columnNumber, int[] columnWidth,
+                                                   String[] columnName, List<AdviceModel> dataList) {
         if (columnNumber == columnWidth.length && columnWidth.length == columnName.length) {
             // 第一步，创建一个webbook，对应一个Excel文件
             HSSFWorkbook wb = new HSSFWorkbook();
@@ -314,14 +314,13 @@ public class ExportExcelUtil {
                 createCell(0, adviceModel.getClientName(), cellStyle, row);
                 createCell(1, adviceModel.getMobileNo(), cellStyle, row);
                 createCell(2, adviceModel.getCompany(), cellStyle, row);
-                createCell(3, adviceModel.getMaterial(),cellStyle, row);
+                createCell(3, adviceModel.getMaterial(), cellStyle, row);
             }
             //自定义文件存储路径
-            String localPath = "C:\\Users\\xufan\\Documents"; //本地
             String prodPath = Constants.EXCEL_BASE_PATH; //服务器
             //发送响应流方法
             String excelName = "/咨询表-" + UUID.randomUUID().toString() + ".xls";
-            String creteFile = localPath + excelName;//本地
+            String creteFile = prodPath + excelName;//本地
             String responseFileUrl = Constants.EXCEL_SERVER_ADMIN + excelName;//服务器
             FileOutputStream fos = null;
             try {
@@ -334,7 +333,7 @@ public class ExportExcelUtil {
                 throw new BizException("导出文件错误");
             } finally {
                 try {
-                    if(fos != null){
+                    if (fos != null) {
                         fos.close();
                     }
                 } catch (IOException e) {
