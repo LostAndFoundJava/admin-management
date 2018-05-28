@@ -26,10 +26,6 @@ public class ExhibitionDetail extends MgrBaseModel<ExhibitionDetail> {
 
     private String briefInfo;
 
-    //报名截止日期
-    @JsonDeserialize(using = CustomJsonDateDeserilizer.class)
-    private Date applyEndTime;
-
     @TableField(exist = false)
     private List<File> files;
 
