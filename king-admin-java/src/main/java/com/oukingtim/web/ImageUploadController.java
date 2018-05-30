@@ -6,6 +6,7 @@ import com.oukingtim.util.DateUtil;
 import com.oukingtim.web.vm.ResultVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -35,11 +36,17 @@ public class ImageUploadController {
     @ApiOperation(value = "上传图片", notes = "上传图片")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResultVM uploadImg(HttpSession session, HttpServletRequest request, HttpServletResponse response, MultipartFile file) {
+        long l1 = System.currentTimeMillis();
+        System.out.println(System.currentTimeMillis());
         List<String> uploadFileUrls;
         List<String> fileUrlVO = new ArrayList<>();
         String fastIp = Constants.FILE_SERVER_ADMIN;
         String savePath = session.getServletContext().getRealPath("/");
         String filePath = "/" + DateUtil.date2Str("yyyy/MM/dd", new Date());//当前日期作为文件目录
+
+        long l = System.currentTimeMillis();
+        System.out.println(l);
+        System.out.println(l - l1+"////");
         try {
             uploadFileUrls = CkUploadUtils.upload(request, savePath, filePath, Constants.PIC_BASE_PATH);
 
@@ -58,6 +65,8 @@ public class ImageUploadController {
         } catch (IOException e) {
             logger.error("上传出错", e);
         }*/
+        System.out.println("success");
+        System.out.println(System.currentTimeMillis()-l);
         return ResultVM.ok(fileUrlVO);
     }
 

@@ -42,18 +42,24 @@
                 if(angular.isDefined(param.id)&&param.id!=null){
                     rest.update(param,
                         function (data) {
-                            console.log(data);
-                            toastr.success("保存成功","提示",{"progressBar": true,});
-                            callback(data);
+                            if(data.code == 0){
+                                toastr.success("保存成功","提示",{"progressBar": true,});
+                                callback(data);
+                            }else{
+                                toastr.warn(data.msg,"提示",{"progressBar": true,});
+                            }
                         }, function (error) {
                             toastr.error(error,"提示",{"progressBar": true,});
                         })
                 }else{
                     rest.create(param,
                         function (data) {
-                            console.log(data);
-                            toastr.success("保存成功","提示",{"progressBar": true,});
-                            callback(data);
+                            if(data.code == 0){
+                                toastr.success("保存成功","提示",{"progressBar": true,});
+                                callback(data);
+                            }else{
+                                toastr.warning(data.msg,"提示",{"progressBar": true,});
+                            }
                         }, function (error) {
                             toastr.error(error,"提示",{"progressBar": true,});
                         })

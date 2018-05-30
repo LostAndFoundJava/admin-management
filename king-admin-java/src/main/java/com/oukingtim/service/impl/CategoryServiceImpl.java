@@ -81,6 +81,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryInfoMapper, Categor
         return categoryList;
     }
 
+
     /*@Override
     public List<Exhibition> getExhibitionsByHomepageId(String homepageId) {
         List<Exhibition> exhibitions = mgrExhibitionMapper.selectList(new EntityWrapper<>());

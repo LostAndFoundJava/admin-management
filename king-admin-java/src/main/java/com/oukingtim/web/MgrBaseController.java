@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,7 +78,13 @@ public abstract class MgrBaseController<S extends IService<T>, T extends MgrBase
     public ResultVM create(@RequestBody T t, MultipartFile file) {
         t.setCreateTime(new Date());
         t.setUpdateTime(new Date());
-        if (service.insert(t)) {
+        boolean status;
+        try{
+            status = service.insert(t);
+        }catch (DuplicateKeyException e){
+            return ResultVM.error("已存在，请勿重复插入");
+        }
+        if (status) {
             return ResultVM.ok();
         } else {
             return ResultVM.error();

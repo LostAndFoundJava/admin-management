@@ -144,8 +144,9 @@
 
         //选择图片
         function selectImage(toolbar) {
-            var fileInput = toolbar.container.querySelector('input.ql-image[type=file]');
-            if (fileInput == null) {
+            //var fileInput = toolbar.container.querySelector('input.ql-image[type=file]');
+            //if (fileInput == null) {
+            var fileInput
                 fileInput = document.createElement('input');
                 fileInput.setAttribute('type', 'file');
                 fileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
@@ -156,7 +157,7 @@
                     }
                 });
                 toolbar.container.appendChild(fileInput);
-            }
+            //}
             fileInput.click();
         };
 
