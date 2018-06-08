@@ -2,6 +2,7 @@ package com.oukingtim.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.oukingtim.domain.Category;
+import com.oukingtim.domain.ClickCount;
 import com.oukingtim.domain.Exhibition;
 import com.oukingtim.domain.NewsModel;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,4 +21,6 @@ import java.util.List;
 public interface NewsEditionService extends IService<NewsModel>{
 
     List<NewsModel> selectAll();
+
+    List<ClickCount> getClickCount(Integer type);
 }

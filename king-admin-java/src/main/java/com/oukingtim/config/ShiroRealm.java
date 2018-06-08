@@ -3,6 +3,7 @@ package com.oukingtim.config;
 import com.oukingtim.domain.SysUser;
 import com.oukingtim.service.SysMenuService;
 import com.oukingtim.service.SysUserService;
+import com.oukingtim.util.ShiroUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -31,6 +32,9 @@ public class ShiroRealm extends AuthorizingRealm {
     private CacheManager cacheManager;
 
     private Cache<String, AtomicInteger> passwordRetryCache;
+
+    private Cache<String, String> uniqueLoginUser;
+
     /**
      * @Author : oukingtim
      * @Description : 授权(验证权限时调用)
@@ -57,7 +61,12 @@ public class ShiroRealm extends AuthorizingRealm {
         String username = (String) authenticationToken.getPrincipal();
         String password = new String((char[]) authenticationToken.getCredentials());
 
+//        uniqueLoginUser = cacheManager.getCache("uniqueLoginUser");
+//        if(uniqueLoginUser.get(username) != null)
+//            throw new UnknownAccountException("此账号已经登陆！！请勿重复登陆");
+
         passwordRetryCache = cacheManager.getCache("passwordRetryCache");
+
         AtomicInteger retryCount = passwordRetryCache.get(username);
 
         if (retryCount != null && retryCount.intValue() >= 5)
@@ -92,6 +101,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
         passwordRetryCache.remove(username);
+//        uniqueLoginUser.put(username,"");
         return info;
     }
 }

@@ -1,12 +1,15 @@
 package com.oukingtim.web;
 
+import com.oukingtim.domain.ClickCount;
 import com.oukingtim.domain.Exhibition;
 import com.oukingtim.service.MgrExhibitionService;
+import com.oukingtim.service.NewsEditionService;
 import com.oukingtim.web.vm.ResultVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +26,8 @@ import java.util.List;
 @RequestMapping("/api/mgr/exhibition/management")
 public class MgrExhibitionController extends MgrBaseController<MgrExhibitionService, Exhibition> {
 
+    @Autowired
+    private NewsEditionService newsEditionService;
 
     private static Logger logger = LoggerFactory.getLogger(MgrExhibitionController.class);
 
@@ -32,5 +37,15 @@ public class MgrExhibitionController extends MgrBaseController<MgrExhibitionServ
     public ResultVM getExhibitionsByCategoryId(@Valid @RequestParam("categoryIds") List<String> categoryIds) {
         List<Exhibition> exhibitions = service.getExhibitionsByCategoryId(categoryIds);
         return ResultVM.ok(exhibitions);
+    }
+
+    /**
+     * 返回点击次数
+     * @return
+     */
+    @RequestMapping("/clickCount")
+    public ResultVM getClickCount() {
+        List<ClickCount> list = newsEditionService.getClickCount(0);
+        return ResultVM.ok(list);
     }
 }

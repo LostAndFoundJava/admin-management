@@ -10,8 +10,12 @@ import com.oukingtim.util.ShiroUtils;
 import com.oukingtim.web.vm.ResultVM;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +39,12 @@ public class LoginController {
     @Autowired
     private SysRoleService sysRoleService;
 
+    @Autowired
+    private CacheManager cacheManager;
+
+    private Cache<String, String> uniqueLoginUser;
+
+
     @PostMapping("/login")
     public ResultVM login(@RequestBody Map<String, String> map) {
         UsernamePasswordToken token = null;
@@ -46,6 +56,7 @@ public class LoginController {
             password = new Sha256Hash(password).toHex();
             token = new UsernamePasswordToken(username, password);
             subject.login(token);
+            ShiroUtils.getSubject().getSession().setAttribute("username",username);
         } catch (UnknownAccountException e) {
             return ResultVM.error(e.getMessage());
         } catch (IncorrectCredentialsException e) {
@@ -60,6 +71,9 @@ public class LoginController {
 
     @GetMapping("/signout")
     public ResultVM logout() {
+//        uniqueLoginUser = cacheManager.getCache("uniqueLoginUser");
+//        String username = ((SysUser) (SecurityUtils.getSubject().getPrincipals().iterator().next())).getUsername();
+//        uniqueLoginUser.remove(username);
         ShiroUtils.logout();
         return ResultVM.ok();
     }

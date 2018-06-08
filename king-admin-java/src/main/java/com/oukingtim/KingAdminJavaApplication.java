@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 @Slf4j
 @SpringBootApplication
+//@ServletComponentScan(basePackageClasses = SessionListener.class)
 public class KingAdminJavaApplication {
 
 	public static void main(String[] args) {

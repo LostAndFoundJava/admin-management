@@ -1,21 +1,26 @@
 package com.oukingtim.config.myIntercept;
 
 import com.alibaba.fastjson.JSONObject;
+import com.oukingtim.domain.SysUser;
 import com.oukingtim.web.vm.ResultVM;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.PrintWriter;
+import java.util.Collection;
 
 /**
  * Created by chenjian on 2018/4/3.
  */
 @Slf4j
 public class MySessionIntercept extends AccessControlFilter {
-
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         return false;
@@ -24,7 +29,6 @@ public class MySessionIntercept extends AccessControlFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         Subject subject = getSubject(request, response);
-
         if (!subject.isAuthenticated() && !subject.isRemembered()) {
             //如果没有登录,AJAX
             PrintWriter out = null;

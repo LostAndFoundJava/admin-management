@@ -2,6 +2,7 @@ package com.oukingtim.service.impl;
 
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.oukingtim.domain.ClickCount;
 import com.oukingtim.domain.NewsModel;
 import com.oukingtim.mapper.NewsEditonMapper;
 import com.oukingtim.service.NewsEditionService;
@@ -25,5 +26,10 @@ public class NewsEditionServiceImpl extends ServiceImpl<NewsEditonMapper,NewsMod
     @Override
     public List<NewsModel> selectAll() {
         return newsEditonMapper.selectAll();
+    }
+
+    @Override
+    public List<ClickCount> getClickCount(Integer type) {
+        return newsEditonMapper.getClickCount(type);
     }
 }

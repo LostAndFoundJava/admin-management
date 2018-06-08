@@ -2,8 +2,10 @@ package com.oukingtim.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.oukingtim.domain.Category;
+import com.oukingtim.domain.ClickCount;
 import com.oukingtim.domain.NewsModel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,4 +18,6 @@ import java.util.List;
 @Mapper
 public interface NewsEditonMapper extends BaseMapper<NewsModel> {
     List<NewsModel> selectAll();
+
+    List<ClickCount> getClickCount(@Param("type") Integer type);
 }

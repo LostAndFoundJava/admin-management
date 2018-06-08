@@ -9,4 +9,9 @@
            statistics="true">
     </cache>
 
+    <cache name="uniqueLoginUser" eternal="false"
+           timeToIdleSeconds="12" timeToLiveSeconds="0" overflowToDisk="false"
+           statistics="true">
+    </cache>
+
 </ehcache>

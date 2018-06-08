@@ -5,4 +5,8 @@
     <select id="selectAll" resultType="com.oukingtim.domain.NewsModel">
         select distinct t.news_category from news t where 1=1 and t.`delete` = 0
     </select>
+
+    <select id="getClickCount" resultType="com.oukingtim.domain.ClickCount">
+        select clicked_id,count from click_count where click_type = #{type}
+    </select>
 </mapper>

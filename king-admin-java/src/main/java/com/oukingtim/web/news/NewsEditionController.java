@@ -1,10 +1,12 @@
 package com.oukingtim.web.news;
 
+import com.oukingtim.domain.ClickCount;
 import com.oukingtim.domain.NewsModel;
 import com.oukingtim.service.NewsEditionService;
 import com.oukingtim.web.MgrBaseController;
 import com.oukingtim.web.vm.ResultVM;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +28,15 @@ public class NewsEditionController extends MgrBaseController<NewsEditionService,
     public ResultVM selectAll(){
         List<NewsModel> newsModels = newsEditionService.selectAll();
         return ResultVM.ok(newsModels);
+    }
+
+    /**
+     * 返回点击次数
+     * @return
+     */
+    @RequestMapping("/clickCount")
+    public ResultVM getClickCount() {
+        List<ClickCount> list = newsEditionService.getClickCount(1);
+        return ResultVM.ok(list);
     }
 }
