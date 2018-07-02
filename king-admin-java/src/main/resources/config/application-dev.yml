@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://47.97.201.63:3306/honger_web?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-    username: root
-    password: 123qwe456ASD
+    url: jdbc:mysql:
+    username: 
+    password: 
 
 server:
   port: 8090
